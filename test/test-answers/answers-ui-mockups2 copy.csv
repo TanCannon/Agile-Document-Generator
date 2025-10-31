@@ -1,0 +1,417 @@
+Okay, I understand. You're looking for wireframe mockups for a web/mobile application with the following core modules: Home, Dashboard, Subject Areas, Jobs, Change Requests, ServiceNow, Reports, and Settings. The application needs role-based access and specific features for the Home and Job Detail pages.
+
+Here are the wireframes.  I've focused on the key screens and interactions to give you a solid starting point.  Remember, these are *wireframes*, so they are intentionally low-fidelity.  Color, branding, and precise visual styling would come later.
+
+**Assumptions:**
+
+*   Role-based access: I assume `Admin`, `User`, and potentially `Read-Only` roles.  The `Settings` menu is only visible to `Admin`. Other modules might have reduced functionality based on role.
+*   "User/Team-Specific" in the Home page means filtering based on the logged-in user's assignments.
+*   Mobile design focuses on a responsive layout adapting to smaller screens.
+
+**Navigation Flow:**
+
+```
+Home (Landing Page) --> Search Result Page --> Job Detail Page
+Home (Landing Page) --> Subject Area List Page --> Subject Area Detail Page (Jobs) --> Job Detail Page
+Home (Landing Page) --> Dashboard
+Home (Landing Page) --> Change Requests
+Home (Landing Page) --> ServiceNow
+Home (Landing Page) --> Rally Tickets
+Menu --> Dashboard
+Menu --> Subject Area List
+Menu --> Jobs List
+Menu --> Change Requests
+Menu --> ServiceNow
+Menu --> Reports
+Menu --> Settings (Admin Only)
+Settings --> User Management
+Settings --> Role Management
+Settings --> Report Management
+Settings --> Support Templates
+```
+
+**Wireframes:**
+
+**1. Home Page (Web & Mobile)**
+
+*   **Web:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Logo]      [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    |  [Collapsible Sidebar Menu (Icons + Labels)]                  |
+    |  - Home (Active)                                               |
+    |  - Dashboard                                                   |
+    |  - Subject Areas                                                |
+    |  - Jobs                                                         |
+    |  - Change Requests                                              |
+    |  - ServiceNow                                                   |
+    |  - Reports                                                      |
+    |  - Settings (Admin Only)                                        |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Search Job** [Search Icon]                                      |
+    | [Search Input Field (Autocomplete)]  [Filter Icon]              |
+    |-------------------------------------------------------------------|
+    | **Subject Area List**                                           |
+    | [Subject Area 1] [Subject Area 2] [Subject Area 3] [See All >] |
+    |-------------------------------------------------------------------|
+    | **Recent Incidents**                                           |
+    | [Incident 1]  [Incident 2]  [See All >]                         |
+    |-------------------------------------------------------------------|
+    | **Change Requests**                                            |
+    | [CR 1]  [CR 2]  [See All >]                                    |
+    |-------------------------------------------------------------------|
+    | **Rally Tickets**                                               |
+    | [Ticket 1]  [Ticket 2]  [See All >]                             |
+    --------------------------------------------------------------------
+    ```
+
+*   **Mobile:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Hamburger Menu Icon] [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Search Job** [Search Icon]                                      |
+    | [Search Input Field (Autocomplete)]  [Filter Icon]              |
+    |-------------------------------------------------------------------|
+    | **Subject Area List**                                           |
+    | [Subject Area 1] [Subject Area 2] [Subject Area 3] [See All >] |
+    |-------------------------------------------------------------------|
+    | **Recent Incidents**                                           |
+    | [Incident 1]  [Incident 2]  [See All >]                         |
+    |-------------------------------------------------------------------|
+    | **Change Requests**                                            |
+    | [CR 1]  [CR 2]  [See All >]                                    |
+    |-------------------------------------------------------------------|
+    | **Rally Tickets**                                               |
+    | [Ticket 1]  [Ticket 2]  [See All >]                             |
+    --------------------------------------------------------------------
+    [Bottom Navigation Bar: Home, Dashboard, Jobs, Reports]
+    ```
+    *   **Interaction:** Tapping the Subject Area links will lead to a Subject Area Detail Page showing jobs of that specific subject area.
+
+**2. Dashboard (Web & Mobile)**
+
+*   **Web:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Logo]      [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    |  [Collapsible Sidebar Menu (Icons + Labels)]                  |
+    |  - Home                                                        |
+    |  - Dashboard (Active)                                           |
+    |  - Subject Areas                                                |
+    |  - Jobs                                                         |
+    |  - Change Requests                                              |
+    |  - ServiceNow                                                   |
+    |  - Reports                                                      |
+    |  - Settings (Admin Only)                                        |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **System Health Overview**                                       |
+    | [Gauge Chart: Overall Health]  [Line Chart: Recent Performance] |
+    |-------------------------------------------------------------------|
+    | **Alerts**                                                     |
+    | [Alert 1] [Severity Icon] [Description] [Link to Details]     |
+    | [Alert 2] [Severity Icon] [Description] [Link to Details]     |
+    | [See All >]                                                     |
+    |-------------------------------------------------------------------|
+    | **Key Metrics**                                                 |
+    | [Metric 1: # Jobs Running] [Value]                             |
+    | [Metric 2: Average Completion Time] [Value]                    |
+    | [Metric 3: Failure Rate] [Value]                               |
+    | [More Metrics >]                                              |
+    --------------------------------------------------------------------
+    ```
+
+*   **Mobile:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Hamburger Menu Icon] [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **System Health Overview**                                       |
+    | [Gauge Chart: Overall Health]                                  |
+    | [Line Chart: Recent Performance]                               |
+    |-------------------------------------------------------------------|
+    | **Alerts**                                                     |
+    | [Alert 1] [Severity Icon] [Description] [Link to Details]     |
+    | [Alert 2] [Severity Icon] [Description] [Link to Details]     |
+    | [See All >]                                                     |
+    |-------------------------------------------------------------------|
+    | **Key Metrics**                                                 |
+    | [Metric 1: # Jobs Running] [Value]                             |
+    | [Metric 2: Average Completion Time] [Value]                    |
+    | [Metric 3: Failure Rate] [Value]                               |
+    | [More Metrics >]                                              |
+    --------------------------------------------------------------------
+    [Bottom Navigation Bar: Home, Dashboard, Jobs, Reports]
+    ```
+
+**3. Subject Area List (Web & Mobile)**
+
+*   **Web:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Logo]      [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    |  [Collapsible Sidebar Menu (Icons + Labels)]                  |
+    |  - Home                                                        |
+    |  - Dashboard                                                   |
+    |  - Subject Areas (Active)                                       |
+    |  - Jobs                                                         |
+    |  - Change Requests                                              |
+    |  - ServiceNow                                                   |
+    |  - Reports                                                      |
+    |  - Settings (Admin Only)                                        |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Subject Area List**                                           |
+    | [Subject Area 1] [Description] [# of Jobs] [> Icon]            |
+    | [Subject Area 2] [Description] [# of Jobs] [> Icon]            |
+    | [Subject Area 3] [Description] [# of Jobs] [> Icon]            |
+    | ...                                                             |
+    |-------------------------------------------------------------------|
+    | **[Admin Role Only] Add Subject Area Button**                 |
+    --------------------------------------------------------------------
+    ```
+
+*   **Mobile:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Hamburger Menu Icon] [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Subject Area List**                                           |
+    | [Subject Area 1] [Description] [# of Jobs] [> Icon]            |
+    | [Subject Area 2] [Description] [# of Jobs] [> Icon]            |
+    | [Subject Area 3] [Description] [# of Jobs] [> Icon]            |
+    | ...                                                             |
+    |-------------------------------------------------------------------|
+    | **[Admin Role Only] Add Subject Area Button**                 |
+    --------------------------------------------------------------------
+    [Bottom Navigation Bar: Home, Dashboard, Jobs, Reports]
+    ```
+   *   **Interaction:** Tapping the subject area row navigate to the `Subject Area Detail Page` that will list all jobs of that specific subject area.
+
+**4. Jobs List (Web & Mobile)**
+
+*   **Web:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Logo]      [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    |  [Collapsible Sidebar Menu (Icons + Labels)]                  |
+    |  - Home                                                        |
+    |  - Dashboard                                                   |
+    |  - Subject Areas                                                |
+    |  - Jobs (Active)                                              |
+    |  - Change Requests                                              |
+    |  - ServiceNow                                                   |
+    |  - Reports                                                      |
+    |  - Settings (Admin Only)                                        |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Jobs List**                                                   |
+    | [Search Input Field] [Filter Icon]                             |
+    |-------------------------------------------------------------------|
+    | [Table Header: Job Name | Subject Area | Status | Last Run | >]  |
+    | [Job 1] [Subject Area] [Status] [Date] [> Icon]              |
+    | [Job 2] [Subject Area] [Status] [Date] [> Icon]              |
+    | ...                                                             |
+    | [Pagination Controls: < 1 2 3 ... >]                           |
+    --------------------------------------------------------------------
+    ```
+
+*   **Mobile:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Hamburger Menu Icon] [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Jobs List**                                                   |
+    | [Search Input Field] [Filter Icon]                             |
+    |-------------------------------------------------------------------|
+    | [Job 1] [Job Name] [Status] [> Icon]                           |
+    | [Job 2] [Job Name] [Status] [> Icon]                           |
+    | ...                                                             |
+    | [Pagination Controls: < 1 2 3 ... >]                           |
+    --------------------------------------------------------------------
+    [Bottom Navigation Bar: Home, Dashboard, Jobs, Reports]
+    ```
+
+**5. Change Requests List (Web & Mobile)**
+
+Very similar to the Jobs List in layout and functionality.  The table headers would change (e.g., "Request ID", "Description", "Status", "Requested By", "Date").
+
+**6. ServiceNow (Web & Mobile)**
+
+Potentially an embedded ServiceNow portal view.
+
+**7. Reports (Web & Mobile)**
+
+Embedded Power BI reports (with appropriate authentication).
+
+**8. Settings (Web & Mobile) - ADMIN ONLY**
+
+*   **Web:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Logo]      [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    |  [Collapsible Sidebar Menu (Icons + Labels)]                  |
+    |  - Home                                                        |
+    |  - Dashboard                                                   |
+    |  - Subject Areas                                                |
+    |  - Jobs                                                         |
+    |  - Change Requests                                              |
+    |  - ServiceNow                                                   |
+    |  - Reports                                                      |
+    |  - Settings (Active)                                           |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Settings**                                                    |
+    | [User Management Link]                                        |
+    | [Role Management Link]                                        |
+    | [Report Management Link]                                      |
+    | [Support Templates Link]                                      |
+    --------------------------------------------------------------------
+    ```
+
+*   **Mobile:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Hamburger Menu Icon] [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Settings**                                                    |
+    | [User Management Link]                                        |
+    | [Role Management Link]                                        |
+    | [Report Management Link]                                      |
+    | [Support Templates Link]                                      |
+    --------------------------------------------------------------------
+    [Bottom Navigation Bar: Home, Dashboard, Jobs, Reports]
+    ```
+
+**9. Job Detail Page (Web & Mobile)**
+
+*   **Web:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Logo]      [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    |  [Collapsible Sidebar Menu (Icons + Labels)]                  |
+    |  - Home                                                        |
+    |  - Dashboard                                                   |
+    |  - Subject Areas                                                |
+    |  - Jobs (Active)                                              |
+    |  - Change Requests                                              |
+    |  - ServiceNow                                                   |
+    |  - Reports                                                      |
+    |  - Settings (Admin Only)                                        |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Job Information**                                           |
+    | [Job Name] [Status] [Owner] [Schedule]                       |
+    | [Description]                                                  |
+    |-------------------------------------------------------------------|
+    | **Job Support Instructions**                                   |
+    | [Documentation Link]                                          |
+    | [Troubleshooting Steps]                                       |
+    |-------------------------------------------------------------------|
+    | **Error Logs**                                                 |
+    | [UC4 Logs] [Informatica Logs]                                 |
+    |-------------------------------------------------------------------|
+    | **Associated Incidents**                                       |
+    | [Incident 1]  [Incident 2]  [See All >]                         |
+    |-------------------------------------------------------------------|
+    | **Change Requests**                                            |
+    | [CR 1]  [CR 2]  [See All >]                                    |
+    |-------------------------------------------------------------------|
+    | **Job Schedule**                                               |
+    | [Next Run] [Last Run] [Frequency] [Timing]                     |
+    |-------------------------------------------------------------------|
+    | **Job Run Stats**                                              |
+    | [Success Rate] [Failure Rate] [Processing Time]                 |
+    --------------------------------------------------------------------
+    ```
+
+*   **Mobile:**
+
+    ```
+    --------------------------------------------------------------------
+    |  [Hamburger Menu Icon] [App Name]                         [User Profile]  |
+    --------------------------------------------------------------------
+    | **Main Content Area**                                         |
+    |-------------------------------------------------------------------|
+    | **Job Information**                                           |
+    | [Job Name] [Status]                                            |
+    | [Owner] [Schedule]                                            |
+    | [Description]                                                  |
+    |-------------------------------------------------------------------|
+    | **Job Support Instructions**                                   |
+    | [Documentation Link]                                          |
+    | [Troubleshooting Steps]                                       |
+    |-------------------------------------------------------------------|
+    | **Error Logs**                                                 |
+    | [UC4 Logs]                                                    |
+    | [Informatica Logs]                                             |
+    |-------------------------------------------------------------------|
+    | **Associated Incidents**                                       |
+    | [Incident 1]  [Incident 2]  [See All >]                         |
+    |-------------------------------------------------------------------|
+    | **Change Requests**                                            |
+    | [CR 1]  [CR 2]  [See All >]                                    |
+    |-------------------------------------------------------------------|
+    | **Job Schedule**                                               |
+    | [Next Run] [Last Run] [Frequency] [Timing]                     |
+    |-------------------------------------------------------------------|
+    | **Job Run Stats**                                              |
+    | [Success Rate] [Failure Rate] [Processing Time]                 |
+    --------------------------------------------------------------------
+    [Bottom Navigation Bar: Home, Dashboard, Jobs, Reports]
+    ```
+*  For the mobile version, consider using accordions or expandable sections to make the information more manageable on a smaller screen.
+*  Prioritize information based on user roles. For example, developers might need the Error Logs section front and center.
+
+**Suggestions for Layout Improvements:**
+
+*   **Customizable Dashboards:** Allow users to customize their dashboards by adding/removing/rearranging widgets.
+*   **Drag-and-Drop Job Scheduling (Advanced):** For users managing job schedules, consider a visual drag-and-drop interface for scheduling jobs.
+*   **Activity Feeds:** Implement an activity feed (similar to social media) to display recent actions, updates, and notifications within the system.
+*   **Contextual Help:** Provide contextual help and tooltips to guide users through the application.
+*   **Theming:**  Allow users to choose light/dark themes.
+
+**Next Steps:**
+
+1.  **User Research:** Validate these wireframes with real users. Get feedback on usability and information architecture.
+2.  **Refine:** Based on user feedback, refine the wireframes.
+3.  **Visual Design:** Add visual design elements (colors, typography, branding) to create high-fidelity mockups.
+4.  **Prototyping:** Create interactive prototypes to test the user flow and interactions.
+5.  **Development:** Begin development, incorporating the design and user feedback.
+
+Let me know if you'd like me to elaborate on any of these wireframes or suggestions!  I can provide more detailed versions of specific screens or explore alternative layouts.

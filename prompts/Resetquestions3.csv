@@ -1,0 +1,12 @@
+questions
+Generate a Gantt chart in CSV format for the below sprint planning where:  
+- Use "|" as the delimiter.  
+- The first column should be "Epic / Week".  
+- The next columns should be "Week 1", "Week 2", "Week 3", etc., with each column representing 1 week.  
+- Each row should represent an epic.  
+- Use ███████ to indicate when work is happening for that epic.  
+- Some epics should run in parallel, i.e., have overlapping weeks with other epics.  
+- Leave blank cells where no work is happening.  
+- Do not include any extra text or explanation.
+ 
+ 

@@ -1,0 +1,9 @@
+questions
+Generate a CSV table format having columns page name and code with | as the delimiter
+"login": """You are a UI designer. Create a clean HTML + CSS mockup  without indentation for a login page.""",
+
+"dashboard": """Generate an HTML + CSS mockup  without indentation for a user dashboard page.""",
+
+"tic_tac_toe": """Create an HTML + CSS mockup  without indentation of a Tic Tac Toe board."""
+
+

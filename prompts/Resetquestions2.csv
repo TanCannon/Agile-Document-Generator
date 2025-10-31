@@ -1,0 +1,13 @@
+questions
+Provide a detailed CSV table for the below detailed plan with the following columns:
+Epic, ID, User Story, Tasks/Subtasks, Acceptance Criteria, Priority, Story Points, Sprint Number, Assignee
+ 
+- Use | as the delimiter between columns.
+- Each row should represent a different user story.
+- The Sprint Number column should: Assign user stories to different sprints, Ensure the total Story Points per sprint do not exceed 20.
+- The Assignee column should contain placeholder names like "Team Member 1", "Team Member 2", "Team Member 3", etc.
+- Be assigned in a round-robin fashion across user stories.
+- The Priority column should indicate the priority of the story (e.g., "High", "Medium", "Low").
+- Do not include any extra text, explanation, or notes outside the CSV.
+- Ensure the table is well-structured so it can be imported directly into Excel or any spreadsheet tool.
+ 

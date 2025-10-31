@@ -1,0 +1,173 @@
+questions
+Generate a Gantt chart in CSV format for the below sprint planning where:  
+- Use "|" as the delimiter.  
+- The first column should be "Epic / Week".  
+- The next columns should be "Week 1", "Week 2", "Week 3", etc., with each column representing 1 week.  
+- Each row should represent an epic.  
+- Use ███████ to indicate when work is happening for that epic.  
+- Some epics should run in parallel, i.e., have overlapping weeks with other epics.  
+- Leave blank cells where no work is happening.  
+- Do not include any extra text or explanation.
+ 
+ ```csv
+Epic|ID|User Story|Tasks/Subtasks|Acceptance Criteria|Priority|Story Points|Sprint Number|Assignee
+Project Setup|1|As a project manager, I want to define the project scope so that all stakeholders have a clear understanding of the deliverables.|Review FRD and identify key deliverables|Scope Document is created and includes all key deliverables.|High|3|1|Team Member 1
+Project Setup|2|As a project manager, I want to define the project scope so that all stakeholders have a clear understanding of the deliverables.|Identify in-scope and out-of-scope functionalities|Scope Document clearly defines what is in-scope and out-of-scope.|High|2|1|Team Member 2
+Project Setup|3|As a project manager, I want to define the project scope so that all stakeholders have a clear understanding of the deliverables.|Obtain sign-off on scope from stakeholders|Stakeholders have signed off on the scope document.|High|1|1|Team Member 3
+Project Setup|4|As a project manager, I want to create a detailed project schedule so that we can track progress and meet deadlines.|Create a detailed project schedule|Project Schedule (Gantt Chart) is created with all tasks and timelines.|High|3|1|Team Member 1
+Project Setup|5|As a project manager, I want to create a detailed project schedule so that we can track progress and meet deadlines.|Assign tasks and responsibilities to team members|Responsibility Assignment Matrix is created with clear task assignments.|Medium|2|1|Team Member 2
+Project Setup|6|As a project manager, I want to create a detailed project schedule so that we can track progress and meet deadlines.|Establish communication and reporting protocols|Communication Plan is created outlining communication channels and frequency.|Medium|1|1|Team Member 3
+Project Setup|7|As a developer, I want to set up the development environment so that I can start coding.|Provision necessary hardware and software|Development Environment Setup is complete and accessible.|High|3|2|Team Member 1
+Project Setup|8|As a developer, I want to set up the development environment so that I can start coding.|Configure version control system (Git)|Git Repository is set up and accessible for version control.|High|2|2|Team Member 2
+Project Setup|9|As a developer, I want to set up the development environment so that I can start coding.|Set up testing and staging environments|Testing and Staging Environments are set up and configured.|Medium|2|2|Team Member 3
+Authentication & Authorization|10|As a user, I want to be able to log in using Okta single sign-on so that I don't have to remember multiple passwords.|Integrate Okta for single sign-on|Okta Integration Document is created.|High|3|2|Team Member 1
+Authentication & Authorization|11|As a user, I want to be able to log in using Okta single sign-on so that I don't have to remember multiple passwords.|Test Okta authentication flow|Working Okta Authentication is verified.|High|2|2|Team Member 2
+Authentication & Authorization|12|As an administrator, I want to implement role-based access control so that users only have access to the features they need.|Define user roles and permissions (Admin, Developer, Read-Only, Support Engineer)|RBAC Matrix is created defining roles and permissions.|High|3|3|Team Member 3
+Authentication & Authorization|13|As an administrator, I want to implement role-based access control so that users only have access to the features they need.|Implement RBAC logic in the application|RBAC Implementation is implemented in the application.|High|3|3|Team Member 1
+Authentication & Authorization|14|As an administrator, I want to implement role-based access control so that users only have access to the features they need.|Test user roles and permissions|Verified RBAC Implementation confirms users have correct access.|High|2|3|Team Member 2
+Data Layer - Snowflake|15|As a developer, I want to set up the Snowflake connection so that I can access data.|Establish connection to Snowflake database|Snowflake Connection String is created and tested.|High|2|3|Team Member 3
+Data Layer - Snowflake|16|As a developer, I want to implement the data model in Snowflake so that the data is organized correctly.|Data Model Implementation|Data Model Schema is implemented in Snowflake.|High|3|4|Team Member 1
+Data Layer - Snowflake|17|As a data engineer, I want to create data extraction scripts so that I can pull data from Snowflake.|Create scripts to extract necessary data from Snowflake|Data Extraction Scripts are created and functional.|High|3|4|Team Member 2
+Data Layer - Snowflake|18|As a data engineer, I want to create data extraction scripts so that I can pull data from Snowflake.|Test data extraction scripts|Verified Data Extraction Scripts ensures data is extracted correctly.|High|2|4|Team Member 3
+Data Layer - External APIs|19|As a developer, I want to integrate with the ServiceNow API so that I can fetch incident and change request data.|Obtain API access to ServiceNow for Incidents and Change Requests|ServiceNow API Credentials are obtained.|Medium|1|4|Team Member 1
+Data Layer - External APIs|20|As a developer, I want to integrate with the ServiceNow API so that I can fetch incident and change request data.|Implement API calls to fetch Incidents and Change Requests|ServiceNow API Integration Code is implemented.|High|3|4|Team Member 2
+Data Layer - External APIs|21|As a developer, I want to integrate with the UC4 API so that I can fetch job and job plan data.|Obtain API access to UC4 for job and job plan data|UC4 API Credentials are obtained.|Medium|1|5|Team Member 3
+Data Layer - External APIs|22|As a developer, I want to integrate with the UC4 API so that I can fetch job and job plan data.|Implement API calls to fetch job and job plan data|UC4 API Integration Code is implemented.|High|3|5|Team Member 1
+Data Layer - Data Transformation|23|As a data engineer, I want to implement data transformation logic so that the data is in the required format.|Transform data extracted from Snowflake and APIs into the required format|Data Transformation Scripts are created.|High|3|5|Team Member 2
+Data Layer - Data Transformation|24|As a data engineer, I want to implement data transformation logic so that the data is in the required format.|Test data transformation logic|Verified Data Transformation Scripts confirms data transformation is correct.|High|2|5|Team Member 3
+Home Module|25|As a user, I want to be able to search for jobs so that I can quickly find the information I need.|Create UI for job search|Search UI Component is created.|High|2|5|Team Member 1
+Home Module|26|As a user, I want to be able to search for jobs so that I can quickly find the information I need.|Implement backend logic for job search|Working Job Search functionality is implemented.|High|3|6|Team Member 2
+Home Module|27|As a user, I want to see a list of subject areas so that I can easily navigate to different sections of the application.|Create UI for subject area list|Subject Area List UI Component is created.|Medium|2|6|Team Member 3
+Home Module|28|As a user, I want to see a list of subject areas so that I can easily navigate to different sections of the application.|Fetch subject area data from database|Subject Area List Data is fetched from the database.|Medium|2|6|Team Member 1
+Home Module|29|As a user, I want to see recent incidents so that I can stay informed about system issues.|Create UI for recent incidents|Recent Incidents UI Component is created.|Medium|2|6|Team Member 2
+Home Module|30|As a user, I want to see recent incidents so that I can stay informed about system issues.|Fetch recent incident data from database|Recent Incidents Data is fetched from the database.|Medium|2|6|Team Member 3
+Home Module|31|As a user, I want to see change requests so that I can stay informed about system changes.|Create UI for Change Requests|Change Requests UI Component is created.|Medium|2|7|Team Member 1
+Home Module|32|As a user, I want to see change requests so that I can stay informed about system changes.|Fetch Change Request data from database|Change Request Data is fetched from the database.|Medium|2|7|Team Member 2
+Dashboard Module|33|As an operator, I want a system health overview dashboard so that I can quickly identify potential problems.|Design and develop system health overview dashboard|System Health Overview Dashboard UI is created.|High|3|7|Team Member 3
+Dashboard Module|34|As an operator, I want a system health overview dashboard so that I can quickly identify potential problems.|Fetch and display system health metrics|System Health Metrics Data is displayed on the dashboard.|High|3|7|Team Member 1
+Dashboard Module|35|As an operator, I want to see alerts so that I can be notified of critical issues.|Design and develop alerts section|Alerts UI Component is created.|High|2|7|Team Member 2
+Dashboard Module|36|As an operator, I want to see alerts so that I can be notified of critical issues.|Implement logic for displaying alerts|Alerts Data is displayed in the alerts section.|High|3|8|Team Member 3
+Dashboard Module|37|As an operator, I want to see key metrics so that I can monitor system performance.|Design and develop key metrics section|Key Metrics UI Component is created.|Medium|2|8|Team Member 1
+Dashboard Module|38|As an operator, I want to see key metrics so that I can monitor system performance.|Fetch and display key metrics data|Key Metrics Data is displayed in the key metrics section.|Medium|2|8|Team Member 2
+Job Scheduler Module|39|As a User, I want Job Scheduler Screen.|Design the Job Scheduler screen layout|Job Scheduler Screen Mockup is created|High|2|8|Team Member 3
+Job Scheduler Module|40|As a User, I want Job Scheduler Screen.|Develop the Job Scheduler screen UI|Job Scheduler UI Component is created|High|3|8|Team Member 1
+Job Scheduler Module|41|As a User, I want Filter Bar Functionality.|Develop Date Range Picker|Date Range Picker Component is developed|High|2|9|Team Member 2
+Job Scheduler Module|42|As a User, I want Filter Bar Functionality.|Develop Environment Dropdown|Environment Dropdown Component is developed|High|2|9|Team Member 3
+Job Scheduler Module|43|As a User, I want Filter Bar Functionality.|Implement Apply and Reset Buttons functionality|Working Apply/Reset Buttons functionality|High|2|9|Team Member 1
+Job Scheduler Module|44|As a User, I want Search Functionality.|Develop Global Search Bar|Global Search Bar Component is developed|High|2|9|Team Member 2
+Job Scheduler Module|45|As a User, I want Search Functionality.|Develop Job List Search|Job List Search Functionality is developed|High|3|10|Team Member 3
+Job Scheduler Module|46|As a User, I want Job Listing Table.|Implement Pagination|Pagination Component is implemented|High|3|10|Team Member 1
+Job Scheduler Module|47|As a User, I want Job Listing Table.|Implement Sorting|Sorting Functionality is implemented|High|3|10|Team Member 2
+Job Scheduler Module|48|As a User, I want Job Listing Table.|Display Columns (Job Name, Job Plan, Job Type, Description, Environment, Last Run)|Job Listing Table with Required Columns is displayed|High|2|10|Team Member 3
+Job Scheduler Module|49|As a User, I want Hyperlink Behavior.|Implement Job Name Hyperlink to Job Detail Page|Job Name Hyperlink is implemented|High|1|11|Team Member 1
+Job Scheduler Module|50|As a User, I want Hyperlink Behavior.|Implement Job Plan Hyperlink to Job Plan Detail Page|Job Plan Hyperlink is implemented|High|1|11|Team Member 2
+Job Scheduler Module|51|As a User, I want UI/UX Requirements.|Implement Description field wrapping and truncation|Description Field Wrapping is implemented|High|1|11|Team Member 3
+Job Scheduler Module|52|As a User, I want UI/UX Requirements.|Implement Responsive Layout|Responsive Layout Implementation is implemented|High|2|11|Team Member 1
+Job Scheduler Module|53|As a User, I want Backend Filtering.|Optimize backend filtering for performance|Optimized Backend Filtering is done|High|2|12|Team Member 2
+Job Scheduler Module|54|As a User, I want API Queries.|Implement API queries with filter, sort, and pagination parameters|Working API Queries is created|High|3|12|Team Member 3
+Job Scheduler Module|55|As a User, I want Security and Access Control.|Ensure authorized users can view job data|Secure Job Data Access is implemented|High|3|12|Team Member 1
+Job Detail Page Module|56|As a User, I want Header Section.|Display full technical job name as page title|Page Title is displayed|High|1|12|Team Member 2
+Job Detail Page Module|57|As a User, I want Job Metadata Section.|Display Job Name, Job Type, Environment, Workflow, Last Run Status|Job Metadata Section is displayed|High|3|13|Team Member 3
+Job Detail Page Module|58|As a User, I want Description Section.|Display job's functionality and schedule details|Description Section is displayed|High|3|13|Team Member 1
+Job Detail Page Module|59|As a User, I want Tabs Section.|Implement tabs for Support Instructions, Job Plans, Run Stats, Incidents, Change Request|Tabbed Navigation is implemented|High|3|13|Team Member 2
+Job Detail Page Module|60|As a User, I want Default Tab Load.|Set Support Instructions as default tab|Default Tab Loading is implemented|High|1|13|Team Member 3
+Job Detail Page Module|61|As a User, I want Dynamic Content Loading.|Ensure each tab loads its data dynamically|Dynamic Content Loading is implemented|High|2|14|Team Member 1
+Job Detail Page Module|62|As a User, I want Hyperlink Behavior.|Implement Workflow field hyperlink|Workflow Hyperlink is implemented|High|1|14|Team Member 2
+Job Detail Page Module|63|As a User, I want Hyperlink Behavior.|Implement Document hyperlinks|Document Hyperlinks is implemented|High|1|14|Team Member 3
+Job Detail Page Module|64|As a User, I want UI/UX Requirements.|Implement card-based layout, environment labels, word wrapping|UI/UX Improvements are implemented|High|2|14|Team Member 1
+Job Detail Page - Support Instructions|65|As a User, I want SLA Display.|Display SLA in top-right corner|SLA Display is implemented|High|1|15|Team Member 2
+Job Detail Page - Support Instructions|66|As a User, I want Restart Instructions.|Display restart steps as multi-line paragraph|Restart Instructions are displayed|High|2|15|Team Member 3
+Job Detail Page - Support Instructions|67|As a User, I want Input Details.|Display input details as bullet points or comma-separated list|Input Details are displayed|High|2|15|Team Member 1
+Job Detail Page - Support Instructions|68|As a User, I want Output Details.|Display output details including locations/destinations|Output Details are displayed|High|2|15|Team Member 2
+Job Detail Page - Support Instructions|69|As a User, I want Support Notes.|Display support notes and guidelines|Support Notes are displayed|High|2|16|Team Member 3
+Job Detail Page - Support Instructions|70|As a User, I want Exceptions for Non-Production Environments.|Display environment-specific instructions|Non-Production Exceptions are displayed|High|2|16|Team Member 1
+Job Detail Page - Support Instructions|71|As a User, I want Schedule Frequency.|Display the job schedule frequency|Schedule Frequency is displayed|High|1|16|Team Member 2
+Job Detail Page - Support Instructions|72|As a User, I want Linked Support Document.|Display and link the support document|Linked Support Document is displayed|High|1|16|Team Member 3
+Job Detail Page - Support Instructions|73|As a User, I want Secured Access to Linked Documents.|Ensure secure access to PDF|Secured Document Access is implemented|High|2|17|Team Member 1
+Job Detail Page - Job Plans Tab|74|As a User, I want Header Section.|Implement Tabs Navigation|Tab Navigation is implemented|High|1|17|Team Member 2
+Job Detail Page - Job Plans Tab|75|As a User, I want Header Section.|Implement Search Field|Search Field is implemented|High|2|17|Team Member 3
+Job Detail Page - Job Plans Tab|76|As a User, I want Job Plan Table.|Display Job Plan, Description, Environment, Last Modified Date columns|Job Plan Table is displayed|High|3|17|Team Member 1
+Job Detail Page - Job Plans Tab|77|As a User, I want Pagination.|Implement Pagination|Pagination Controls are implemented|High|2|18|Team Member 2
+Job Detail Page - Job Plans Tab|78|As a User, I want Environment Filter.|Implement Environment Filter|Environment Filter is implemented|High|2|18|Team Member 3
+Job Detail Page - Job Plans Tab|79|As a User, I want Dynamic Content Loading.|Dynamically load job plans based on filters|Dynamic Job Plans Loading is implemented|High|3|18|Team Member 1
+Job Detail Page - Job Plans Tab|80|As a User, I want Sorting.|Implement Sorting|Sorting Functionality is implemented|High|2|18|Team Member 2
+Job Detail Page - Job Plans Tab|81|As a User, I want Hyperlink Behavior.|Implement hyperlink on Job Plan name|Job Plan Hyperlink is implemented|High|1|19|Team Member 3
+Job Detail Page - Job Plans Tab|82|As a User, I want Search Functionality.|Implement Search Functionality|Working Search is implemented|High|2|19|Team Member 1
+Job Detail Page - Job Plans Tab|83|As a User, I want Environment Status Display.|Implement Color-coded environment status indicators|Environment Status Indicators are implemented|High|2|19|Team Member 2
+Job Detail Page - Run Statistics Tab|84|As a User, I want Dynamic Filters Section.|Implement filter bar with date pickers and environment dropdown|Filter Bar Component is implemented|High|2|19|Team Member 3
+Job Detail Page - Run Statistics Tab|85|As a User, I want Apply/Reset Functionality.|Implement Apply and Reset buttons for filters|Apply/Reset Functionality is implemented|High|2|20|Team Member 1
+Job Detail Page - Run Statistics Tab|86|As a User, I want Summary Tiles.|Display summary tiles for total runs, successful runs, failed runs, avg duration|Summary Tiles are displayed|High|2|20|Team Member 2
+Job Detail Page - Run Statistics Tab|87|As a User, I want Search Functionality.|Implement search functionality for Job Plan, Duration, Status|Search Functionality is implemented|High|2|20|Team Member 3
+Job Detail Page - Run Statistics Tab|88|As a User, I want Data Table.|Display job run data in tabular format|Run Statistics Table is displayed|High|3|20|Team Member 1
+Job Detail Page - Run Statistics Tab|89|As a User, I want SLA-Based Duration Highlighting.|Highlight duration values based on SLA|SLA Highlighting is implemented|High|3|21|Team Member 2
+Job Detail Page - Incidents Tab|90|As a User, I want Header Section.|Implement Summary tiles for Total, Last 7 Days, and This Month|Summary Tiles are implemented|High|2|21|Team Member 3
+Job Detail Page - Incidents Tab|91|As a User, I want Filters Section.|Implement date pickers and environment dropdown filters|Filter Section is implemented|High|2|21|Team Member 1
+Job Detail Page - Incidents Tab|92|As a User, I want Search Functionality.|Implement search functionality across columns|Search Functionality is implemented|High|2|21|Team Member 2
+Job Detail Page - Incidents Tab|93|As a User, I want Data Table.|Display incident data in tabular format|Incident Data Table is displayed|High|3|22|Team Member 3
+Job Detail Page - Incidents Tab|94|As a User, I want Incident Number Hyperlinking.|Implement hyperlink to ServiceNow incident page|Incident Number Hyperlink is implemented|High|1|22|Team Member 1
+Job Detail Page - Incidents Tab|95|As a User, I want Status Badge UI Behavior.|Implement color-coded status badges|Status Badges are implemented|High|2|22|Team Member 2
+Job Detail Page - Incidents Tab|96|As a User, I want Incident Details Popup Trigger.|Click on "Eye" icon to show Incident Details Popup|Popup Trigger is implemented|High|1|22|Team Member 3
+Job Detail Page - Incidents Tab|97|As a User, I want Incident Details Popup.|Incident Details Popup Implementation|Incident Details Popup is implemented|High|3|23|Team Member 1
+Job Detail Page - Change Requests Tab|98|As a User, I want Filters|Implement date range and environment filters|Change Request Filters are implemented|High|2|23|Team Member 2
+Job Detail Page - Change Requests Tab|99|As a User, I want Search|Implement search functionality across relevant columns|Change Request Search is implemented|High|2|23|Team Member 3
+Job Detail Page - Change Requests Tab|100|As a User, I want Data Table|Display change request data in tabular format|Change Request Table is displayed|High|3|23|Team Member 1
+Job Detail Page - Change Requests Tab|101|As a User, I want Hyperlink Behavior|Implement hyperlink to Change Request on ServiceNow (if API available)|Change Request Hyperlink is implemented|High|1|24|Team Member 2
+Job Detail Page - Change Requests Tab|102|As a User, I want Status Indicator|Functionality to color code Change Request status|Status Indicator on Change Request is implemented|High|2|24|Team Member 3
+Job Plan Detail Page|103|As a User, I want Header Section|Implement Job Plan Title, Environment, Last Run Status, Last Modified Date|Header Section is implemented|High|2|24|Team Member 1
+Job Plan Detail Page|104|As a User, I want Job Plan Overview|Implement Description|Job Plan Description is implemented|High|3|24|Team Member 2
+Job Plan Detail Page|105|As a User, I want Tab Behavior|Implement Jobs Tab as Default|Jobs Tab as Default is implemented|High|1|25|Team Member 3
+Job Plan Detail Page|106|As a User, I want Dynamic Tab Navigation|Implement Dynamic Tab Navigation|Dynamic Tab Navigation is implemented|High|2|25|Team Member 1
+Job Plan Detail Page - Jobs Tab|107|As a User, I want Filter Section|Implement Filter Section with Environment Dropdown|Filter Section is implemented|High|2|25|Team Member 2
+Job Plan Detail Page - Jobs Tab|108|As a User, I want Search Bar|Implement Search Bar with Job Name, Description|Search Bar is implemented|High|2|25|Team Member 3
+Job Plan Detail Page - Jobs Tab|109|As a User, I want Job List Table|Implement Job List Table with required columns|Job List Table is implemented|High|3|26|Team Member 1
+Job Plan Detail Page - Jobs Tab|110|As a User, I want Hyperlink Navigation|Job Name hyperlinks to Job Detail Page|Job Detail Page Hyperlink is implemented|High|1|26|Team Member 2
+Job Plan Detail Page - Jobs Tab|111|As a User, I want Filtering|Environment dropdown filter updates Job List Table|Dynamic Filtered Job List is implemented|High|2|26|Team Member 3
+Job Plan Detail Page - Jobs Tab|112|As a User, I want Search|Search functionality filters Job List Table by Job Name or Description|Dynamic Search Results are implemented|High|2|26|Team Member 1
+Job Plan Detail Page - Jobs Tab|113|As a User, I want Sorting|Enable sorting on Job Name, Description and Last Modified Date|Sorting Functionality is implemented|High|3|27|Team Member 2
+Job Plan Detail Page - Run Statistics Tab|114|As a User, I want Summary Section|Display Total Runs, Success Runs, Failed Runs and Avg. Duration|Summary Section is implemented|High|2|27|Team Member 3
+Job Plan Detail Page - Run Statistics Tab|115|As a User, I want Filters Section|Implement Start Date/End Date and Environment filters|Date & Environment Filters are implemented|High|2|27|Team Member 1
+Job Plan Detail Page - Run Statistics Tab|116|As a User, I want Search Bar|Implement Search Bar with Job Name, Job Plan, Type, Environment or Status|Search Functionality is implemented|High|2|27|Team Member 2
+Job Plan Detail Page - Run Statistics Tab|117|As a User, I want Run Statistics Table|Display Job/Job Plan, Type, Planned Start Time, Actual Start Time, End Time, Duration, Environment, Status|Run Statistics Table is implemented|High|3|28|Team Member 3
+Job Plan Detail Page - Run Statistics Tab|118|As a User, I want Dynamic Update|Dynamic data updates without Page Reload|Dynamic Data Loading is implemented|High|3|28|Team Member 1
+Job Plan Detail Page - Run Statistics Tab|119|As a User, I want Sorting & Filtering|Functionality to Sort & Filter|Sorting & Filtering Functionality is implemented|High|3|28|Team Member 2
+Job Plan Detail Page - Run Statistics Tab|120|As a User, I want Color Indicators|Display Color Indicators to show SLA Breach|SLA Breach Visualization is implemented|High|3|28|Team Member 3
+Job Plan Detail Page - Incidents Tab|121|As a User, I want Summary Section|Display Total, Last 7 Day's and This Month Incidents|Incidents Summary Section is implemented|High|2|29|Team Member 1
+Job Plan Detail Page - Incidents Tab|122|As a User, I want Filters|Start Date / End Date, Environment Filters implementation|Incidents Filters are implemented|High|2|29|Team Member 2
+Job Plan Detail Page - Incidents Tab|123|As a User, I want Search Bar|Ability to search Incidents|Incidents Search is implemented|High|2|29|Team Member 3
+Job Plan Detail Page - Incidents Tab|124|As a User, I want Incident Table|Functionality to display all Incidents|Incidents Table is implemented|High|3|29|Team Member 1
+Job Plan Detail Page - Incidents Tab|125|As a User, I want Hyperlink Behavior|Functionality to link Incident to ServiceNow or Popup|Incidents Hyperlink Functionality is implemented|High|1|30|Team Member 2
+Job Plan Detail Page - Incidents Tab|126|As a User, I want Status Indicator|Functionality to color code Incident status|Status Indicator on Incident is implemented|High|2|30|Team Member 3
+Job Plan Detail Page - Incidents Tab|127|As a User, I want Incident Details Popup|Implement Incident Details Popup|Incident Details Popup is implemented|High|3|30|Team Member 1
+Job Plan Detail Page - Incidents Tab|128|As a User, I want Status Badge UI Behavior|Implement Color-coded status badges|Status Badges are implemented|High|2|30|Team Member 2
+Job Plan Detail Page - Change Request Tab|129|As a User, I want Summary Section|Implement Summary tiles for Total, Open, Closed Change Requests|Summary Tiles are implemented|High|2|31|Team Member 3
+Job Plan Detail Page - Change Request Tab|130|As a User, I want Filters|Implement date range and environment filters|Change Request Filters are implemented|High|2|31|Team Member 1
+Job Plan Detail Page - Change Request Tab|131|As a User, I want Search Bar|Ability to search Change Requests|Change Request Search is implemented|High|2|31|Team Member 2
+Job Plan Detail Page - Change Request Tab|132|As a User, I want Change Request Table|Functionality to display all Change Request|Change Request Table is implemented|High|3|31|Team Member 3
+Job Plan Detail Page - Change Request Tab|133|As a User, I want Hyperlink Behavior|Functionality to link Change Request to ServiceNow or Popup|Change Request Hyperlink Functionality is implemented|High|1|32|Team Member 1
+Job Plan Detail Page - Change Request Tab|134|As a User, I want Status Indicator|Functionality to color code Change Request status|Status Indicator on Change Request is implemented|High|2|32|Team Member 2
+Admin Module|135|As an administrator, I want to manage users so that I can control access to the system.|Develop UI for user management|User Management UI is created.|High|3|32|Team Member 3
+Admin Module|136|As an administrator, I want to manage users so that I can control access to the system.|Implement backend logic for user management (create, edit, delete)|User Management Functionality is implemented.|High|3|32|Team Member 1
+Admin Module|137|As an administrator, I want to manage roles so that I can control access to the system.|Develop UI for role management|Role Management UI is created.|High|3|33|Team Member 2
+Admin Module|138|As an administrator, I want to manage roles so that I can control access to the system.|Implement backend logic for role management (create, edit, delete)|Role Management Functionality is implemented.|High|3|33|Team Member 3
+Admin Module|139|As an administrator, I want to manage reports so that I can customize the reports.|Develop UI for report management|Report Management UI is created.|High|3|33|Team Member 1
+Admin Module|140|As an administrator, I want to manage reports so that I can customize the reports.|Implement backend logic for report management|Report Management Functionality is implemented.|High|3|33|Team Member 2
+Admin Module|141|As an administrator, I want to manage support so that I can track user issues.|Develop UI for support management|Support Management UI is created.|High|3|34|Team Member 3
+Admin Module|142|As an administrator, I want to manage support so that I can track user issues.|Implement backend logic for support management|Support Management Functionality is implemented.|High|3|34|Team Member 1
+Templates Module|143|As a support agent, I want templates with pre-defined Jobs, Job Plans, Change Requests, and Incidents|Implement the screen to create Templates|Screen for Template creation is implemented|High|3|34|Team Member 2
+Templates Module|144|As a support agent, I want templates with pre-defined Jobs, Job Plans, Change Requests, and Incidents|Implement API's to be called in the front end for Template creation|API's to support the Template creation. are implemented|High|3|34|Team Member 3
+Reporting|145|As a user, I want to see Power BI reports so that I can analyze data.|Embed Power BI reports in the application|Embedded Power BI Reports are displayed.|High|2|35|Team Member 1
+Reporting|146|As a user, I want the Power BI data to be up-to-date so that I can see the latest information.|Configure data refresh schedule for Power BI reports|Power BI Data Refresh is configured.|High|2|35|Team Member 2
+Testing|147|As a developer, I want to write unit tests so that I can ensure the code is working correctly.|Write and execute unit tests for all modules|Unit Test Results are documented.|High|3|35|Team Member 3
+Testing|148|As a tester, I want to perform integration testing so that I can ensure the modules are working together correctly.|Perform integration testing between different modules|Integration Test Results are documented.|High|3|35|Team Member 1
+Testing|149|As a user, I want to participate in user acceptance testing (UAT) so that I can ensure the application meets my needs.|Conduct UAT with end-users|UAT Sign-off is obtained.|High|2|36|Team Member 2
+Deployment|150|As a release manager, I want to prepare a deployment package so that I can deploy the application.|Prepare Deployment Package|Deployment Package is created.|High|2|36|Team Member 3
+Deployment|151|As a release manager, I want to deploy the application to the staging environment so that I can test it.|Deploy to Staging Environment|Staging Environment Deployment is successful.|High|3|36|Team Member 1
+Deployment|152|As a tester, I want to conduct final testing on the staging environment so that I can ensure the application is ready for production.|Conduct Final Testing|Final Test Results are documented.|High|3|37|Team Member 2
+Documentation|153|As a technical writer, I want to develop a user manual so that users can learn how to use the application.|Develop User Manual|User Manual is created.|High|3|37|Team Member 3
+Documentation|154|As a technical writer, I want to develop API documentation so that developers can integrate with the application.|Develop API Documentation|API Documentation is created.|High|3|37|Team Member 1
+Documentation|155|As a release manager, I want to create release notes so that users can see what has changed in each release.|Create Release Notes|Release Notes are created for each release.|High|2|38|Team Member 2
+Training|156|As a trainer, I want to conduct user training sessions so that users can learn how to use the application.|Conduct User Training|Training Materials are used and trainees participate.|High|3|38|Team Member 3
+Training|157|As a trainer, I want to prepare training materials so that users can learn how to use the application.|Prepare Training Materials|Trained Users successfully use training materials|High|3|38|Team Member 1
+Project Closure|158|As a project manager, I want to conduct a final project review so that we can assess the project's success.|Final Project Review|Project Closure Report is created.|High|2|39|Team Member 2
+Project Closure|159|As a project manager, I want to hand over all project documentation to the client so that they have all the information they need.|Documentation Handover|Handover Documentation is complete.|High|2|39|Team Member 3
+```

@@ -1,0 +1,769 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Management System</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout */
+    #container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      width: 250px;
+      background-color: #343a40;
+      color: white;
+      padding: 20px;
+      overflow-y: auto;
+      transition: width 0.3s ease;
+    }
+
+    #sidebar.collapsed {
+      width: 60px;
+    }
+
+    #sidebar h2 {
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #sidebar li {
+      padding: 10px;
+      border-bottom: 1px solid #555;
+    }
+
+    #sidebar li:last-child {
+      border-bottom: none;
+    }
+
+    #sidebar a {
+      color: white;
+      display: block;
+      padding: 5px 0;
+    }
+
+    #sidebar a:hover {
+      background-color: #495057;
+      text-decoration: none;
+    }
+
+    #sidebar .active {
+      background-color: #007bff;
+      color: white;
+    }
+
+    /* Content */
+    #content {
+      flex: 1;
+      padding: 20px;
+      background-color: #fff;
+    }
+
+    section {
+      display: none;
+      padding: 20px;
+    }
+
+    section:target {
+      display: block;
+    }
+
+    /* Components */
+    .card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    /* Dashboard Styles */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .dashboard-item {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Utility Classes */
+    .mt-2 {
+      margin-top: 16px;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      #container {
+        flex-direction: column;
+      }
+
+      #sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+        overflow: visible;
+      }
+
+      #sidebar.collapsed {
+          width: 100%; /* Expand sidebar on small screens when "collapsed" */
+      }
+
+      #content {
+        padding: 10px;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  /* Collapsible Sidebar Button */
+    #collapse-btn {
+      background-color: transparent;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      margin-bottom: 15px;
+      padding: 5px;
+      display: block; /* Make sure it's visible */
+    }
+
+  #collapse-btn:focus {
+    outline: none;
+  }
+
+
+  /* Modal Styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+    /* Active Menu Item Highlight */
+    #sidebar a.active {
+        background-color: #0056b3;
+        font-weight: bold;
+    }
+
+  /* Autocomplete Styles */
+    .autocomplete {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      border-bottom: none;
+      border-top: none;
+      z-index: 99;
+      /*position the autocomplete items to be the same width as the container:*/
+      top: 100%;
+      left: 0;
+      right: 0;
+    }
+
+    .autocomplete-items div {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #fff;
+      border-bottom: 1px solid #d4d4d4;
+    }
+
+    .autocomplete-items div:hover {
+      /*when hovering an item:*/
+      background-color: #e9e9e9;
+    }
+
+    .autocomplete-active {
+      /*when navigating through the items using the arrow keys:*/
+      background-color: DodgerBlue !important;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <aside id="sidebar">
+      <button id="collapse-btn">☰</button>
+      <h2>Job Management</h2>
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#subject-areas">Subject Areas</a></li>
+        <li><a href="#jobs">Jobs</a></li>
+        <li><a href="#change-requests">Change Requests</a></li>
+        <li><a href="#service-now">ServiceNow</a></li>
+        <li><a href="#reports">Reports</a></li>
+        <li><a href="#settings">Settings</a></li>
+      </ul>
+    </aside>
+
+    <main id="content">
+
+      <section id="home">
+        <h2>Home</h2>
+
+        <div class="card">
+          <h3>Search Job</h3>
+          <div class="autocomplete">
+            <input type="text" id="job-search" placeholder="Search by job name, ID, or subject area">
+          </div>
+          <button class="mt-2">Search</button>
+        </div>
+
+        <div class="card">
+          <h3>Subject Area List</h3>
+          <ul>
+            <li><a href="#">Finance Jobs</a></li>
+            <li><a href="#">Technology Jobs</a></li>
+            <li><a href="#">HR Jobs</a></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Recent Incidents</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Incident ID</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>INC001</td>
+                <td>Database connection failed</td>
+                <td>Open</td>
+              </tr>
+              <tr>
+                <td>INC002</td>
+                <td>Application slow response</td>
+                <td>In Progress</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Change Requests</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>CR ID</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CR001</td>
+                <td>Update server configuration</td>
+                <td>Approved</td>
+              </tr>
+              <tr>
+                <td>CR002</td>
+                <td>Deploy new version</td>
+                <td>Pending</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Rally Tickets</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>RA-123</td>
+                <td>Implement new feature</td>
+                <td>In Progress</td>
+              </tr>
+              <tr>
+                <td>RA-456</td>
+                <td>Fix bug in module X</td>
+                <td>Resolved</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="dashboard">
+        <h2>Dashboard</h2>
+        <div class="dashboard-grid">
+          <div class="dashboard-item">
+            <h3>System Health</h3>
+            <p>Status: Operational</p>
+          </div>
+          <div class="dashboard-item">
+            <h3>Alerts</h3>
+            <p>No critical alerts</p>
+          </div>
+          <div class="dashboard-item">
+            <h3>Key Metrics</h3>
+            <p>Job Success Rate: 98%</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="subject-areas">
+        <h2>Subject Areas</h2>
+        <div class="card">
+          <table>
+            <thead>
+              <tr>
+                <th>Subject Area</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Finance</td>
+                <td>Jobs related to financial operations</td>
+                <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+              </tr>
+              <tr>
+                <td>Technology</td>
+                <td>Jobs related to software development</td>
+                <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <button onclick="document.getElementById('subjectAreaModal').style.display='block'">Add Subject Area</button>
+
+          <div id="subjectAreaModal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="document.getElementById('subjectAreaModal').style.display='none'">&times;</span>
+              <form>
+                <div class="form-group">
+                  <label for="subjectAreaName">Subject Area Name:</label>
+                  <input type="text" id="subjectAreaName" name="subjectAreaName">
+                </div>
+                <div class="form-group">
+                  <label for="subjectAreaDescription">Description:</label>
+                  <textarea id="subjectAreaDescription" name="subjectAreaDescription"></textarea>
+                </div>
+                <button type="submit">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="jobs">
+        <h2>Jobs</h2>
+        <div class="card">
+          <div class="form-group">
+            <label for="job-filter">Filter:</label>
+            <select id="job-filter">
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Job ID</th>
+                <th>Name</th>
+                <th>Subject Area</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>JOB001</td>
+                <td>Daily Sales Report</td>
+                <td>Finance</td>
+                <td>Active</td>
+              </tr>
+              <tr>
+                <td>JOB002</td>
+                <td>Weekly Backup</td>
+                <td>Technology</td>
+                <td>Active</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="change-requests">
+        <h2>Change Requests</h2>
+        <div class="card">
+          <table>
+            <thead>
+              <tr>
+                <th>CR ID</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CR003</td>
+                <td>Upgrade Database Server</td>
+                <td>Pending</td>
+                <td><a href="#">View</a> | <a href="#">Approve</a></td>
+              </tr>
+              <tr>
+                <td>CR004</td>
+                <td>Implement New Security Patch</td>
+                <td>In Progress</td>
+                <td><a href="#">View</a> | <a href="#">Reject</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="service-now">
+        <h2>ServiceNow</h2>
+        <div class="card">
+          <p>Embedded ServiceNow View</p>
+          <!-- Placeholder for embedded ServiceNow content -->
+        </div>
+      </section>
+
+      <section id="reports">
+        <h2>Reports</h2>
+        <div class="card">
+          <p>Embedded Power BI Reports</p>
+          <!-- Placeholder for embedded Power BI reports -->
+        </div>
+      </section>
+
+      <section id="settings">
+        <h2>Settings</h2>
+        <div class="card">
+          <h3>User Management</h3>
+          <p><a href="#">Manage Users</a></p>
+        </div>
+        <div class="card">
+          <h3>Role Management</h3>
+          <p><a href="#">Manage Roles</a></p>
+        </div>
+        <div class="card">
+          <h3>Report Management</h3>
+          <p><a href="#">Manage Reports</a></p>
+        </div>
+        <div class="card">
+          <h3>Support Templates</h3>
+          <p><a href="#">Manage Support Templates</a></p>
+        </div>
+      </section>
+
+      <section id="job-detail">
+        <h2>Job Detail</h2>
+        <div class="card">
+            <h3>Job Information</h3>
+            <p><strong>Job Name:</strong> Sample Job</p>
+            <p><strong>Description:</strong> A sample job for demonstration purposes.</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Owner:</strong> John Doe</p>
+            <p><strong>Schedule:</strong> Daily at 00:00</p>
+        </div>
+        <div class="card">
+            <h3>Job Support Instructions</h3>
+            <p>Follow these instructions to troubleshoot common issues...</p>
+        </div>
+        <div class="card">
+            <h3>Error Logs</h3>
+            <p>Last error: No errors found.</p>
+        </div>
+        <div class="card">
+            <h3>Associated Incidents</h3>
+            <p>No incidents associated.</p>
+        </div>
+        <div class="card">
+            <h3>Change Requests</h3>
+            <p>No change requests associated.</p>
+        </div>
+        <div class="card">
+            <h3>Job Schedule</h3>
+            <p><strong>Next Run:</strong> 2024-01-02 00:00</p>
+            <p><strong>Last Run:</strong> 2024-01-01 00:00</p>
+            <p><strong>Frequency:</strong> Daily</p>
+            <p><strong>Timing:</strong> At 00:00</p>
+        </div>
+        <div class="card">
+            <h3>Job Run Stats</h3>
+            <p><strong>Success Rate:</strong> 99%</p>
+            <p><strong>Failure Rate:</strong> 1%</p>
+            <p><strong>Average Processing Time:</strong> 5 minutes</p>
+        </div>
+    </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Sidebar Collapse Functionality
+    const collapseBtn = document.getElementById('collapse-btn');
+    const sidebar = document.getElementById('sidebar');
+
+    collapseBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    // Autocomplete Functionality
+    function autocomplete(inp, arr) {
+      /*the autocomplete function takes two arguments,
+      the text field element and an array of possible autocompleted values:*/
+      var currentFocus;
+      /*execute a function when someone writes in the text field:*/
+      inp.addEventListener("input", function(e) {
+          var a, b, i, val = this.value;
+          /*close any already open lists of autocompleted values*/
+          closeAllLists();
+          if (!val) { return false;}
+          currentFocus = -1;
+          /*create a DIV element that will contain the items (values):*/
+          a = document.createElement("DIV");
+          a.setAttribute("id", this.id + "autocomplete-list");
+          a.setAttribute("class", "autocomplete-items");
+          /*append the DIV element as a child of the autocomplete container:*/
+          this.parentNode.appendChild(a);
+          /*for each item in the array...*/
+          for (i = 0; i < arr.length; i++) {
+            /*check if the item starts with the same letters as the text field value:*/
+            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+              /*create a DIV element for each matching element:*/
+              b = document.createElement("DIV");
+              /*make the matching letters bold:*/
+              b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+              b.innerHTML += arr[i].substr(val.length);
+              /*insert a input field that will hold the current array item's value:*/
+              b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+              /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+                  /*insert the value for the autocomplete text field:*/
+                  inp.value = this.getElementsByTagName("input")[0].value;
+                  /*close the list of autocompleted values,
+                  (or any other open lists of autocompleted values:*/
+                  closeAllLists();
+              });
+              a.appendChild(b);
+            }
+          }
+      });
+      /*execute a function presses a key on the keyboard:*/
+      inp.addEventListener("keydown", function(e) {
+          var x = document.getElementById(this.id + "autocomplete-list");
+          if (x) x = x.getElementsByTagName("div");
+          if (e.keyCode == 40) {
+            /*If the arrow DOWN key is pressed,
+            increase the currentFocus variable:*/
+            currentFocus++;
+            /*and and make the current item more visible:*/
+            addActive(x);
+          } else if (e.keyCode == 38) { //up
+            /*If the arrow UP key is pressed,
+            decrease the currentFocus variable:*/
+            currentFocus--;
+            /*and and make the current item more visible:*/
+            addActive(x);
+          } else if (e.keyCode == 13) {
+            /*If the ENTER key is pressed, prevent the form from being submitted,*/
+            e.preventDefault();
+            if (currentFocus > -1) {
+              /*and simulate a click on the "active" item:*/
+              if (x) x[currentFocus].click();
+            }
+          }
+      });
+      function addActive(x) {
+        /*a function to classify an item as "active":*/
+        if (!x) return false;
+        /*start by removing the "active" class on all items:*/
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        /*add class "autocomplete-active":*/
+        x[currentFocus].classList.add("autocomplete-active");
+      }
+      function removeActive(x) {
+        /*a function to remove the "active" class from all autocomplete items:*/
+        for (var i = 0; i < x.length; i++) {
+          x[i].classList.remove("autocomplete-active");
+        }
+      }
+      function closeAllLists(elmnt) {
+        /*close all autocomplete lists in the document,
+        except the one passed as an argument:*/
+        var x = document.getElementsByClassName("autocomplete-items");
+        for (var i = 0; i < x.length; i++) {
+          if (elmnt != x[i] && elmnt != inp) {
+            x[i].parentNode.removeChild(x[i]);
+          }
+        }
+      }
+      /*execute a function when someone clicks in the document:*/
+      document.addEventListener("click", function (e) {
+          closeAllLists(e.target);
+      });
+    }
+
+    /*An array containing all the job names/IDs in the world:*/
+    var jobs = ["JOB001", "JOB002", "Finance Jobs", "Technology Jobs", "HR Jobs"];
+
+    /*initiate the autocomplete function on the "job-search" element, and pass along the jobs array as possible autocomplete values:*/
+    autocomplete(document.getElementById("job-search"), jobs);
+
+    // Keep active menu item highlighted on page load/refresh
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentHash = window.location.hash;
+      if (currentHash) {
+        const activeLink = document.querySelector(`#sidebar a[href="${currentHash}"]`);
+        if (activeLink) {
+          document.querySelectorAll('#sidebar a').forEach(link => link.classList.remove('active')); // Remove all active classes
+          activeLink.classList.add('active'); // Set the current link as active
+        }
+      } else {
+        document.querySelector('#sidebar a[href="#home"]').classList.add('active'); // Default to Home if no hash
+      }
+
+      // Update active link on hash change
+      window.addEventListener('hashchange', function() {
+        document.querySelectorAll('#sidebar a').forEach(link => link.classList.remove('active')); // Remove all active classes
+        const newActiveLink = document.querySelector(`#sidebar a[href="${window.location.hash}"]`);
+        if (newActiveLink) {
+          newActiveLink.classList.add('active');
+        } else {
+            document.querySelector('#sidebar a[href="#home"]').classList.add('active'); // Default to Home if no hash
+        }
+      });
+    });
+
+
+  </script>
+</body>
+</html>
+```

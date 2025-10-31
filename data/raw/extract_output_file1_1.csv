@@ -1,0 +1,1354 @@
+2.2 SCOPE
+• Development of a secure, role-based web application. 
+• Integration with external platforms to pull job data, incidents, change requests, and run statistics. 
+• User-friendly dashboards and reporting mechanisms using embedded Power BI. 
+• Centralized support documentation repository.
+2.3 OUT OF SCOPE
+• Bi-directional updates to external systems. 
+• Mobile app development. 
+• Infrastructure provisioning and CI/CD setup. 
+• Production deployments.
+3. FUNCTIONAL MODULES
+3.1 MENU STRUCTURE
+Menu Item 
+Submenus/Features 
+Home 
+Search Job, Subject Area List, Recent Incidents, Change Requests 
+Dashboard 
+System health overview, alerts, and key metrics 
+Job Scheduler 
+View all jobs with filters, sorting, and search 
+Change Requests 
+List, view, and manage change requests 
+Incidents 
+View incidents and tickets from ServiceNow 
+Reports 
+Embedded Power BI reports 
+Admin 
+User Management, Role Management, Report Management, Support 
+Templates
+4. SCREENS
+4.1 JOB SCHEDULER
+I. PURPOSE
+The Job Scheduler screen provides a user interface to view and monitor the execution of scheduled jobs 
+within the UC4 automation system. It allows users to filter, search, sort, and navigate through job details, 
+as well as access individual job and job plan pages for deeper insight.
+II. SCOPE
+This screen is primarily designed for operations and support users. It includes job listing functionality with 
+filtering, sorting, hyperlinking, and pagination. It supports only viewing operations, and no job creation or 
+execution is handled on this screen.
+III. FUNCTIONAL OVERVIEW
+A. Navigation and Layout
+• Accessible from the left navigation menu under “Job Scheduler”. 
+• Includes a filter bar, search bar, and job listing table. 
+• 
+Page header displays the title: Job Scheduler.
+7
+DIG-ITS FRD
+IV. FUNCTIONAL REQUIREMENTS
+A. Filter Bar Functionality
+i. Date Range Picker
+• Includes Start Date and End Date fields. 
+• Default behavior on page load:
+o Start Date = Today - 30 days 
+o End Date = Today 
+• Filters are auto-applied with default values on page load.
+ii. Environment Dropdown
+• Dropdown labeled “Environment” with options:
+o dev 
+o cert 
+o prod (default selection) 
+• Filters are auto-applied on load with the default environment.
+iii. Apply and Reset Buttons
+• Apply button applies current filter and search criteria. 
+• Reset button resets all filters to default (Prod, Last 30 Days).
+B. Search Functionality
+i. Global Search Bar
+• Search input placed at the top right of the filter bar. 
+• Searches across:
+o Job Name 
+o Job Plan
+ii. Job List Search
+• Works on all visible columns except “Last Run”. 
+• Allows inline filtering of job list.
+C. Job Listing Table
+i. Pagination
+• Default: 10 records per page. 
+• Navigation controls allow movement between pages.
+8
+DIG-ITS FRD
+ii. Sorting
+• Sorting enabled on all columns. 
+• Default sort: Last Run in descending order.
+iii. Columns Displayed
+Following five columns are shown:
+Column Name 
+Description 
+Job Name 
+Name of the job. Hyperlinked to open the Job Page. 
+Job Plan 
+Associated job plan name. Hyperlinked to open the Job Plan Page. 
+Job Type 
+Type of job. 
+Description 
+Summary of what the job does. Limited to 2 lines with ellipsis (…) if overflow occurs. Word 
+wrapping enabled. 
+Environment 
+Displays the job environment (dev/cert/prod).
+Last Run 
+Timestamp of last execution. Sorted descending by default.
+iv. Data Uniqueness
+• The job list should present unique records based on the combination of Job Name and
+Job Plan.
+V. HYPERLINK BEHAVIOR
+• Job Name: Opens the corresponding Job Detail Page. 
+• Job Plan: Opens the corresponding Job Plan Detail Page.
+VI. UI/UX REQUIREMENTS
+• Description field must be wrapped and truncated after two lines with ellipsis (...) for overflow. 
+• Responsive layout must be supported for various screen sizes. 
+• Consistent styling with the overall application theme (buttons, fonts, colors, etc.).
+VII. NON-FUNCTIONAL REQUIREMENTS
+• Backend filtering should be optimized for performance to handle large job datasets. 
+• API queries (if any) must support filter, sort, and pagination parameters. 
+• Security and access control must ensure only authorized users can view job data.
+9
+DIG-ITS FRD
+VIII. OUT OF SCOPE (FUTURE ENHANCEMENTS)
+• Export functionality (CSV, Excel). 
+• Real-time job monitoring and live status updates. 
+• Job execution or modification from the UI.
+10
+DIG-ITS FRD
+4.1.1 JOB DETAIL PAGE
+I. PURPOSE
+The Job Detail Page provides an in-depth view of an individual job. It is accessible by clicking the Job Name 
+hyperlink on the Job Scheduler screen. This page allows users to view metadata about the job, monitor its 
+performance, review past execution data, troubleshoot issues, and track changes made to the job.
+II. NAVIGATION
+• Accessible from: Job Scheduler → [Click on Job Name] 
+• Opens the Job Detail Page for the selected job. 
+• Default tab on load: Support Instructions Tab
+11
+DIG-ITS FRD
+III. PAGE LAYOUT
+A. Header Section
+The header contains the full technical job name as the page title (e.g., 
+TABLEAU.JOBS0100.POWERSHELL).
+B. Job Metadata Section
+This section displays structured job details:
+Field 
+Description 
+Job Name 
+Friendly display name of the job (e.g., Sales Metrics Processing) 
+Job Type 
+UC4 Job ID or identifier (e.g., SM-308475) 
+Environment 
+Available environments listed: Dev, QA, Prod (shown as toggles or labels) 
+Workflow 
+Textual field currently. Hyperlinked field pointing to the associated workflow 
+page on UC4 (if API is provided). 
+Last Run Status 
+Status of the most recent job execution (e.g., Success, Fail)
+IV. DESCRIPTION SECTION
+• Text area summarizing the job's functionality and behavior. 
+• Describes schedule details and the command being executed. 
+• Long descriptions should support word-wrapping and line breaks.
+V. TABS SECTION
+Available Tabs (Horizontal Menu)
+Tab Name 
+Functionality Overview 
+Support Instructions 
+Displays restart steps, SLA details, inputs/outputs. (Default tab) 
+Job Plans 
+Lists associated job plans, dependencies, or higher-level groupings 
+Run Stats 
+Displays job execution statistics over time 
+Incidents 
+Shows related incident records and status 
+Change Request 
+Tracks changes to the job configuration
+Tab navigation must not reload the page but instead update the content area dynamically.
+12
+DIG-ITS FRD
+VI. FUNCTIONAL REQUIREMENTS
+A. Default Tab Load
+• On initial load, the Support Instructions tab must be selected and displayed by default.
+B. Dynamic Content Loading
+• Each tab must load only its specific data when selected. 
+• No full page reload on tab switch.
+C. Hyperlink Behavior
+• Workflow Field: The workflow field should open the associated workflow page in the same tab
+(if the ServiceNow API is available; otherwise, this feature is out of scope). 
+• Documents: Any documents listed (e.g., Sales Metric Support Guide.pdf) should open in a new
+browser tab when clicked. Note: The behavior for opening documents in a new tab is still under 
+discussion and may be subject to change based on further requirements or technical 
+constraints.
+VII. UI/UX REQUIREMENTS
+• Clean, card-based layout for metadata and descriptions. 
+• Environment labels (Dev, QA, Prod) should be visually distinctive (e.g., color-coded based on if the
+job has been executed on the environment or not). 
+• Word wrapping must be applied to long descriptions and instructions. 
+• The layout should be responsive and display cleanly across desktops.
+13
+DIG-ITS FRD
+4.1.1.1 SUPPORT INSTRUCTIONS TAB
+I. PURPOSE
+The Support Instructions tab provides comprehensive operational guidance for executing, monitoring, and 
+troubleshooting a job. This includes restart procedures, SLA information, data input/output details, and 
+environment-specific exceptions.
+It ensures that support teams have all necessary information to manage job execution effectively, 
+particularly during incidents or failures.
+II. ACCESS AND DEFAULT BEHAVIOR
+• This tab is part of the Job Detail Page (4.1.1). 
+• Automatically selected and loaded by default when a job detail page is accessed. 
+• Displays job-specific support information in a structured, readable format.
+III. LAYOUT AND CONTENT SECTIONS
+The tab is visually split into well-defined blocks. Each section is formatted using headers and paragraph 
+content.
+A. SLA (Max Run Time)
+• Displayed in the top-right corner. 
+• Text format: SLA: Value from database
+14
+DIG-ITS FRD
+• Aligns horizontally with the section header for visual prominence.
+B. Restart Instructions
+• Title: Restart Instructions 
+• Describes manual or automated steps needed to restart the job if it fails. 
+• Displayed as a multi-line paragraph. 
+• Supports readable formatting (word-wrapped and spaced).
+C. Input Details
+• Title: Input Details 
+• Describes the source of data, including file names, formats, and origins. 
+• Can include bullet points or comma-separated formats.
+D. Output Details
+• Title: Output Details 
+• Describes what output the job generates (files, reports, database updates, etc.). 
+• May include locations or destinations.
+E. Support Notes
+• Title: Support Notes 
+• Any special instructions, additional guidelines, or reminders. 
+• Used for highlighting manual validations, upstream/downstream dependencies, etc.
+F. Exceptions for Non-Production Environments
+• Title: Exceptions for Non-Production Environments 
+• Explains environment-specific instructions, such as bypassing approval workflows or simplified
+restart steps.
+G. Schedule Frequency
+• Title: Schedule Frequency 
+• Describes the frequency at which the job is scheduled to run. E.g. Weekly, Monthly, Ad-hoc 
+• Should be displayed as a simple text.
+H. Linked Support Document
+• Label: Sales Metrics Support Guide.pdf 
+• Hyperlinked text at the bottom of the tab. 
+• On click:
+o Opens the document in a new browser tab. 
+o No download icon is shown. 
+• Link should be validated (file must exist and be accessible to authorized users).
+15
+DIG-ITS FRD
+Note: The behavior of hyperlinking and opening documents in a new tab is still under discussion 
+and may be subject to change based on further requirements or technical constraints.
+IV. FUNCTIONAL REQUIREMENTS SUMMARY
+Feature 
+Specification 
+Default Tab 
+Support Instructions shown by default on Job Detail Page load 
+SLA Display 
+Top-right aligned 
+Restart Instructions 
+Multi-line paragraph; shows job recovery steps 
+Input Details 
+File sources, formats, or dependencies listed clearly 
+Output Details 
+Output targets (e.g., files, DB updates)  
+Support Notes 
+Optional guidelines or caveats for support teams 
+Exceptions for Non-Prod 
+Shows simplified restart policies or notes for QA/Dev environments 
+PDF Link 
+Opens in new tab; no download icon 
+Word Wrapping 
+Enabled on all content for readability 
+Responsive Layout 
+All sections should align cleanly on desktop
+V. NON-FUNCTIONAL REQUIREMENTS
+• Must support secured access to linked documents (PDFs). 
+• 
+The document link should fail gracefully if missing (e.g., show “file not available”). 
+• 
+The layout must be keyboard and screen-reader accessible.
+16
+DIG-ITS FRD
+4.1.1.2 JOB PLANS TAB
+I. PURPOSE
+The Job Plan Tab displays a list of job plans that are available for viewing. It provides users with an 
+overview of job plan details, such as job plan names, descriptions, environments, and modification dates. 
+The tab allows users to filter, sort, and access further details of each job plan through dynamic interaction. 
+The user can click on any specific job plan to view its detailed information on a separate page.
+II. NAVIGATION
+• Accessible from:
+Job Scheduler → [Click on Job Plans Tab] 
+• Opens:
+The list of job plans is displayed in a table format with associated metadata. 
+• Tab Visibility:
+This tab is part of the horizontal tab navigation in the Job Detail Page (4.1.1).
+III. PAGE LAYOUT
+The Job Plan Tab is organized into a table format, displaying the following metadata columns for each job 
+plan. The layout should be clean, responsive, and visually structured for easy scanning of job plan data.
+A. Header Section
+• Tabs Navigation:
+Horizontal tabs at the top, including:
+o Support Instructions (Default tab) 
+o Job Plans (Selected tab) 
+o Run Statistics 
+o Incidents 
+o Change Requests 
+• Search Field:
+A search bar should be available at the top-right corner of the Job Plan table to allow users to 
+search job plans by Job Plan Name, Description, or Environment.
+17
+DIG-ITS FRD
+B. Job Plan Table
+The table will display the following columns:
+1. Job Plan
+a. The name of the job plan (e.g., WCR JOBP1000_GLOBAL_PC). 
+b. The name should be a clickable hyperlink that directs users to the job plan's detailed
+page. 
+2. Description
+a. A short description of the job plan (e.g., WCR Global Policy and claim processing). 
+3. Environment
+a. A list of the environments associated with the job plan, displayed with color codes.
+i. Green: Successfully executed. 
+ii. Red: Pending or in progress. 
+4. Last Modified Date
+a. The date and time when the job plan was last modified (e.g., 03-Mar-2025 00:50:10). 
+b. The date should be displayed in a readable, formatted way and should be sortable by
+clicking the column header. 
+5. Pagination
+a. The table should support pagination to display a limited number of job plans per page
+(e.g., 10 records per page). 
+b. Users should be able to navigate between pages using page numbers or previous/next
+buttons.
+C. Environment Filter
+A filter dropdown should be provided to allow users to filter job plans based on the environment 
+(e.g., All, Dev, Cert, Prod). This should dynamically update the displayed list based on the selected 
+environment.
+IV. FUNCTIONAL REQUIREMENTS
+A. Dynamic Content Loading
+• The job plans list must dynamically load based on the selected filters and search criteria. 
+• Changing filters or search criteria must update the job plan list without reloading the entire
+page.
+B. Sorting
+• Each column in the job plan table (Job Plan, Description, Environment, Last Modified Date)
+should be sortable by clicking on the column header. 
+• Sorting should be both ascending and descending.
+18
+DIG-ITS FRD
+C. Hyperlink Behavior
+• Clicking on the job plan name (under the "Job Plan" column) should open the Job Plan Detail
+Page in the same window/tab. 
+• The job plan name should be a hyperlink, clearly distinguishable by a different style (e.g.,
+underline or color).
+D. Search Functionality
+• Users should be able to search job plans by name, description, or environment using the search
+bar at the top-right. 
+• The search should be case-insensitive and support partial text matches.
+E. Environment Status Display
+• The Environment column will display color-coded status indicators:
+o Green: Successful execution in the environment. 
+o Red: Pending execution or processing.
+F. Pagination
+• The job plan list should be paginated, displaying a maximum of 10 job plans per page. 
+• Pagination controls (e.g., page numbers, "Next", "Previous") should be clearly visible and easy
+to use.
+G. Filtering by Environment
+• Users should be able to filter the job plans by the environment using a dropdown filter (e.g., All,
+Dev, Cert, Prod). 
+• The page should dynamically update the job plan list based on the selected environment.
+V. UI/UX REQUIREMENTS
+• Responsive Design:
+The layout should be responsive and adapt to various screen sizes. 
+• Table Design:
+The job plan table should have a clear, card-based layout with well-defined rows and columns. 
+ The environment status color-coding should be visually distinct to quickly convey the job status. 
+• Hover/Click Interactions:
+o The job plan name (under the Job Plan column) should be clearly indicated as a clickable
+element (e.g., hover effect, underline). 
+o Hovering over the environment status should show a tooltip or additional information (e.g.,
+"Execution successful in Dev environment").
+19
+DIG-ITS FRD
+• Search Box and Filters:
+The search field and environment filter should be easily accessible at the top of the page for quick 
+navigation.
+VI. NON-FUNCTIONAL REQUIREMENTS
+• Security:
+Users must be authorized to access job plan data, with access control implemented to restrict 
+visibility to authorized users only. 
+• Performance:
+The job plan list should load quickly, even when filtering by different environments or applying 
+search criteria. 
+• Error Handling:
+The system should handle errors gracefully, such as when no job plans match the search criteria or 
+filters, displaying a message like "No results found."
+20
+DIG-ITS FRD
+4.1.1.3 RUN STATISTICS TAB
+I. PURPOSE
+The Run Statistics tab provides users with a detailed breakdown of a job's execution history, helping to 
+analyze trends, identify failures, monitor SLA adherence, and improve operational oversight.
+II. TAB BEHAVIOR & DEFAULT LOAD
+• This is the third tab on the Job Detail Page. 
+• Data is loaded dynamically when this tab is selected. 
+• On initial load:
+o Start Date = Today - 30 days 
+o End Date = Today 
+o Environment = All environments (Dev, QA, Prod)
+III. HEADER AND CONTROLS
+A. Dynamic Filters Section
+A filter bar, consistent with the UC4 Jobs List Page, is displayed at the top of the tab with the following filters:
+Filter Name 
+Type 
+Default Value 
+Description 
+Start Date 
+Date Picker 
+Today - 30 days 
+Start of the filter date range 
+End Date 
+Date Picker 
+Today 
+End of the filter date range 
+Environmen
+Multi-select 
+All (pre-
+Allows filtering by environment: Dev, Cert, Prod
+21
+DIG-ITS FRD
+t 
+Dropdown 
+selected) 
+Apply 
+Button
+Button 
+- 
+Applies all selected filter values
+Reset 
+Button
+Button 
+- 
+Resets filters to default (last 30 days, all environments)
+Filters are not applied automatically on value change—users must click Apply.
+IV. SUMMARY TILES
+Once filters are applied, four summary tiles are displayed showing statistics for the filtered results:
+Tile Title 
+Description 
+Summary 
+Total number of job runs in selected date range and environments 
+Successful Runs 
+Count of successful runs 
+Failed Runs 
+Count of failed runs 
+Avg. Duration 
+Average duration (in minutes) of runs in filtered range
+• Summary tiles update dynamically when filters are changed. 
+• Each tile has a consistent design, with equal size and spacing.
+V. SEARCH FUNCTIONALITY
+Inline search input is enabled above or within the table for:
+Column Name 
+Searchable? 
+Behavior 
+Job Plan 
+Yes 
+Partial or full match 
+Duration 
+Yes 
+Numeric input; supports >, <, = 
+Status 
+Yes 
+Supports “Success” / “Fail”
+Search works in conjunction with filters and pagination.
+VI. DATA TABLE
+Displays the filtered list of job runs in tabular format:
+Column Name 
+Description 
+Job Plan 
+Job Plan of which the job is a part 
+Planned Start Time 
+Scheduled job start time 
+Actual Start Time 
+Actual time the job started execution 
+End Time 
+When the job finished 
+Duration 
+Total run time in minutes; SLA-based highlight applies 
+Environment 
+The environment where job was executed (Dev, Cert, Prod) 
+Status 
+Job result (Success / Fail); shown using color-coded badges
+22
+DIG-ITS FRD
+• Sorting is enabled on all columns. 
+• Default Sort: Actual Start Time in descending order. 
+• Pagination: 10 records per page (with controls to move through pages). 
+• Word wrap enabled where necessary (e.g., long Job Plan names).
+VII. SLA-BASED DURATION HIGHLIGHTING
+Each Duration value and Avg. Duration is compared to the SLA:
+Condition 
+Display
+Color 
+Duration/Avg. Duration < SLA 
+Green 
+Duration /Avg. Duration > SLA 
+Red
+• Applies to each individual run (row-level). 
+• Helps quickly identify runs that exceeded acceptable thresholds.
+VIII. UI/UX REQUIREMENTS
+Component 
+Requirement 
+Filter/Search Buttons 
+Uniform width, center-aligned labels 
+Summary Tiles 
+Aligned in a single row, same size, responsive on various screen sizes 
+Table Sorting 
+All columns sortable. 
+Status Badges 
+"Success" = Green; "Fail" = Red (pill-style badge) 
+Pagination 
+Visible below the table, supports previous/next and page numbers 
+Layout 
+Consistent with UC4 Jobs list page design
+IX. FUNCTIONAL REQUIREMENTS SUMMARY
+Feature 
+Specification 
+Header Style 
+Same as UC4 Jobs List Page (no fixed header) 
+Filters 
+Start Date, End Date, Environment 
+Default Filters on Load 
+Last 30 days, All environments 
+Search 
+Job Plan, Duration, Status 
+Summary Tiles 
+Summary, Successful Runs, Failed Runs, Avg. Duration 
+Sorting 
+All columns sortable. 
+Default Sort 
+Actual Start Time (Descending) 
+Pagination 
+10 rows per page 
+SLA-Based Duration Highlighting 
+Green < SLA; Red > SLA
+23
+DIG-ITS FRD
+X. NON-FUNCTIONAL REQUIREMENTS
+• Filters, search, and pagination should work with efficient backend APIs. 
+• 
+Job data must be fetched dynamically; avoid full page reloads. 
+• 
+Component styling and interaction must comply with accessibility standards.
+24
+DIG-ITS FRD
+4.1.1.4 INCIDENTS TAB
+I. PURPOSE
+The Incidents tab displays all incidents associated with the selected job. It provides job-specific operational 
+issue tracking and links to the incident system (e.g., ServiceNow) for further investigation and resolution 
+details.
+II. TAB BEHAVIOR & DATA SCOPE
+• This is the fourth tab on the Job Detail Page. 
+• On load, it fetches incident records related to the selected job. 
+• Shows incidents created within a specified date range and/or environment. 
+• By default, it loads data for the last 30 days and all environments.
+III. HEADER SECTION (SUMMARY TILES)
+Three summary tiles are displayed at the top of the tab to provide a quick view of incident volume:
+Tile Title 
+Description 
+Total Count 
+Total number of incidents linked to the job (all time or filtered) 
+Last 7 Day’s Count 
+Count of incidents created in the last 7 calendar days 
+This Month Count 
+Incidents created within the current calendar month
+• Tiles do not update dynamically when filters are applied.
+25
+DIG-ITS FRD
+IV. FILTERS SECTION
+A filter bar is displayed similar to the UC4 Jobs Page.
+Filter Name 
+Type 
+Default Value 
+Description 
+Start Date 
+Date Picker 
+Today - 30 days 
+Filters incidents created on or after this date 
+End Date 
+Date Picker 
+Today 
+Filters incidents created on or before this date 
+Environmen
+t
+Multi-select 
+Dropdown
+All 
+environments
+Filters incidents based on selected environment(s)
+Apply 
+Button
+Button 
+— 
+Applies selected filters
+Reset 
+Button
+Button 
+— 
+Resets filters to default (last 30 days, all environments)
+Filters are not auto-applied. User must click Apply to view filtered results.
+V. SEARCH FUNCTIONALITY
+A search box is provided at the top-right of the table.
+Supported Columns 
+Search Support 
+Notes 
+Incident No. 
+Yes 
+Partial or full match 
+Description 
+Yes 
+Keyword-based text search 
+Job Plan 
+Yes 
+Searchable job plan name 
+Environment 
+Yes 
+Searches exact match (e.g., Dev, QA, Prod) 
+Status 
+Yes 
+Accepts values like “Open”, “In Progress”
+VI. DATA TABLE (INCIDENT LIST)
+The filtered incident data is shown in tabular format with the following columns:
+Column Name 
+Description 
+Incident No. 
+Hyperlinked to open the ServiceNow incident in a new tab (if API is provided) 
+Description 
+Short incident summary 
+Job Plan 
+Job plan associated with the incident 
+Environment 
+The environment where the incident occurred (Dev, Cert, Prod) 
+Created At 
+Timestamp when the incident was logged 
+Status 
+Incident state – e.g., Open, In Progress, Resolved – shown as color badge 
+Action 
+Eye icon for viewing incident details on popup
+All columns are sortable (ascending / descending).
+Default sort is by Created At (Descending).
+26
+DIG-ITS FRD
+VII. INCIDENT NUMBER HYPERLINKING (SERVICENOW INTEGRATION)
+Feature 
+Description 
+Hyperlink on Incident No. 
+Each Incident No. links to a unique ServiceNow incident page 
+Link Behavior 
+Opens in new browser tab 
+Data Source 
+URLs will be fetched using ServiceNow API or provided format by client 
+Fallback 
+If API fails, disable hyperlink and show plain text
+The hyperlink format or mapping logic will be implemented once the ServiceNow API endpoint / base URL 
+pattern is shared by the client.
+VIII. STATUS BADGE UI BEHAVIOR
+Status 
+Badge Color 
+Open 
+Orange 
+In Progress 
+Blue 
+Resolved 
+Green
+• Use pill-style or rounded badges for consistency.
+IX. PAGINATION
+• Pagination is enabled below the table. 
+• Default: 10 records per page 
+• Includes previous / next buttons and page number indicators.
+X. UI/UX REQUIREMENTS
+Component 
+Requirement 
+Filter Controls 
+Match style and layout of UC4 Jobs page 
+Button Alignment 
+Apply and Reset buttons of equal width and center-aligned text 
+Status Badges 
+Consistent color coding for clarity 
+Column Sorting 
+Enabled on all columns except Action. 
+Table Responsiveness 
+Auto-fit to screen, scrollable on small resolution
+XI. FUNCTIONAL REQUIREMENTS SUMMARY
+Feature 
+Specification
+27
+DIG-ITS FRD
+Summary Tiles 
+Total, Last 7 Days, This Month 
+Filters 
+Start Date, End Date, Environment 
+Search 
+Supported on Incident No, Description, Job Plan, Environment, Status 
+Sortable Columns 
+All columns sortable. 
+Default Sort 
+Created At (Descending) 
+Incident No. Hyperlinking 
+Opens ServiceNow incident page in new tab (based on client API) 
+Status Badges 
+Color-coded based on status 
+Pagination 
+10 records per page
+XII. NON-FUNCTIONAL REQUIREMENTS
+• Backend APIs must support:
+o Filtering by date and environment 
+o Search queries across supported columns 
+o Pagination with metadata 
+• UI should be:
+o Responsive on standard resolutions 
+o Accessible with screen readers and keyboard navigation 
+• ServiceNow integration to be implemented post API link provision.
+28
+DIG-ITS FRD
+4.1.1.4.1 INCIDENT DETAILS POPUP
+29
+DIG-ITS FRD
+I. PURPOSE
+This popup provides detailed information on a specific incident linked to a UC4 Job. Users can view and, 
+depending on the incident's status, edit certain fields. This ensures proper documentation, tracking, and 
+resolution of job-related incidents through ServiceNow integration.
+II. TRIGGER & BEHAVIOR
+• Triggered from the Incidents tab by clicking the “View (eye)” icon in the Action column. 
+• Opens a centered modal popup overlaying the current screen. 
+• Modal includes a Close (X) icon in the top-right corner.
+30
+DIG-ITS FRD
+III. FIELDS & LAYOUT
+A. Field Overview
+All fields below are editable by default. However, if the incident's Status is Resolved, the fields 
+become read-only, and the Update button is hidden.
+Section 
+Field Name 
+Type 
+Editable? 
+Description 
+Header Info 
+Incident No 
+Hyperlinked 
+Text
+Always 
+(Hyperlinked)
+Opens ServiceNow incident in 
+new tab 
+ 
+Short 
+Description
+Text Input 
+Yes unless status is 
+Resolved
+Title of the incident
+Incident 
+Description
+Multiline Text 
+Yes unless status is 
+Resolved
+Detailed incident narrative
+Created At 
+DateTime 
+Picker
+Yes unless status is 
+Resolved
+Timestamp when incident was 
+created 
+ 
+Closed At 
+DateTime 
+Picker
+Yes unless status is 
+Resolved
+Timestamp when incident was 
+closed 
+Identification 
+Client/Enviro
+nment
+Text Input 
+Yes unless status is 
+Resolved
+Client impacted by the incident
+Object 
+Text Input 
+Yes unless status is 
+Resolved
+Affected object/component
+Job 
+Text Input 
+Yes unless status is 
+Resolved
+The associated job name
+Job Plan 
+Text Input 
+Yes unless status is 
+Resolved
+The associated job plan name
+Classification 
+Priority 
+Dropdown 
+Yes unless status is 
+Resolved
+Priority (e.g., P1, P2, P3)
+Impact 
+Dropdown 
+Yes unless status is 
+Resolved
+Impact level (Low, Medium, 
+High) 
+ 
+Urgency 
+Dropdown 
+Yes unless status is 
+Resolved
+Urgency level (Low, Medium, 
+High) 
+Assignment 
+Info
+Assignment 
+Group
+Dropdown 
+Yes unless status is 
+Resolved
+Team responsible
+Status 
+Dropdown 
+Yes unless status is 
+Resolved
+Open / In Progress / Resolved
+Assigned To 
+Dropdown or 
+Text
+Yes unless status is 
+Resolved
+Assignee name
+Configuration 
+Details
+Configuratio
+n Item
+Text Input 
+Yes unless status is 
+Resolved
+Related job or system item
+Resolution 
+Details
+Resolution 
+Info
+Multiline Text 
+Yes unless status is 
+Resolved
+Description of how the issue was 
+resolved 
+ 
+Root Cause 
+Category
+Dropdown 
+Yes unless status is 
+Resolved
+E.g., Configuration, Data, 
+Network, Application
+31
+DIG-ITS FRD
+Root Cause 
+Type
+Dropdown 
+(dependent)
+Yes unless status is 
+Resolved
+Dependent on Root Cause 
+Category
+IV. STATUS-BASED BEHAVIOR
+Incident Status 
+Field Editability 
+Update Button 
+Resolved 
+All fields are read-only 
+Hidden 
+Open 
+All fields are editable 
+Visible 
+In Progress 
+All fields are editable 
+Visible
+V. ACTIONS
+1. Update Button
+• Visible only when status is Open or In Progress 
+• On click:
+o Validates mandatory fields (if applicable). 
+o Sends ServiceNow API request to update the ticket. 
+o Displays success or failure message. 
+o Closes modal and optionally refreshes Incidents tab.
+2. Close (X)
+• Dismisses the popup without saving changes.
+VI. UI & DESIGN NOTES
+Element 
+Behavior / Style 
+Modal Width 
+Fixed width (e.g., 600px), scrollable for overflow 
+Status Badge 
+Color-coded (Open = Orange, In Progress = Blue, Resolved = Green) 
+Update Button 
+Blue, right-aligned, hidden if status is Resolved 
+Hyperlink (Incident No) 
+Opens ServiceNow URL in a new browser tab
+VII. NON-FUNCTIONAL REQUIREMENTS
+• Responsiveness: Modal should adapt to various screen sizes. 
+• Accessibility: Support keyboard navigation and screen readers. 
+• Performance: API call for updating should be completed within few seconds. 
+• Security: Integration with ServiceNow must use secure authentication and authorization.
+32
+DIG-ITS FRD
+4.1.1.5 CHANGE REQUEST TAB
+I. PURPOSE
+The Change Request Tab displays a list of all change requests associated with a selected UC4 job. It allows 
+users to view, search, and filter change records related to job scheduling, workflows, and configuration 
+changes.
+This helps ensure visibility into ongoing and historical job modifications and provides quick access to 
+change ownership and timelines.
+II. TAB BEHAVIOR
+• This tab is the fifth section on the Job Details page. 
+• Data is fetched from snowflake for the selected UC4 Job. 
+• By default, the tab shows change requests from the last 3 months (based on Planned Date). 
+• Filters are auto-applied on load.
+III. FILTERS AND CONTROLS
+Filter Field 
+Type 
+Behavior 
+Start Date 
+Date Picker 
+Defaults to 3 months prior from today 
+End Date 
+Date Picker 
+Defaults to today 
+Search Bar Free Text
+Search
+Searches across CR No, Description, Domain, Change Owner, and Status
+Clear 
+Button 
+Resets all filters to default values
+33
+DIG-ITS FRD
+Filters
+IV. DATA TABLE COLUMNS
+Column
+Name
+Type 
+Description 
+Behavior
+CR No. 
+Hyperlink
+ed Text
+Unique Change Request ID 
+Click opens the CR in a new browser tab 
+(if URL is available) 
+Planned 
+Date
+DateTime Scheduled time for applying the
+change
+Sortable
+Actual 
+Date
+DateTime Time when change was actually
+implemented
+Sortable
+Descripti
+on
+Text 
+Summary of the change 
+Searchable, Sortable
+Domain 
+Text 
+Area of change (e.g., UC4 Schedule, 
+Workflow Change)
+Searchable, Sortable
+Job Plan 
+Text 
+Job plan title 
+Searchable, Sortable
+Environ
+ment
+Text 
+Applicable environment 
+Searchable, Sortable
+Status 
+Badge/La
+bel
+Open, Closed, Cancelled 
+Color-coded (Open = Orange, Closed = 
+Green, Cancelled = Red); Searchable, 
+Sortable 
+Change 
+Owner
+Text 
+Person responsible for the change 
+Searchable, Sortable
+V. TABLE BEHAVIOR
+Feature 
+Description 
+Sorting 
+Enabled on all columns 
+Search 
+Applies across: CR No, Description, Domain, Job Plan, Change Owner, 
+Status 
+Pagination 
+Default 10 records per page, supports navigation 
+Default Sort Order 
+By Planned Date (Descending) 
+Word Wrap 
+Description column wraps text; 2-line max with ellipsis (...) overflow 
+Hyperlink 
+CR No is clickable and opens CR details in new tab (ServiceNow or other)
+VI. UI & DESIGN NOTES
+Element 
+Behavior / Style 
+Status Badge 
+Open (Orange), Closed (Green), Cancelled (Red)
+34
+DIG-ITS FRD
+Column Alignment 
+Text centered or left-aligned for consistency 
+Filter Layout 
+Consistent with UC4 Jobs screen 
+Empty State Handling 
+Show message: "No Change Requests found for selected criteria."
+VII. NON-FUNCTIONAL REQUIREMENTS
+Category 
+Requirement 
+Performance 
+Table should load within seconds 
+Security 
+All change request data must follow role-based access control 
+Responsiveness 
+Table and filters must display correctly across desktops 
+ServiceNow Integration 
+If API available, CR No will link to the corresponding record in ServiceNow
+35
+DIG-ITS FRD
+4.1.2 JOB PLAN DETAIL PAGE
+I. PURPOSE
+The Job Plan Detail Page provides detailed information on an individual job plan, including job execution 
+details, associated incidents, and change requests. It offers users the ability to track and monitor job 
+execution status, review job logs, and access associated incidents and change requests.
+II. NAVIGATION
+• Accessed via: Clicking the Job Plan hyperlink on the Job Scheduler page or from the Job Plan List. 
+• The page provides quick access to various job plan-related data, with sections for Jobs, Run
+Statistics, Incidents, and Change Requests.
+III. PAGE LAYOUT
+A. Header Section
+• Job Plan Title: The name of the job plan is displayed prominently. 
+• Environment: The environment for the job plan (e.g., Dev → Cert → Prod). 
+• Last Run Status: Displays the outcome of the most recent job execution (e.g., Success or
+Failure). 
+• Last Modified Date: Timestamp showing when the job plan was last modified.
+B. Job Plan Overview
+• Description: A brief description of the job, explaining its function and purpose.
+36
+DIG-ITS FRD
+IV. FUNCTIONAL REQUIREMENT
+A. Tab Behavior
+• The default tab open should be Jobs. 
+• The page should use dynamic tab navigation. When users click on tabs like Jobs, Run Statistics,
+Incidents, or Change Requests, the content area below the header should update without 
+reloading the page.
+37
+DIG-ITS FRD
+4.1.2.1 JOBS TAB
+I. PURPOSE
+The Jobs Tab provides a detailed list of all jobs associated with the selected Job Plan. It allows users to 
+view job names, descriptions, environments, and the last modified dates, along with quick navigation to 
+individual job detail pages.
+II. NAVIGATION
+Accessed via: Clicking on the Jobs tab within the Job Plan Detail Page. 
+ This is the default tab displayed when the Job Plan Detail Page loads.
+III. PAGE LAYOUT
+A. Filter Section
+• Environment Filter: Dropdown with options (Dev, Cert, Prod) to filter jobs by environment.
+B. Search Bar
+• Search Input: Allows users to search jobs by Job Name or Description.
+C. Job List Table 
+ Displays jobs in a tabular format with the following columns:
+• Job Name: Hyperlinked to the Job Detail Page. 
+• Description: A short summary of the job. 
+• Environment: Displays all environments for the job (Dev → Cert → Prod). 
+• Last Modified Date: Displays the timestamp of the last modification.
+Pagination:
+• Default 10 records per page. 
+• Navigation controls (Previous, Next) for additional pages.
+38
+DIG-ITS FRD
+Sorting:
+• Enabled on Job Name, Description, and Last Modified Date columns.
+IV. FUNCTIONAL REQUIREMENTS
+1. Hyperlink Navigation:
+a. Clicking Job Name opens the respective Job Detail Page in the same tab. 
+2. Filtering:
+a. Selecting an environment from the dropdown dynamically updates the job list without a full
+page reload. 
+3. Search:
+a. The search bar filters jobs by Job Name and Description in real time. 
+4. Sorting:
+a. Users can sort the table by clicking on the column headers for Job Name, Description, and
+Last Modified Date. 
+5. Default Behavior:
+a. The Jobs Tab loads first when the Job Plan Detail Page opens. 
+b. Environment Filter defaults to All.
+39
+DIG-ITS FRD
+4.1.2.2 RUN STATISTICS TAB
+I. PURPOSE
+The Run Statistics Tab provides detailed information about the execution history of jobs and job plans 
+under the selected Job Plan. It allows users to monitor run performance, analyze execution trends, and 
+identify failures or SLA breaches.
+II. NAVIGATION
+Accessed via: Clicking on the Run Statistics tab on the Job Plan Detail Page.
+III. PAGE LAYOUT
+A. Summary Section
+• Summary: Displays total number of runs. 
+• Successful Runs: Count of runs with status Success. 
+• Failed Runs: Count of runs with status Fail. 
+• Avg. Duration: Displays the average execution time across all runs.
+B. Filters Section
+• Start Date / End Date: Calendar inputs to filter runs by date range. Default set to last 1 month
+from current date. 
+• Environment Filter: Dropdown with options (Dev, Cert, Prod).
+40
+DIG-ITS FRD
+• Apply Button: Applies selected filters to the table. 
+• Reset Button: Clears all applied filters.
+C. Search Bar
+• Search for records by Job Name, Job Plan, Type, Environment or Status.
+D. Run Statistics Table 
+ Displays execution details in tabular format with the following columns:
+• Job/Job Plan: Name of the job or job plan. 
+• Type: Indicates whether it is a Job or Job Plan. 
+• Planned Start Time: Scheduled start time for the run. 
+• Actual Start Time: Actual execution start time. 
+• End Time: Actual completion time. 
+• Duration: Total time taken for the execution (with color indicators).
+o Green: SLA met (duration <= SLA). 
+o Red: SLA breached (duration > SLA). 
+• Environment: Dev / Cert / Prod. 
+• Status: Success (green) or Fail (red).
+Pagination:
+• Displays 10 records per page with navigation controls.
+Sorting:
+• Enabled on all columns.
+IV. FUNCTIONAL REQUIREMENTS
+1. Dynamic Data Update:
+a. Table updates dynamically based on filter criteria without page reload. 
+2. Sorting & Filtering:
+a. Users can sort by any column. 
+b. Filters apply in combination (date range + environment). 
+3. Color Indicators:
+a. Green: Duration within SLA. 
+b. Red: Duration exceeds SLA. 
+4. Default Behavior:
+a. Default date range = Last 30 days. 
+b. Default environment filter = All environments selected.
+41
+DIG-ITS FRD
+4.1.2.4 INCIDENTS TAB
+I. PURPOSE
+The Incidents Tab displays all incidents associated with the selected Job Plan. It provides users with 
+detailed visibility into open, in-progress, and resolved incidents. Users can filter incidents, view statuses, 
+and navigate to incident details for troubleshooting.
+II. NAVIGATION
+Accessed via: Clicking the Incidents tab on the Job Plan Detail Page.
+III. PAGE LAYOUT
+A. Summary Section
+• Total Count: Displays the total number of incidents. 
+• Last 7 Day's Count: Displays the number of incidents created in the past 7 days. 
+• This Month Count: Displays the number of incidents created in the current month.
+B. Filters
+• Start Date / End Date: Calendar fields for date range filtering. 
+• Environment: Dropdown filter with options (Dev, Cert, Prod). 
+• Apply Button: Applies selected filter criteria to the incident list.
+42
+DIG-ITS FRD
+• Reset Button: Clears all applied filters.
+C. Search Bar
+• Allows users to search by Incident No., Job Name, Job Plan, Description, Run ID, Environment
+or Status.
+D. Incident Table 
+ Displays the following columns:
+• Incident No.: Hyperlinked to open the Incident Detail Page on ServiceNow (subject to
+ServiceNow API is provided). 
+• Description: Brief text explaining the issue. 
+• Job Name: Name of the associated job. 
+• Job Plan Run ID: Run ID associated with the incident. 
+• Environment: Dev / Cert / Prod. 
+• Created At: Timestamp when the incident was created. 
+• Status: Displays the current status with color coding:
+o Open: Orange 
+o In Progress: Blue 
+o Resolved: Green 
+• Action: Eye icon for viewing incident details. The Incident Details popup open up.
+Pagination:
+• Default: 10 records per page. 
+• Navigation buttons for multiple pages.
+IV. FUNCTIONAL REQUIREMENTS
+1. Dynamic Data Loading:
+a. Incident list updates dynamically when filters or search are applied. 
+2. Hyperlink Behavior:
+a. Clicking Incident No. opens the ServiceNow Incident Detail Page on a new tab. 
+3. Status Indicators:
+a. Color-coded statuses as per the mockup for quick identification. 
+4. Default Behavior:
+a. Default view shows incidents for the last 30 days. 
+b. Default environment filter = All environments selected. 
+5. Sorting:
+a. Sorting enabled on Incident No., Description, Job Name, Job Plan Run ID, Enviroment,
+Created At and Status.
+43
+DIG-ITS FRD
+4.1.2.4.1 INCIDENT DETAILS POPUP
+44
+DIG-ITS FRD
+45
+DIG-ITS FRD
+I. PURPOSE
+The Incident Details Popup provides complete information about a selected incident associated with the 
+job plan. This popup allows users to review the incident details without navigating away from the Job Plan 
+Detail Page.
+II. REFERENCE
+The functionality, fields, and behavior of this popup are identical to the Incident Details Popup described 
+in Section 4.1.1.4.1. 
+For consistency and to avoid duplication, refer to Section 4.1.1.4.1 INCIDENT DETAILS POPUP for detailed 
+specifications.
+III. FUNCTIONAL REQUIREMENT
+• The Incident Details Popup for 4.1.2.4 inherits all functional and non-functional specifications from
+Section 4.1.1.4.1. 
+• Any enhancements or changes in Section 4.1.1.4.1 will automatically apply to this section.
+46
+DIG-ITS FRD
+4.1.2.5 CHANGE REQUEST TAB
+47
+DIG-ITS FRD
+I. PURPOSE
+The Change Request (CR) Tab provides a detailed view of all change requests associated with the selected 
+Job Plan. It allows users to track planned and actual dates, monitor CR status, and view additional details 
+such as description, domain, object name, environment, and change owner.
+II. NAVIGATION
+Accessed via: Clicking the Change Requests tab on the Job Plan Detail Page.
+III. PAGE LAYOUT
+A. Summary Section
+• Total Count: Displays the total number of change requests linked to the job plan. 
+• Open Count: Displays the total number of CRs currently in Open status. 
+• Closed Count: Displays the number of CRs marked as Closed.
+B. Filters
+• Start Date / End Date: Calendar fields to filter CRs by date range. 
+• Environment: Dropdown filter with options (Dev, Cert, Prod). 
+• Apply Button: Applies the selected filter criteria to the list. 
+• Reset Button: Clears all applied filters.
+C. Search Bar
+• Allows searching by CR No., Description, Domain, Object Name, Environment, Status or
+Change Owner.
+D. Change Request Table 
+ Displays the following columns:
+• CR No.: Hyperlinked to open detailed Change Request information on ServiceNow (subject to
+ServiceNow API being provided) 
+• Planned Date: Scheduled date and time for the CR implementation. 
+• Actual Date: Actual date and time when the CR was executed. 
+• Description: Brief details of the CR (e.g., dependency updates, workflow modifications). 
+• Domain: The domain or category under which the CR falls (e.g., Workflow Change, UC4
+Schedule, Informatica). 
+• Object Name: The name of the associated object or job. 
+• Environment: Environment associated with the CR (Dev / Cert / Prod). 
+• Status: Current status of the CR with color codes:
+48
+DIG-ITS FRD
+o Closed: Green 
+o Open: Orange 
+o Cancelled: Red 
+• Change Owner: Name of the user responsible for the CR.
+Pagination:
+• Default: 10 records per page. 
+• Navigation buttons for multiple pages.
+IV. FUNCTIONAL REQUIREMENTS
+1. Dynamic Data Loading:
+a. Change Request list updates dynamically when filters or search are applied. 
+2. Hyperlink Behavior:
+a. Clicking CR No. opens the Change Request Detail Page on a new tab (subject to ServiceNow
+API being provided). 
+3. Status Indicators:
+a. Color-coded statuses for quick identification (Green for Closed, Orange for Open, Red for
+Cancelled). 
+4. Default Behavior:
+a. Default environment filter = All environments selected. 
+b. Default sort order = CR No. (ascending). 
+5. Sorting:
+a. Sorting enabled on CR No., Planned Date, Actual Date, Domain, Object Name
+Environment, Status and Change Owner. 
+6. Handling Multiple Domains and Object Names for a Single CR: 
+• A single Change Request can have multiple domains and multiple object names. 
+• In such cases:
+o CR No., Planned Date, Actual Date, Description, Environment, Status, and Change Owner
+columns remain common and will span multiple rows. 
+o Domain and Object Name will have separate entries for each associated value. 
+o This ensures that all related domains and objects are displayed clearly under a single CR
+grouping.
+49
+DIG-ITS FRD
+5. NON-FUNCTIONAL REQUIREMENTS
+Requirement 
+Details 
+Performance 
+System should support concurrent users with minimal response 
+time 
+Scalability 
+Support scaling to multiple users as needed 
+Security 
+Role-based access control (RBAC); Okta integration 
+Availability 
+99.9% uptime, hosted on GAIG’s Tanzu platform 
+Logging and Monitoring 
+Centralized logging with error tracking 
+Data Refresh 
+Batch and near real-time from Snowflake DB 
+Browser Compatibility 
+Chrome, Edge
+6. USER ROLES AND PERMISSIONS
+Role 
+Permissions 
+Administrator 
+Full access to all modules, user and role management, and report 
+configuration 
+Developer 
+View/edit job details, add support docs, view logs/incidents 
+Read-Only User 
+View-only access to all modules and reports 
+Support Engineer 
+Edit support documentation and log resolutions
+7. DEPENDENCIES
+Dependency 
+Owner 
+Snowflake DB setup and data 
+GAIG ETL Team 
+API access to UC4, ServiceNow 
+GAIG 
+CI/CD pipeline setup 
+GAIG 
+Okta SSO configuration 
+GAIG 
+VDI Access 
+GAIG 
+Access to GitHub, ServiceNow 
+GAIG
+8. REPORTING REQUIREMENTS
+• Power BI embedded reports to be used for dashboards and operational metrics.
+50
+DIG-ITS FRD
+9. ERD & DATA MODEL

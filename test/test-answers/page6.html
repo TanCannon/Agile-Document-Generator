@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Statistics</title>
+    <style>
+        /* Basic Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        /* Screen Styles */
+        section {
+            display: none;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        section:target {
+            display: block;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Summary Section */
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .summary-item {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .summary-item h3 {
+            margin-bottom: 10px;
+        }
+
+        /* Filter Section */
+        .filter {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .filter-buttons button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .filter-buttons button.apply {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .filter-buttons button.reset {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Table */
+        .run-statistics-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .run-statistics-table th,
+        .run-statistics-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .run-statistics-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .run-statistics-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Buttons */
+        .button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .summary,
+            .filter {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section id="run-statistics">
+        <div class="container">
+            <h1>Run Statistics</h1>
+
+            <div class="summary">
+                <div class="summary-item">
+                    <h3>Successful Runs</h3>
+                    <p>125</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Failed Runs</h3>
+                    <p>15</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Average Duration</h3>
+                    <p>00:15:30</p>
+                </div>
+            </div>
+
+            <div class="filter">
+                <div class="filter-group">
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" id="start-date" name="start-date">
+                </div>
+                <div class="filter-group">
+                    <label for="end-date">End Date:</label>
+                    <input type="date" id="end-date" name="end-date">
+                </div>
+                <div class="filter-group">
+                    <label for="environment">Environment:</label>
+                    <select id="environment" name="environment">
+                        <option value="all">All</option>
+                        <option value="dev">Development</option>
+                        <option value="qa">QA</option>
+                        <option value="prod">Production</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-buttons">
+                <button class="button apply">Apply</button>
+                <button class="button reset">Reset</button>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Search Job Name, Job Plan, Type, Environment, or Status">
+            </div>
+
+            <table class="run-statistics-table" aria-label="Run Statistics">
+                <thead>
+                    <tr>
+                        <th>Job/Job Plan</th>
+                        <th>Type</th>
+                        <th>Planned Start Time</th>
+                        <th>Actual Start Time</th>
+                        <th>End Time</th>
+                        <th>Duration</th>
+                        <th>Environment</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>JobPlan_001</td>
+                        <td>Data Ingestion</td>
+                        <td>2024-10-26 08:00:00</td>
+                        <td>2024-10-26 08:00:10</td>
+                        <td>2024-10-26 08:15:40</td>
+                        <td>00:15:30</td>
+                        <td>Production</td>
+                        <td>Success</td>
+                    </tr>
+                    <tr>
+                        <td>JobPlan_002</td>
+                        <td>Data Transformation</td>
+                        <td>2024-10-26 09:00:00</td>
+                        <td>2024-10-26 09:00:05</td>
+                        <td>2024-10-26 09:20:15</td>
+                        <td>00:20:10</td>
+                        <td>QA</td>
+                        <td>Failed</td>
+                    </tr>
+                    <tr>
+                        <td>JobPlan_003</td>
+                        <td>Data Analysis</td>
+                        <td>2024-10-26 10:00:00</td>
+                        <td>2024-10-26 10:00:02</td>
+                        <td>2024-10-26 10:10:12</td>
+                        <td>00:10:10</td>
+                        <td>Development</td>
+                        <td>Success</td>
+                    </tr>
+					<tr>
+                        <td>JobPlan_001</td>
+                        <td>Data Ingestion</td>
+                        <td>2024-10-26 08:00:00</td>
+                        <td>2024-10-26 08:00:10</td>
+                        <td>2024-10-26 08:15:40</td>
+                        <td>00:15:30</td>
+                        <td>Production</td>
+                        <td>Success</td>
+                    </tr>
+					<tr>
+                        <td>JobPlan_001</td>
+                        <td>Data Ingestion</td>
+                        <td>2024-10-26 08:00:00</td>
+                        <td>2024-10-26 08:00:10</td>
+                        <td>2024-10-26 08:15:40</td>
+                        <td>00:15:30</td>
+                        <td>Production</td>
+                        <td>Success</td>
+                    </tr>
+
+                    <!-- More rows of data here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Navigation -  For demo, show/hide using URL hash -->
+    <nav>
+        <a href="#run-statistics">Run Statistics</a>
+    </nav>
+</body>
+</html>

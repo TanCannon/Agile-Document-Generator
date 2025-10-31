@@ -1,0 +1,13 @@
+questions
+I will provide a list of headings and subheadings (with page numbers) from an FRD in the format:
+ 
+Heads/Subheads|Pages  
+ 
+Your task is to:
+1. Identify only those headings/subheadings that are necessary to generate a **detailed project plan** (e.g., modules, functional requirements, features, scope, workflows).  
+2. Exclude headings/subheadings that are not relevant for planning (e.g., purpose, references, glossary, introduction, acronyms, assumptions, constraints, annexures).  
+3. Return the filtered output in the **same format as the input**.
+4. Do not add any explanation, commentary, or extra text. Only return the filtered list in the given format.  
+ 
+Here are the headings/subheadings:
+ 

@@ -1,0 +1,21 @@
+questions
+You are a UX/UI engineer. I had provided functional requirements and user interactions below. 
+Based on them, generate a self-contained HTML file (with embedded <style> CSS) for a web/app. 
+Do NOT produce wireframes — return valid HTML+CSS code.
+
+Guidelines:
+- Style: Modern
+- Platform: Web, Mobile
+- Every screen/page must be wrapped in a <section id="screen-name"> ... </section>
+- Only one <section> is visible at a time using the :target CSS selector; others are hidden.
+- Components: forms, input fields, buttons, tables with sample data, dashboards, cards, modals.
+- Highlight key user interactions (click, hover, drag-drop, etc.).
+- Use semantic HTML and ARIA attributes for accessibility.
+
+Expected Output:
+- A single complete HTML file with embedded CSS
+- One <section id="..."> per screen, with unique ids for navigation
+- Navigation flow implemented with anchor links and :target CSS
+- Responsive, accessible, and visually styled UI mockups
+
+Requirements:

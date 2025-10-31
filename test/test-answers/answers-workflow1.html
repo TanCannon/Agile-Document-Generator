@@ -1,0 +1,358 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Workflows</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+        }
+
+        nav {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mermaid {
+            width: 80%; /* Adjust as needed */
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#workflow1">Project Setup</a>
+        <a href="#workflow2">Authentication & Authorization</a>
+        <a href="#workflow3">Data Layer - Snowflake</a>
+        <a href="#workflow4">Data Layer - External APIs</a>
+        <a href="#workflow5">Data Layer - Data Transformation</a>
+        <a href="#workflow6">Home Module</a>
+        <a href="#workflow7">Dashboard Module</a>
+        <a href="#workflow8">Job Scheduler Module</a>
+        <a href="#workflow9">Job Detail Page Module</a>
+        <a href="#workflow10">Job Detail Page - Support Instructions</a>
+        <a href="#workflow11">Job Detail Page - Job Plans Tab</a>
+        <a href="#workflow12">Job Detail Page - Run Statistics Tab</a>
+        <a href="#workflow13">Job Detail Page - Incidents Tab</a>
+        <a href="#workflow14">Job Detail Page - Change Requests Tab</a>
+        <a href="#workflow15">Job Plan Detail Page</a>
+        <a href="#workflow16">Admin Module</a>
+        <a href="#workflow17">Templates Module</a>
+        <a href="#workflow18">Reporting</a>
+        <a href="#workflow19">Testing</a>
+        <a href="#workflow20">Deployment</a>
+        <a href="#workflow21">Documentation</a>
+        <a href="#workflow22">Training</a>
+        <a href="#workflow23">Project Closure</a>
+    </nav>
+
+    <section id="workflow1">
+        <div class="mermaid">
+            graph LR
+            A[Review FRD] --> B{Identify Key Deliverables?};
+            B -- Yes --> C[Create Scope Document];
+            B -- No --> A;
+            C --> D{Identify In/Out Scope?};
+            D -- Yes --> E[Define Scope];
+            D -- No --> C;
+            E --> F{Obtain Stakeholder Sign-off?};
+            F -- Yes --> G[Scope Document Complete];
+            F -- No --> E;
+            style G fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow2">
+        <div class="mermaid">
+            sequenceDiagram
+            participant User
+            participant Application
+            participant Okta
+
+            User->>Application: Request Login
+            Application->>Okta: Redirect to Okta
+            Okta->>User: Authenticate User
+            User->>Okta: Provide Credentials
+            Okta->>Application: Return Authentication Token
+            Application->>Application: Verify Token and Create Session
+            Application->>User: Grant Access
+        </div>
+    </section>
+
+    <section id="workflow3">
+        <div class="mermaid">
+            graph LR
+            A[Establish Snowflake Connection] --> B{Connection Successful?};
+            B -- Yes --> C[Implement Data Model in Snowflake];
+            B -- No --> A;
+            C --> D[Create Data Extraction Scripts];
+            D --> E{Extraction Successful?};
+            E -- Yes --> F[Data Ready];
+            E -- No --> D;
+            style F fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow4">
+        <div class="mermaid">
+            graph LR
+            A[Obtain API Access] --> B{API Access Granted?};
+            B -- Yes --> C[Implement API Calls];
+            B -- No --> A;
+            C --> D{API Calls Successful?};
+            D -- Yes --> E[Data Ready];
+            D -- No --> C;
+            style E fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow5">
+        <div class="mermaid">
+            graph LR
+            A[Extract Data] --> B[Transform Data];
+            B --> C{Transformation Successful?};
+            C -- Yes --> D[Data Ready];
+            C -- No --> B;
+            style D fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow6">
+        <div class="mermaid">
+            graph LR
+            A[User Accesses Home Page] --> B{Search Jobs?};
+            B -- Yes --> C[Implement Backend Search Logic];
+            B -- No --> D{View Subject Areas?};
+            C --> E[Display Job Search Results];
+            D -- Yes --> F[Fetch Subject Area Data];
+            D -- No --> G{View Recent Incidents?};
+            F --> H[Display Subject Area List];
+            G -- Yes --> I[Fetch Recent Incident Data];
+            G -- No --> J{View Change Requests?};
+            I --> K[Display Recent Incidents];
+            J -- Yes --> L[Fetch Change Request Data];
+            L --> M[Display Change Requests];
+            H --> M;
+            K --> M;
+            style M fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow7">
+        <div class="mermaid">
+            graph LR
+            A[Operator Accesses Dashboard] --> B[Fetch System Health Metrics];
+            B --> C[Display System Health Overview];
+            C --> D[Implement Alerts Section];
+            D --> E[Display Alerts];
+            E --> F[Implement Key Metrics Section];
+            F --> G[Display Key Metrics Data];
+            style G fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow8">
+        <div class="mermaid">
+            graph LR
+            A[User Accesses Job Scheduler] --> B[Develop Date Range Picker];
+            B --> C[Develop Environment Dropdown];
+            C --> D[Implement Apply/Reset Buttons];
+            D --> E[Develop Global Search Bar];
+            E --> F[Develop Job List Search];
+            F --> G[Implement Pagination];
+            G --> H[Implement Sorting];
+            H --> I[Display Job Listing Table];
+            style I fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow9">
+        <div class="mermaid">
+            graph LR
+            A[User Accesses Job Detail Page] --> B[Display Technical Job Name];
+            B --> C[Display Job Metadata];
+            C --> D[Display Job Description];
+            D --> E[Implement Tabs Section];
+            E --> F["Load Support Instructions (Default)"];
+            style F fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow10">
+        <div class="mermaid">
+            graph LR
+            A[Load Support Instructions Tab] --> B[Display SLA];
+            B --> C[Display Restart Instructions];
+            C --> D[Display Input Details];
+            D --> E[Display Output Details];
+            E --> F[Display Support Notes];
+            F --> G[Display Non-Production Exceptions];
+            G --> H[Display Schedule Frequency];
+            H --> I[Display Linked Support Document];
+            style I fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow11">
+        <div class="mermaid">
+            graph LR
+            A[Load Job Plans Tab] --> B[Implement Tab Navigation];
+            B --> C[Implement Search Field];
+            C --> D[Display Job Plan Table];
+            D --> E[Implement Pagination];
+            E --> F[Implement Environment Filter];
+            F --> G[Dynamically Load Job Plans];
+            style G fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow12">
+        <div class="mermaid">
+            graph LR
+            A[Load Run Statistics Tab] --> B[Implement Filter Bar];
+            B --> C[Implement Apply/Reset Buttons];
+            C --> D[Display Summary Tiles];
+            D --> E[Implement Search];
+            E --> F[Display Job Run Data Table];
+            style F fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow13">
+        <div class="mermaid">
+            graph LR
+            A[Load Incidents Tab] --> B[Implement Summary Tiles];
+            B --> C[Implement Filters];
+            C --> D[Implement Search];
+            D --> E[Display Incident Data Table];
+            style E fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow14">
+        <div class="mermaid">
+            graph LR
+            A[Load Change Requests Tab] --> B[Implement Filters];
+            B --> C[Implement Search];
+            C --> D[Display Change Request Data Table];
+            style D fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow15">
+        <div class="mermaid">
+            graph LR
+            A[User Accesses Job Plan Detail Page] --> B[Implement Header Section];
+            B --> C[Implement Job Plan Overview];
+            C --> D[Implement Tab Behavior];
+            style D fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow16">
+        <div class="mermaid">
+            graph LR
+            A[Admin Accesses Admin Module] --> B[Develop UI for User Management];
+            B --> C[Implement Backend Logic for User Management];
+            C --> D[Develop UI for Role Management];
+            D --> E[Implement Backend Logic for Role Management];
+            E --> F[Develop UI for Report Management];
+            F --> G[Implement Backend Logic for Report Management];
+            G --> H[Develop UI for Support Management];
+            H --> I[Implement Backend Logic for Support Management];
+            style I fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow17">
+        <div class="mermaid">
+            graph LR
+            A[Support Agent Access Templates] --> B[Implement Screen to Create Templates];
+            B --> C[Implement APIs for Template Creation];
+            style C fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow18">
+        <div class="mermaid">
+            graph LR
+            A[User Accesses Reporting] --> B[Embed Power BI Reports];
+            B --> C[Configure Data Refresh Schedule];
+            style C fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow19">
+        <div class="mermaid">
+            graph LR
+            A[Developer Starts Testing] --> B[Write and Execute Unit Tests];
+            B --> C[Perform Integration Testing];
+            C --> D[Conduct UAT with End-Users];
+            style D fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow20">
+        <div class="mermaid">
+            graph LR
+            A[Release Manager Starts Deployment] --> B[Prepare Deployment Package];
+            B --> C[Deploy to Staging Environment];
+            C --> D[Tester Conducts Final Testing];
+            style D fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow21">
+        <div class="mermaid">
+            graph LR
+            A[Technical Writer Starts Documentation] --> B[Develop User Manual];
+            B --> C[Develop API Documentation];
+            C --> D[Create Release Notes];
+            style D fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow22">
+        <div class="mermaid">
+            graph LR
+            A[Trainer Starts Training] --> B[Prepare Training Materials];
+            B --> C[Conduct User Training Sessions];
+            style C fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <section id="workflow23">
+        <div class="mermaid">
+            graph LR
+            A[Project Manager Starts Project Closure] --> B[Conduct Final Project Review];
+            B --> C[Documentation Handover];
+            style C fill:#f9f,stroke:#333,stroke-width:2px
+        </div>
+    </section>
+
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true, theme: "default" });
+    </script>
+
+</body>
+</html>
+```

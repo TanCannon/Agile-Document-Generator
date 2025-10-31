@@ -1,0 +1,54 @@
+questions
+You are a UX/UI engineer. I had provided functional requirements and user interactions below. 
+Based on them, generate a self-contained HTML file (with embedded <style> CSS) for a web/app. 
+Do NOT produce wireframes — return valid HTML+CSS code.
+
+Guidelines:
+- Style: Modern
+- Platform: Web, Mobile
+- Every screen/page must be wrapped in a <section id="screen-name"> ... </section>
+- Only one <section> is visible at a time using the :target CSS selector; others are hidden.
+- Components: forms, input fields, buttons, tables with sample data, dashboards, cards, modals.
+- Highlight key user interactions (click, hover, drag-drop, etc.).
+- Use semantic HTML and ARIA attributes for accessibility.
+
+Requirements:
+3. Functional Modules
+3.1 Menu Structure
+- Menu Item Submenus/Features
+Home Search Job, Subject Area List, Recent Incidents, Change Requests, 
+- Rally Tickets
+Dashboard System health overview, alerts, and key metrics
+Subject Area List and manage subject areas for job categorization
+Jobs List View all jobs with filters, sorting, and search
+Change 
+Requests List, view, and manage change requests
+Service Now View incidents and tickets from ServiceNow
+Reports Embedded Power BI reports
+Settings User Management, Role Management, Report Management, 
+Support Templates
+3.2 Design Patterns
+➢ Collapsible sidebar with icons and labels.
+➢ Highlight active menu items. 
+➢ Role-based visibility (e.g., only Admins see Settings).
+3.3 Home Page Features
+➢ Search Job: (autocomplete, has filters) Search by job name, ID, or subject area.
+➢ Subject Area List: Quick links to jobs grouped by subject area.
+➢ Recent Incidents: Display user or team-specific incidents from ServiceNow.
+➢ Change Requests: Show pending or active CRs relevant to the user/team.
+➢ Rally Tickets: Display recent Rally tickets assigned to the user or team.
+3.4 Job Detail Page
+Section Description
+Job Information Job name, description, status, owner, schedule
+Job Support Instructions Documentation and troubleshooting steps
+Error Logs Error messages and logs from UC4 and Informatica
+Associated Incidents Linked ServiceNow incidents
+Change Requests Change requests and deployment details
+Job Schedule Next run, last run, frequency, timing
+Job Run Stats Metrics on success/failure rates, processing time
+
+Expected Output:
+- A single complete HTML file with embedded CSS
+- One <section id="..."> per screen, with unique ids for navigation
+- Navigation flow implemented with anchor links and :target CSS
+- Responsive, accessible, and visually styled UI mockups

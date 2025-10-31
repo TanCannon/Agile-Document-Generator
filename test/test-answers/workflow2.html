@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  </head>
+  <body>
+  <div class="mermaid">
+graph TD
+  %% Actors
+  U["User"]
+
+  %% System components
+  subgraph System
+    H["Home Page"]
+    S["Search Component"]
+    JDB["Job Database"]
+    F["Filter Options"]
+    AR["Autocomplete Results"]
+  end
+
+  %% Flows
+  U --> H
+  H --> S
+  S --> AR
+  AR --> JDB
+  JDB --> AR
+  AR --> S
+  S --> F
+  F --> JDB
+  JDB --> S
+  S --> H
+  H --> U
+
+  %% Edge labels
+  U -->|Access Home Page| H
+  H -->|Initiates Search| S
+  S -->|Input: Search Term| AR
+  AR -->|Query for Autocomplete Suggestions| JDB
+  JDB -->|Output: Autocomplete Suggestions| AR
+  AR -->|Selects Suggested Job or Enters Full Term| S
+  S -->|Selects Filters Optional| F
+  F -->|Passes Search Term and Filters| JDB
+  JDB -->|Output: Job Search Results| S
+  S -->|Displays Job Search Results| H
+  H -->|Presents Job Search Results| U
+
+  %% Styling
+  style U fill:#f9f,stroke:#333,stroke-width:2px
+  style JDB fill:#ccf,stroke:#333,stroke-width:2px
+
+  </div>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>

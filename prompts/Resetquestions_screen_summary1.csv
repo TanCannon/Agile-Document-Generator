@@ -1,0 +1,18 @@
+questions
+You are given a CSV containing two fields:
+Heading/Subheading name
+The extracted content under that heading
+
+Task:
+Identify which entries correspond to actual user interface (UI) screens, pages, tabs, or popups.
+Use both the heading name and the content to decide.
+Ignore entries that are only descriptions, guidelines, requirements, or non-UI documentation.
+
+For each identified UI entry, generate:
+The exact name of the screen/tab/popup (clean, human-readable).
+A detailed summary (2–3 sentences) describing its purpose and the main elements it displays, inferred only from the heading and its content.
+Do not include any headings, guidelines, or extra formatting (like quotes, bullet points, or markdown) in the output.
+
+Output must be in this exact CSV format:
+Screen Name | Summary
+

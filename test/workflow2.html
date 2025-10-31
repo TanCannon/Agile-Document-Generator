@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Home Page Search Workflow (Mermaid)</title>
+
+  <!-- Page styling -->
+  <style>
+    :root{
+      --bg: #f6f8fa;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #0ea5a4;
+      --pad: 18px;
+      --maxw: 1100px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:var(--font);
+      background:linear-gradient(180deg,var(--bg),#eef2f7 120%);
+      color:#0f172a;
+    }
+
+    .page {
+      max-width: var(--maxw);
+      margin: 28px auto;
+      padding: 18px;
+      box-sizing: border-box;
+    }
+
+    header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    h1 {
+      margin:0;
+      font-size:20px;
+      letter-spacing:-0.2px;
+    }
+
+    p.lead { margin:6px 0 0 0; color:var(--muted); font-size:13px; }
+
+    .toolbar {
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    .btn {
+      background:var(--card);
+      border:1px solid #e6e9ef;
+      padding:8px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:13px;
+      box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+    }
+
+    .card {
+      background:var(--card);
+      border-radius:12px;
+      padding:16px;
+      box-shadow: 0 6px 18px rgba(10,20,40,0.04);
+      border: 1px solid rgba(15,23,42,0.04);
+    }
+
+    .diagram-wrap {
+      margin-top:16px;
+      padding:12px;
+      background: linear-gradient(180deg,#fff,#fbfdff);
+      border-radius:10px;
+      border:1px solid rgba(10,20,30,0.03);
+    }
+
+    .legend {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-top:12px;
+      flex-wrap:wrap;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .legend .item {
+      display:flex;
+      gap:8px;
+      align-items:center;
+      background: #fff;
+      padding:6px 8px;
+      border-radius:8px;
+      border:1px solid rgba(10,20,30,0.03);
+    }
+    .dot { width:12px;height:12px;border-radius:3px;display:inline-block; }
+
+    /* Print-friendly */
+    @media print {
+      .toolbar, header p.lead { display:none; }
+      body { background: #fff; }
+    }
+
+    /* Make mermaid SVG responsive container */
+    .mermaid {
+      overflow:auto;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>Home Page — Search Workflow</h1>
+        <p class="lead">Mermaid (v10) flowchart of initial load + search/autocomplete flow. Use the buttons to toggle theme or re-render.</p>
+      </div>
+
+      <div class="toolbar">
+        <button id="toggleTheme" class="btn">Toggle Theme</button>
+        <button id="reRender" class="btn">Re-render</button>
+      </div>
+    </header>
+
+    <section class="card diagram-wrap">
+      <!-- Mermaid diagram container -->
+      <div class="mermaid" id="workflow">
+        graph TD
+            %% Actors
+            U["User"]
+
+            %% System subgraph
+            subgraph System
+            direction TB
+            H["Home Page"]
+            S["Search Component"]
+            AR["Autocomplete Results"]
+            F["Filter Options"]
+            JDB["Job Database"]
+            end
+
+        %% Flows
+        U -->|Access Home Page| H
+        H -->|Initiates Search| S
+        S -->|Input: Search Term| AR
+        AR -->|Query for Autocomplete Suggestions| JDB
+        JDB -->|Output: Autocomplete Suggestions| AR
+        AR -->|Selects Suggested Job or Enters Full Term| S
+        S -->|"Selects Filters (optional)"| F
+        F -->|Passes Search Term & Filters| JDB
+        JDB -->|Output: Job Search Results| S
+        S -->|Displays Job Search Results| H
+        H -->|Presents Job Search Results| U
+
+  %% Styling notes: node styling via mermaid config below
+      </div>
+
+      <div class="legend" aria-hidden="true">
+        <div class="item"><span class="dot" style="background:#f9f;"></span> Actor (User)</div>
+        <div class="item"><span class="dot" style="background:#ccf;"></span> External/Internal DB</div>
+        <div class="item"><span class="dot" style="background:#fff;border:1px solid #e2e8f0;"></span> System components</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Mermaid (v10) as an ES module -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    // base config
+    let cfg = {
+      startOnLoad: true,
+      theme: 'default',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: false
+      }
+    };
+
+    mermaid.initialize(cfg);
+
+    // Apply some node styling via mermaid API (class-based)
+    // We define classes inside the mermaid graph using the %% comments/styles above OR
+    // we can add CSS rules to the generated SVG after mermaid renders. We'll hook after render.
+    function styleAfterRender(svg) {
+      if (!svg) return;
+      // color the User node
+      try {
+        const userNode = svg.querySelector('[title="User"]') || svg.querySelector('g[id*="U"]');
+        if (userNode) {
+          // set background rect fill if present
+          const rect = userNode.querySelector('rect');
+          if (rect) rect.setAttribute('fill', '#fff0f6');
+        }
+        // color DB node (Job Database)
+        const db = svg.querySelector('[title="Job Database"]') || svg.querySelector('g[id*="JDB"]');
+        if (db) {
+          const rect = db.querySelector('rect');
+          if (rect) rect.setAttribute('fill', '#e8f0ff');
+        }
+      } catch(e){ /* tolerant */ }
+    }
+
+    // re-render hook to style svg after mermaid draws it
+    mermaid.addOnLoad(function() {
+      // mermaid renders inside .mermaid elements; find the generated svg
+      const container = document.getElementById('workflow');
+      const svg = container.querySelector('svg');
+      if (svg) styleAfterRender(svg);
+    });
+
+    // UI controls
+    const toggleBtn = document.getElementById('toggleTheme');
+    const reRenderBtn = document.getElementById('reRender');
+
+    toggleBtn.addEventListener('click', () => {
+      cfg.theme = (cfg.theme === 'default') ? 'dark' : 'default';
+      mermaid.initialize(cfg);
+      // re-render by re-attaching text
+      const el = document.getElementById('workflow');
+      const text = el.textContent;
+      el.innerHTML = text;
+      mermaid.init(undefined, el);
+    });
+
+    reRenderBtn.addEventListener('click', () => {
+      const el = document.getElementById('workflow');
+      const text = el.textContent;
+      el.innerHTML = text;
+      mermaid.init(undefined, el);
+    });
+  </script>
+</body>
+</html>

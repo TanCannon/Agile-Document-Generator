@@ -1,0 +1,7 @@
+questions
+I have given an FRD (Functional Requirements Document) for a project below. Please generate a detailed project plan in CSV format (Use | as the delimiter) with the following columns: Module Name, Tasks, Subtasks, Deliverables.
+1. Break each section of the FRD into clear modules.
+2. Each module should have multiple tasks.
+3. Each task should be broken down into detailed subtasks.
+4. Each task/subtask should have a clear deliverable.
+

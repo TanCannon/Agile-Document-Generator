@@ -1,0 +1,138 @@
+## user_stories 1.0
+1. questions
+Provide a CSV table with the columns: Epic, ID, User Story, Tasks/Subtasks, Acceptance Criteria, Priority, Story Points. Enclose every field in double quotes. If a field contains a double quote, escape it by using two double quotes (""). Do not include any extra text. Each row should represent a different user story for a Tic Tac Toe game.
+
+## user_stories 1.1
+2. questions
+I have given an FRD (Functional Requirements Document) for a project below. Please generate a detailed project plan in CSV format (Use | as the delimiter) with the following columns: Module Name, Tasks, Subtasks, Deliverables.
+1. Break each section of the FRD into clear modules.
+2. Each module should have multiple tasks.
+3. Each task should be broken down into detailed subtasks.
+4. Each task/subtask should have a clear deliverable.
+
+<stick the FRD text here>
+
+## sprint-planning 1
+question
+Provide a CSV table with the columns: Epic, ID, User Story, Tasks/Subtasks, Acceptance Criteria, Priority, Story Points, Sprint Number, Assignee. Enclose every field in double quotes. Do not include any extra text. The 'Sprint Number' column should assign user stories to different sprints, ensuring that the total 'Story Points' for each sprint do not exceed 20. The 'Assignee' column should be filled with placeholder names like 'Team Member 1', 'Team Member 2', etc., and should be assigned in a round-robin fashion. Enclose every field in double quotes. Do not include any extra text. Each row should represent a different user story for a Tic Tac Toe game.
+
+## sprint-planning 1.1
+questions
+Provide a CSV table with the columns: Epic, ID, User Story, Tasks/Subtasks, Acceptance Criteria, Priority, Story Points, Sprint Number, Assignee. Enclose every field in double quotes. Do not include any extra text. The 'Sprint Number' column should assign user stories to different sprints, ensuring that the total 'Story Points' for each sprint do not exceed 20. The 'Assignee' column should be filled with placeholder names like 'Team Member 1', 'Team Member 2', etc., and should be assigned in a round-robin fashion. Enclose every field in double quotes. Do not include any extra text. Each row should represent a different user story.Use | as the delimiter.
+
+## sprint-planning 2
+questions
+Provide a CSV table for the below detailed plan with the following columns:
+Epic, ID, User Story, Tasks/Subtasks, Acceptance Criteria, Priority, Story Points, Sprint Number, Assignee
+ 
+- Use | as the delimiter between columns.
+- Each row should represent a different user story.
+- The Sprint Number column should:
+- Assign user stories to different sprints.
+- Ensure the total Story Points per sprint do not exceed 20.
+- The Assignee column should contain placeholder names like "Team Member 1", "Team Member 2", "Team Member 3", etc.
+- Be assigned in a round-robin fashion across user stories.
+- The Priority column should indicate the priority of the story (e.g., "High", "Medium", "Low").
+- Do not include any extra text, explanation, or notes outside the CSV.
+- Ensure the table is well-structured so it can be imported directly into Excel or any spreadsheet tool.with the columns: Epic, ID, User Story, Tasks/Subtasks, Acceptance Criteria, Priority, Story Points, Sprint Number, Assignee. Enclose every field in double quotes. Do not include any extra text. The 'Sprint Number' column should assign user stories to different sprints, ensuring that the total 'Story Points' for each sprint do not exceed 20. The 'Assignee' column should be filled with placeholder names like 'Team Member 1', 'Team Member 2', etc., and should be assigned in a round-robin fashion. Enclose every field in double quotes. Do not include any extra text. Each row should represent a different user story.Use | as the delimiter.
+ 
+ 
+## gantt-chart 1.0
+Generate a single, complete CSV table for a Tic-Tac-Toe project. Every field in the output must be enclosed in double quotes. Do not include any text, explanations, or code fences before or after the CSV data. 
+
+The CSV must contain the following 11 columns in this exact order:
+"Epic", "ID", "User Story", "Tasks/Subtasks", "Acceptance Criteria", "Priority", "Story Points", "Sprint Number", "Assignee", "Start Date", "End Date"
+
+The data must adhere to these rules:
+- Assign 'Story Points' to each row such that the total for each 'Sprint Number' does not exceed 20.
+- Assign team members in a round-robin fashion starting with "Team Member 1".
+- The 'Start Date' for Sprint 1 is "2025-08-19".
+- Each sprint has a fixed duration of 14 days. Calculate the 'Start Date' and 'End Date' for each row based on its 'Sprint Number'.
+
+
+## gantt-chart 1.1
+questions
+Generate a Gantt chart in CSV format for the below sprint planning where:  
+- Use "|" as the delimiter.  
+- The first column should be "Epic / Week".  
+- The next columns should be "Week 1", "Week 2", "Week 3", etc., with each column representing 1 week.  
+- Each row should represent an epic.  
+- Use ███████ to indicate when work is happening for that epic.  
+- Some epics should run in parallel, i.e., have overlapping weeks with other epics.  
+- Leave blank cells where no work is happening.  
+- Do not include any extra text or explanation.
+
+## UI mockups 1.0
+Generate a CSV table format having columns page name and code with | as the delimiter
+"login": """You are a UI designer. Create a clean HTML + CSS mockup  without indentation for a login page.""",
+
+"dashboard": """Generate an HTML + CSS mockup  without indentation for a user dashboard page.""",
+
+"tic_tac_toe": """Create an HTML + CSS mockup  without indentation of a Tic Tac Toe board."""
+
+
+## UI mockups 1.2
+You are a UX designer. I will provide you with functional requirements and user interactions. 
+Based on them, generate UI mockups in HTML and CSS for a web/app. 
+
+Guidelines:
+- Style: [Minimal / Modern / Material / Corporate] (choose one)
+- Platform: [Web / Mobile / Both]
+- Show layout, navigation, and page sections clearly.
+- Include forms, input fields, buttons, tables, and dashboards as needed.
+- Highlight key user interactions (click, hover, drag-drop, etc.).
+
+Requirements:
+[Paste FRD sections with user-facing features, e.g., login, dashboard, reports, etc.]
+
+Expected Output:
+- Wireframe mockups for each screen
+- Navigation flow between screens
+- Suggestions for layout improvements
+
+## UI mockups 1.3
+You are a UX/UI engineer. I will provide functional requirements and user interactions. 
+Based on them, generate a self-contained HTML file (with embedded <style> CSS) for a web/app. 
+Do NOT produce wireframes — return valid HTML+CSS code.
+
+Guidelines:
+- Style: Modern
+- Platform: Web, Mobile
+- Every screen/page must be wrapped in a <section id="screen-name"> ... </section>
+- Only one <section> is visible at a time using the :target CSS selector; others are hidden.
+- Include a <nav> at the top with anchor links (<a href="#login">Login</a>, etc.) so users and Playwright can jump between sections.
+- Layout: responsive (mobile-first), header + optional sidebar, main content area.
+- Components: forms, input fields, buttons, tables with sample data, dashboards, cards, modals.
+- Highlight key user interactions (click, hover, drag-drop, etc.).
+- Use semantic HTML and ARIA attributes for accessibility.
+
+Requirements:
+[Paste FRD sections with user-facing features, e.g., login, dashboard, reports, etc.]
+
+Expected Output:
+- A single complete HTML file with embedded CSS
+- One <section id="..."> per screen, with unique ids for navigation
+- Navigation flow implemented with anchor links and :target CSS
+- Responsive, accessible, and visually styled UI mockups
+
+## Workflow 1.0
+You are a systems analyst. I will provide you with functional flows and actor roles. 
+Based on them, generate workflow diagrams (flowcharts or UML activity diagrams).
+
+Guidelines:
+- Show all actors (users, admins, system modules, external services).
+- Represent decisions, actions, and data flows.
+- Clearly label inputs/outputs at each step.
+- Use swimlanes if multiple roles are involved.
+
+Process Requirements:
+[Paste FRD sections with process descriptions, workflows, data flow, or system interactions]
+
+Expected Output:
+- Workflow diagram(s) covering each process
+- Actor-to-system interactions
+- Decision points and alternate paths
+
+
+
+ 

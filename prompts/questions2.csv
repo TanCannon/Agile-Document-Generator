@@ -1,0 +1,174 @@
+questions
+Provide a detailed CSV table for the below detailed plan with the following columns:
+Epic, ID, User Story, Tasks/Subtasks, Acceptance Criteria, Priority, Story Points, Sprint Number, Assignee
+ 
+- Use | as the delimiter between columns.
+- Each row should represent a different user story.
+- The Sprint Number column should: Assign user stories to different sprints, Ensure the total Story Points per sprint do not exceed 20.
+- The Assignee column should contain placeholder names like "Team Member 1", "Team Member 2", "Team Member 3", etc.
+- Be assigned in a round-robin fashion across user stories.
+- The Priority column should indicate the priority of the story (e.g., "High", "Medium", "Low").
+- Do not include any extra text, explanation, or notes outside the CSV.
+- Ensure the table is well-structured so it can be imported directly into Excel or any spreadsheet tool.
+ 
+```csv
+Module Name|Tasks|Subtasks|Deliverables
+Project Setup|Define Project Scope|Review FRD and identify key deliverables|Scope Document
+Project Setup|Define Project Scope|Identify in-scope and out-of-scope functionalities|Scope Document
+Project Setup|Define Project Scope|Obtain sign-off on scope from stakeholders|Approved Scope Document
+Project Setup|Project Planning|Create a detailed project schedule|Project Schedule (Gantt Chart)
+Project Setup|Project Planning|Assign tasks and responsibilities to team members|Responsibility Assignment Matrix
+Project Setup|Project Planning|Establish communication and reporting protocols|Communication Plan
+Project Setup|Set up Development Environment|Provision necessary hardware and software|Development Environment Setup
+Project Setup|Set up Development Environment|Configure version control system (Git)|Git Repository
+Project Setup|Set up Development Environment|Set up testing and staging environments|Testing and Staging Environments
+Authentication & Authorization|Configure Okta Integration|Integrate Okta for single sign-on|Okta Integration Document
+Authentication & Authorization|Configure Okta Integration|Test Okta authentication flow|Working Okta Authentication
+Authentication & Authorization|Implement Role-Based Access Control (RBAC)|Define user roles and permissions (Admin, Developer, Read-Only, Support Engineer)|RBAC Matrix
+Authentication & Authorization|Implement Role-Based Access Control (RBAC)|Implement RBAC logic in the application|RBAC Implementation
+Authentication & Authorization|Implement Role-Based Access Control (RBAC)|Test user roles and permissions|Verified RBAC Implementation
+Data Layer - Snowflake|Set up Snowflake Connection|Establish connection to Snowflake database|Snowflake Connection String
+Data Layer - Snowflake|Data Model Implementation|Implement data model based on ERD provided|Data Model Schema
+Data Layer - Snowflake|Data Extraction Scripts|Create scripts to extract necessary data from Snowflake|Data Extraction Scripts
+Data Layer - Snowflake|Data Extraction Scripts|Test data extraction scripts|Verified Data Extraction Scripts
+Data Layer - External APIs|ServiceNow API Integration|Obtain API access to ServiceNow for Incidents and Change Requests|ServiceNow API Credentials
+Data Layer - External APIs|ServiceNow API Integration|Implement API calls to fetch Incidents and Change Requests|ServiceNow API Integration Code
+Data Layer - External APIs|UC4 API Integration|Obtain API access to UC4 for job and job plan data|UC4 API Credentials
+Data Layer - External APIs|UC4 API Integration|Implement API calls to fetch job and job plan data|UC4 API Integration Code
+Data Layer - Data Transformation|Implement Data Transformation Logic|Transform data extracted from Snowflake and APIs into the required format|Data Transformation Scripts
+Data Layer - Data Transformation|Implement Data Transformation Logic|Test data transformation logic|Verified Data Transformation Scripts
+Home Module|Implement Search Job Functionality|Create UI for job search|Search UI Component
+Home Module|Implement Search Job Functionality|Implement backend logic for job search|Working Job Search
+Home Module|Implement Subject Area List|Create UI for subject area list|Subject Area List UI Component
+Home Module|Implement Subject Area List|Fetch subject area data from database|Subject Area List Data
+Home Module|Implement Recent Incidents|Create UI for recent incidents|Recent Incidents UI Component
+Home Module|Implement Recent Incidents|Fetch recent incident data from database|Recent Incidents Data
+Home Module|Implement Change Requests|Create UI for Change Requests|Change Requests UI Component
+Home Module|Implement Change Requests|Fetch Change Request data from database|Change Request Data
+Dashboard Module|Implement System Health Overview|Design and develop system health overview dashboard|System Health Overview Dashboard UI
+Dashboard Module|Implement System Health Overview|Fetch and display system health metrics|System Health Metrics Data
+Dashboard Module|Implement Alerts|Design and develop alerts section|Alerts UI Component
+Dashboard Module|Implement Alerts|Implement logic for displaying alerts|Alerts Data
+Dashboard Module|Implement Key Metrics|Design and develop key metrics section|Key Metrics UI Component
+Dashboard Module|Implement Key Metrics|Fetch and display key metrics data|Key Metrics Data
+Job Scheduler Module|Implement Job Scheduler Screen|Design the Job Scheduler screen layout|Job Scheduler Screen Mockup
+Job Scheduler Module|Implement Job Scheduler Screen|Develop the Job Scheduler screen UI|Job Scheduler UI Component
+Job Scheduler Module|Implement Filter Bar Functionality|Develop Date Range Picker|Date Range Picker Component
+Job Scheduler Module|Implement Filter Bar Functionality|Develop Environment Dropdown|Environment Dropdown Component
+Job Scheduler Module|Implement Filter Bar Functionality|Implement Apply and Reset Buttons functionality|Working Apply/Reset Buttons
+Job Scheduler Module|Implement Search Functionality|Develop Global Search Bar|Global Search Bar Component
+Job Scheduler Module|Implement Search Functionality|Develop Job List Search|Job List Search Functionality
+Job Scheduler Module|Implement Job Listing Table|Implement Pagination|Pagination Component
+Job Scheduler Module|Implement Job Listing Table|Implement Sorting|Sorting Functionality
+Job Scheduler Module|Implement Job Listing Table|Display Columns (Job Name, Job Plan, Job Type, Description, Environment, Last Run)|Job Listing Table with Required Columns
+Job Scheduler Module|Implement Hyperlink Behavior|Implement Job Name Hyperlink to Job Detail Page|Job Name Hyperlink
+Job Scheduler Module|Implement Hyperlink Behavior|Implement Job Plan Hyperlink to Job Plan Detail Page|Job Plan Hyperlink
+Job Scheduler Module|Implement UI/UX Requirements|Implement Description field wrapping and truncation|Description Field Wrapping
+Job Scheduler Module|Implement UI/UX Requirements|Implement Responsive Layout|Responsive Layout Implementation
+Job Scheduler Module|Implement Backend Filtering|Optimize backend filtering for performance|Optimized Backend Filtering
+Job Scheduler Module|Implement API Queries|Implement API queries with filter, sort, and pagination parameters|Working API Queries
+Job Scheduler Module|Implement Security and Access Control|Ensure authorized users can view job data|Secure Job Data Access
+Job Detail Page Module|Implement Header Section|Display full technical job name as page title|Page Title
+Job Detail Page Module|Implement Job Metadata Section|Display Job Name, Job Type, Environment, Workflow, Last Run Status|Job Metadata Section
+Job Detail Page Module|Implement Description Section|Display job's functionality and schedule details|Description Section
+Job Detail Page Module|Implement Tabs Section|Implement tabs for Support Instructions, Job Plans, Run Stats, Incidents, Change Request|Tabbed Navigation
+Job Detail Page Module|Implement Default Tab Load|Set Support Instructions as default tab|Default Tab Loading
+Job Detail Page Module|Implement Dynamic Content Loading|Ensure each tab loads its data dynamically|Dynamic Content Loading
+Job Detail Page Module|Implement Hyperlink Behavior|Implement Workflow field hyperlink|Workflow Hyperlink
+Job Detail Page Module|Implement Hyperlink Behavior|Implement Document hyperlinks|Document Hyperlinks
+Job Detail Page Module|Implement UI/UX Requirements|Implement card-based layout, environment labels, word wrapping|UI/UX Improvements
+Job Detail Page - Support Instructions|Implement SLA Display|Display SLA in top-right corner|SLA Display
+Job Detail Page - Support Instructions|Implement Restart Instructions|Display restart steps as multi-line paragraph|Restart Instructions
+Job Detail Page - Support Instructions|Implement Input Details|Display input details as bullet points or comma-separated list|Input Details
+Job Detail Page - Support Instructions|Implement Output Details|Display output details including locations/destinations|Output Details
+Job Detail Page - Support Instructions|Implement Support Notes|Display support notes and guidelines|Support Notes
+Job Detail Page - Support Instructions|Implement Exceptions for Non-Production Environments|Display environment-specific instructions|Non-Production Exceptions
+Job Detail Page - Support Instructions|Implement Schedule Frequency|Display the job schedule frequency|Schedule Frequency
+Job Detail Page - Support Instructions|Implement Linked Support Document|Display and link the support document|Linked Support Document
+Job Detail Page - Support Instructions|Implement Secured Access to Linked Documents|Ensure secure access to PDF|Secured Document Access
+Job Detail Page - Job Plans Tab|Implement Header Section|Implement Tabs Navigation|Tab Navigation
+Job Detail Page - Job Plans Tab|Implement Header Section|Implement Search Field|Search Field
+Job Detail Page - Job Plans Tab|Implement Job Plan Table|Display Job Plan, Description, Environment, Last Modified Date columns|Job Plan Table
+Job Detail Page - Job Plans Tab|Implement Pagination|Implement Pagination|Pagination Controls
+Job Detail Page - Job Plans Tab|Implement Environment Filter|Implement Environment Filter|Environment Filter
+Job Detail Page - Job Plans Tab|Implement Dynamic Content Loading|Dynamically load job plans based on filters|Dynamic Job Plans Loading
+Job Detail Page - Job Plans Tab|Implement Sorting|Implement Sorting|Sorting Functionality
+Job Detail Page - Job Plans Tab|Implement Hyperlink Behavior|Implement hyperlink on Job Plan name|Job Plan Hyperlink
+Job Detail Page - Job Plans Tab|Implement Search Functionality|Implement Search Functionality|Working Search
+Job Detail Page - Job Plans Tab|Implement Environment Status Display|Implement Color-coded environment status indicators|Environment Status Indicators
+Job Detail Page - Run Statistics Tab|Implement Dynamic Filters Section|Implement filter bar with date pickers and environment dropdown|Filter Bar Component
+Job Detail Page - Run Statistics Tab|Implement Apply/Reset Functionality|Implement Apply and Reset buttons for filters|Apply/Reset Functionality
+Job Detail Page - Run Statistics Tab|Implement Summary Tiles|Display summary tiles for total runs, successful runs, failed runs, avg duration|Summary Tiles
+Job Detail Page - Run Statistics Tab|Implement Search Functionality|Implement search functionality for Job Plan, Duration, Status|Search Functionality
+Job Detail Page - Run Statistics Tab|Implement Data Table|Display job run data in tabular format|Run Statistics Table
+Job Detail Page - Run Statistics Tab|Implement SLA-Based Duration Highlighting|Highlight duration values based on SLA|SLA Highlighting
+Job Detail Page - Incidents Tab|Implement Header Section|Implement Summary tiles for Total, Last 7 Days, and This Month|Summary Tiles
+Job Detail Page - Incidents Tab|Implement Filters Section|Implement date pickers and environment dropdown filters|Filter Section
+Job Detail Page - Incidents Tab|Implement Search Functionality|Implement search functionality across columns|Search Functionality
+Job Detail Page - Incidents Tab|Implement Data Table|Display incident data in tabular format|Incident Data Table
+Job Detail Page - Incidents Tab|Implement Incident Number Hyperlinking|Implement hyperlink to ServiceNow incident page|Incident Number Hyperlink
+Job Detail Page - Incidents Tab|Implement Status Badge UI Behavior|Implement color-coded status badges|Status Badges
+Job Detail Page - Incidents Tab|Incident Details Popup Trigger|Click on "Eye" icon to show Incident Details Popup|Popup Trigger
+Job Detail Page - Incidents Tab|Implement Incident Details Popup|Incident Details Popup Implementation|Incident Details Popup
+Job Detail Page - Change Requests Tab|Implement Filters|Implement date range and environment filters|Change Request Filters
+Job Detail Page - Change Requests Tab|Implement Search|Implement search functionality across relevant columns|Change Request Search
+Job Detail Page - Change Requests Tab|Implement Data Table|Display change request data in tabular format|Change Request Table
+Job Detail Page - Change Requests Tab|Implement Hyperlink Behavior|Implement hyperlink to Change Request on ServiceNow (if API available)|Change Request Hyperlink
+Job Plan Detail Page|Implement Header Section|Implement Job Plan Title, Environment, Last Run Status, Last Modified Date|Header Section
+Job Plan Detail Page|Implement Job Plan Overview|Implement Description|Job Plan Description
+Job Plan Detail Page|Implement Tab Behavior|Implement Jobs Tab as Default|Jobs Tab as Default
+Job Plan Detail Page|Implement Dynamic Tab Navigation|Implement Dynamic Tab Navigation|Dynamic Tab Navigation
+Job Plan Detail Page - Jobs Tab|Implement Filter Section|Implement Filter Section with Environment Dropdown|Filter Section
+Job Plan Detail Page - Jobs Tab|Implement Search Bar|Implement Search Bar with Job Name, Description|Search Bar
+Job Plan Detail Page - Jobs Tab|Implement Job List Table|Implement Job List Table with required columns|Job List Table
+Job Plan Detail Page - Jobs Tab|Implement Hyperlink Navigation|Job Name hyperlinks to Job Detail Page|Job Detail Page Hyperlink
+Job Plan Detail Page - Jobs Tab|Implement Filtering|Environment dropdown filter updates Job List Table|Dynamic Filtered Job List
+Job Plan Detail Page - Jobs Tab|Implement Search|Search functionality filters Job List Table by Job Name or Description|Dynamic Search Results
+Job Plan Detail Page - Jobs Tab|Implement Sorting|Enable sorting on Job Name, Description and Last Modified Date|Sorting Functionality
+Job Plan Detail Page - Run Statistics Tab|Implement Summary Section|Display Total Runs, Success Runs, Failed Runs and Avg. Duration|Summary Section
+Job Plan Detail Page - Run Statistics Tab|Implement Filters Section|Implement Start Date/End Date and Environment filters|Date & Environment Filters
+Job Plan Detail Page - Run Statistics Tab|Implement Search Bar|Implement Search Bar with Job Name, Job Plan, Type, Environment or Status|Search Functionality
+Job Plan Detail Page - Run Statistics Tab|Implement Run Statistics Table|Display Job/Job Plan, Type, Planned Start Time, Actual Start Time, End Time, Duration, Environment, Status|Run Statistics Table
+Job Plan Detail Page - Run Statistics Tab|Implement Dynamic Update|Dynamic data updates without Page Reload|Dynamic Data Loading
+Job Plan Detail Page - Run Statistics Tab|Implement Sorting & Filtering|Functionality to Sort & Filter|Sorting & Filtering Functionality
+Job Plan Detail Page - Run Statistics Tab|Implement Color Indicators|Display Color Indicators to show SLA Breach|SLA Breach Visualization
+Job Plan Detail Page - Incidents Tab|Implement Summary Section|Display Total, Last 7 Day's and This Month Incidents|Incidents Summary Section
+Job Plan Detail Page - Incidents Tab|Implement Filters|Start Date / End Date, Environment Filters implementation|Incidents Filters
+Job Plan Detail Page - Incidents Tab|Implement Search Bar|Ability to search Incidents|Incidents Search
+Job Plan Detail Page - Incidents Tab|Implement Incident Table|Functionality to display all Incidents|Incidents Table
+Job Plan Detail Page - Incidents Tab|Implement Hyperlink Behavior|Functionality to link Incident to ServiceNow or Popup|Incidents Hyperlink Functionality
+Job Plan Detail Page - Incidents Tab|Implement Status Indicator|Functionality to color code Incident status|Status Indicator on Incident
+Job Plan Detail Page - Incidents Tab|Implement Incident Details Popup|Implement Incident Details Popup|Incident Details Popup
+Job Plan Detail Page - Incidents Tab|Implement Status Badge UI Behavior|Implement Color-coded status badges|Status Badges
+Job Plan Detail Page - Change Request Tab|Implement Summary Section|Implement Summary tiles for Total, Open, Closed Change Requests|Summary Tiles
+Job Plan Detail Page - Change Request Tab|Implement Filters|Implement date range and environment filters|Change Request Filters
+Job Plan Detail Page - Change Request Tab|Implement Search Bar|Ability to search Change Requests|Change Request Search
+Job Plan Detail Page - Change Request Tab|Implement Change Request Table|Functionality to display all Change Request|Change Request Table
+Job Plan Detail Page - Change Request Tab|Implement Hyperlink Behavior|Functionality to link Change Request to ServiceNow or Popup|Change Request Hyperlink Functionality
+Job Plan Detail Page - Change Request Tab|Implement Status Indicator|Functionality to color code Change Request status|Status Indicator on Change Request
+Admin Module|Implement User Management|Develop UI for user management|User Management UI
+Admin Module|Implement User Management|Implement backend logic for user management (create, edit, delete)|User Management Functionality
+Admin Module|Implement Role Management|Develop UI for role management|Role Management UI
+Admin Module|Implement Role Management|Implement backend logic for role management (create, edit, delete)|Role Management Functionality
+Admin Module|Implement Report Management|Develop UI for report management|Report Management UI
+Admin Module|Implement Report Management|Implement backend logic for report management|Report Management Functionality
+Admin Module|Implement Support Management|Develop UI for support management|Support Management UI
+Admin Module|Implement Support Management|Implement backend logic for support management|Support Management Functionality
+Templates Module|Implement templates with pre-defined Jobs, Job Plans, Change Requests, and Incidents|Implement the screen to create Templates|Screen for Template creation
+Templates Module|Implement templates with pre-defined Jobs, Job Plans, Change Requests, and Incidents|Implement API's to be called in the front end for Template creation|API's to support the Template creation.
+Reporting|Embed Power BI Reports|Embed Power BI reports in the application|Embedded Power BI Reports
+Reporting|Configure Data Refresh|Configure data refresh schedule for Power BI reports|Power BI Data Refresh
+Testing|Unit Testing|Write and execute unit tests for all modules|Unit Test Results
+Testing|Integration Testing|Perform integration testing between different modules|Integration Test Results
+Testing|User Acceptance Testing (UAT)|Conduct UAT with end-users|UAT Sign-off
+Deployment|Prepare Deployment Package|Create a deployment package with all necessary components|Deployment Package
+Deployment|Deploy to Staging Environment|Deploy the application to the staging environment|Staging Environment Deployment
+Deployment|Conduct Final Testing|Conduct final testing on the staging environment|Final Test Results
+Documentation|Develop User Manual|Create a user manual for the application|User Manual
+Documentation|Develop API Documentation|Create API documentation for all implemented APIs|API Documentation
+Documentation|Create Release Notes|Create release notes for each release|Release Notes
+Training|Conduct User Training|Conduct user training sessions|Training Materials
+Training|Prepare Training Materials|Create training materials for the application|Trained Users
+Project Closure|Final Project Review|Conduct a final project review with stakeholders|Project Closure Report
+Project Closure|Documentation Handover|Hand over all project documentation to the client|Handover Documentation
+```

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Management System</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            height: 100vh; /* Full viewport height */
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #222d32;
+            color: #fff;
+            padding: 20px;
+            overflow-y: auto; /* Scroll if content overflows */
+            height: 100vh;
+            position: sticky; /* Stay fixed during scroll */
+            top: 0;
+
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar li:hover, .sidebar li.active {
+            background-color: #3c8dbc;
+        }
+
+        .sidebar a {
+            color: #fff;
+            display: block;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+            overflow-y: auto; /* Allow content to scroll */
+
+        }
+
+        /* Cards */
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        /* Forms */
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close-button {
+            float: right;
+            cursor: pointer;
+        }
+
+        /* Active Screen */
+        section {
+            display: none;
+        }
+
+        section:target {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 10px;
+                overflow-y: hidden; /* Remove vertical scroll */
+
+            }
+
+            .content {
+                padding: 10px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#search">Search Job</a></li>
+                <li><a href="#subject-area-list">Subject Area List</a></li>
+                <li><a href="#recent-incidents">Recent Incidents</a></li>
+                <li><a href="#change-requests">Change Requests</a></li>
+                <li><a href="#rally-tickets">Rally Tickets</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#jobs-list">Jobs List</a></li>
+                <li><a href="#service-now">ServiceNow</a></li>
+                <li><a href="#reports">Reports</a></li>
+                <li><a href="#settings">Settings</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <!-- Home Screen -->
+            <section id="home">
+                <h1>Home</h1>
+                <div class="card">
+                    <div class="card-header">Search Job</div>
+                    <input type="text" placeholder="Search by job name, ID, or subject area">
+                    <button>Search</button>
+                </div>
+                <div class="card">
+                    <div class="card-header">Subject Area List</div>
+                    <ul>
+                        <li><a href="#jobs-list">Finance</a></li>
+                        <li><a href="#jobs-list">HR</a></li>
+                        <li><a href="#jobs-list">IT</a></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-header">Recent Incidents</div>
+                    <p>No recent incidents.</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">Change Requests</div>
+                    <p>No pending change requests.</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">Rally Tickets</div>
+                    <p>No recent Rally tickets.</p>
+                </div>
+            </section>
+
+            <!-- Search Job Screen -->
+            <section id="search">
+                <h1>Search Job</h1>
+                <div class="card">
+                    <form>
+                        <input type="text" placeholder="Job Name, ID, Subject Area">
+                        <select>
+                            <option value="">-- Select Subject Area --</option>
+                            <option value="finance">Finance</option>
+                            <option value="hr">HR</option>
+                            <option value="it">IT</option>
+                        </select>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </section>
+
+             <!-- Subject Area List Screen -->
+            <section id="subject-area-list">
+                <h1>Subject Area List</h1>
+                <div class="card">
+                    <ul>
+                        <li><a href="#jobs-list">Finance Jobs</a></li>
+                        <li><a href="#jobs-list">HR Jobs</a></li>
+                        <li><a href="#jobs-list">IT Jobs</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Recent Incidents Screen -->
+            <section id="recent-incidents">
+                <h1>Recent Incidents</h1>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Incident ID</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INC0001</td>
+                                <td>Database connection error</td>
+                                <td>Open</td>
+                            </tr>
+                            <tr>
+                                <td>INC0002</td>
+                                <td>Application crash</td>
+                                <td>Resolved</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Change Requests Screen -->
+            <section id="change-requests">
+                <h1>Change Requests</h1>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CR ID</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CR0001</td>
+                                <td>Update application server</td>
+                                <td>Pending Approval</td>
+                            </tr>
+                            <tr>
+                                <td>CR0002</td>
+                                <td>Database migration</td>
+                                <td>In Progress</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Rally Tickets Screen -->
+            <section id="rally-tickets">
+                <h1>Rally Tickets</h1>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>US1234</td>
+                                <td>Implement new feature</td>
+                                <td>In Development</td>
+                            </tr>
+                            <tr>
+                                <td>DE5678</td>
+                                <td>Fix bug</td>
+                                <td>Closed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Dashboard Screen -->
+            <section id="dashboard">
+                <h1>Dashboard</h1>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <div class="card-header">System Health</div>
+                        <p>System is operating normally.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Alerts</div>
+                        <p>No active alerts.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Key Metrics</div>
+                        <p>Job success rate: 99%</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Jobs List Screen -->
+            <section id="jobs-list">
+                <h1>Jobs List</h1>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Job Name</th>
+                                <th>Subject Area</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Financial Report</td>
+                                <td>Finance</td>
+                                <td>Active</td>
+                            </tr>
+                            <tr>
+                                <td>Employee Onboarding</td>
+                                <td>HR</td>
+                                <td>Scheduled</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Service Now Screen -->
+            <section id="service-now">
+                 <h1>ServiceNow Incidents</h1>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Incident Number</th>
+                                <th>Short Description</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INC001001</td>
+                                <td>Network Connectivity Issue</td>
+                                <td>Open</td>
+                            </tr>
+                            <tr>
+                                <td>INC001002</td>
+                                <td>Application Error</td>
+                                <td>Resolved</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Reports Screen -->
+            <section id="reports">
+                 <h1>Power BI Reports</h1>
+                <div class="card">
+                    <p>Embedded Power BI Reports would go here.  Placeholder.</p>
+                </div>
+            </section>
+
+            <!-- Settings Screen -->
+            <section id="settings">
+                <h1>Settings</h1>
+                <div class="card">
+                    <ul>
+                        <li><a href="#">User Management</a></li>
+                        <li><a href="#">Role Management</a></li>
+                        <li><a href="#">Report Management</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Support Screen -->
+            <section id="support">
+                <h1>Support Templates</h1>
+                <div class="card">
+                    <p>Support documentation and templates.</p>
+                </div>
+            </section>
+
+             <!-- Job Detail Page Screen -->
+             <section id="job-detail">
+                <h1>Job Detail</h1>
+                <div class="card">
+                    <div class="card-header">Job Information</div>
+                    <p><strong>Job Name:</strong> Payroll Processing</p>
+                    <p><strong>Description:</strong> Processes monthly payroll.</p>
+                    <p><strong>Status:</strong> Active</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">Job Support Instructions</div>
+                    <p>Refer to the internal documentation for troubleshooting steps.</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">Error Logs</div>
+                    <p>No recent errors.</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">Associated Incidents</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Incident ID</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INC0003</td>
+                                <td>Payroll job failed.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card">
+                    <div class="card-header">Change Requests</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CR ID</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CR0003</td>
+                                <td>Update payroll job script.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card">
+                    <div class="card-header">Job Schedule</div>
+                    <p><strong>Next Run:</strong> 2024-01-25 00:00</p>
+                    <p><strong>Frequency:</strong> Monthly</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">Job Run Stats</div>
+                    <p><strong>Success Rate:</strong> 99%</p>
+                    <p><strong>Average Processing Time:</strong> 5 minutes</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</body>
+</html>

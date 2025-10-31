@@ -1,0 +1,16 @@
+You are a systems analyst. I will provide you with functional flows and actor roles. 
+Based on them, generate workflow diagrams (flowcharts or UML activity diagrams).
+
+Guidelines:
+- Show all actors (users, admins, system modules, external services).
+- Represent decisions, actions, and data flows.
+- Clearly label inputs/outputs at each step.
+- Use swimlanes if multiple roles are involved.
+
+Process Requirements:
+[Paste FRD sections with process descriptions, workflows, data flow, or system interactions]
+
+Expected Output:
+- Workflow diagram(s) covering each process
+- Actor-to-system interactions
+- Decision points and alternate paths

@@ -1,0 +1,22 @@
+Screen Name | Summary
+Home | The Home screen likely displays a main page with quick access to key features such as a search bar, subject area lists, recent incidents, and change requests, offering a central starting point for users.
+Dashboard | The Dashboard screen provides a system health overview, displays alerts, and presents key performance metrics, offering a snapshot of the application's status and performance.
+Job Scheduler | The Job Scheduler screen allows users to view and manage scheduled jobs, offering functionalities to filter, sort, search, and access job details and job plans.
+Change Requests | The Change Requests screen displays a list of change requests and enables users to view and manage them.
+Incidents | The Incidents screen allows users to view incidents and tickets, likely sourced from a system like ServiceNow.
+Reports | The Reports screen features embedded Power BI reports, providing data visualization and analysis capabilities.
+Admin | The Admin screen provides administrative functionalities such as user, role, and report management, providing privileged users with control over the system's configuration and user access.
+Job Scheduler | The Job Scheduler screen enables users to view and monitor scheduled jobs, allowing filtering, searching, and sorting of job details, and providing access to individual job pages.
+Job Detail Page | The Job Detail Page provides an in-depth view of a specific job, allowing users to monitor its performance, review execution data, and troubleshoot issues, with access to various tabs for support instructions, job plans, run statistics, incidents, and change requests.
+Support Instructions Tab | The Support Instructions tab offers operational guidance for managing a job, including restart procedures, SLA information, input/output details, environment-specific exceptions, and links to support documents.
+Job Plans Tab | The Job Plans Tab displays a list of available job plans in a table format, allowing users to filter, sort, and search for job plans, and access further details of each job plan.
+Run Statistics Tab | The Run Statistics tab provides a detailed breakdown of a job's execution history, allowing users to analyze trends, identify failures, and monitor SLA adherence through filters, summary tiles, a search bar, and a data table.
+Incidents Tab | The Incidents Tab displays incidents associated with the selected job, providing a quick view of incident volume via summary tiles, the ability to filter incidents, a search function, and incident data displayed in a sortable table linked to ServiceNow.
+Incident Details Popup | The Incident Details Popup provides complete information on a specific incident, with editable fields, and update functionality.
+Change Request Tab | The Change Request Tab displays a list of change requests associated with the selected UC4 job, allowing users to filter, search, and view change records related to job scheduling, workflows, and configuration changes.
+Job Plan Detail Page | The Job Plan Detail Page offers detailed information about a job plan, including job execution details, associated incidents, and change requests, accessible through tabs.
+Jobs Tab | The Jobs Tab displays a list of jobs associated with the selected job plan, allowing users to filter and search for jobs, and providing links to individual job detail pages.
+Run Statistics Tab | The Run Statistics Tab displays detailed execution history of jobs and job plans under the selected Job Plan.
+Incidents Tab | The Incidents Tab displays all incidents associated with the selected Job Plan, allowing users to filter, view statuses, and navigate to incident details for troubleshooting.
+Incident Details Popup | The Incident Details Popup provides complete information on a specific incident, inherited from 4.1.1.4.1.
+Change Request Tab | The Change Request Tab provides a detailed view of all change requests associated with the selected Job Plan.

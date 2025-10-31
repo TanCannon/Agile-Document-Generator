@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Workflows</title>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+  <style>
+    .workflow-section {
+      height: 100vh;         /* make each section full screen */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      scroll-snap-align: start;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#workflow1">Workflow 1</a> |
+    <a href="#workflow2">Workflow 2</a> |
+    <a href="#workflow3">Workflow 3</a>
+  </nav>
+
+  <!-- Section 1 -->
+  <section id="workflow1" class="workflow-section">
+    <div class="mermaid">
+      flowchart TD
+        A[Start] --> B{Decision}
+        B -->|Yes| C[Do Task]
+        B -->|No| D[Stop]
+    </div>
+  </section>
+
+  <!-- Section 2 -->
+  <section id="workflow2" class="workflow-section">
+    <div class="mermaid">
+      sequenceDiagram
+        Alice->>Bob: Hello
+        Bob->>Alice: Hi!
+    </div>
+  </section>
+
+  <!-- Section 3 -->
+  <section id="workflow3" class="workflow-section">
+    <div class="mermaid">
+      stateDiagram-v2
+        [*] --> Idle
+        Idle --> Working
+        Working --> Done
+        Done --> [*]
+    </div>
+  </section>
+
+</body>
+</html>

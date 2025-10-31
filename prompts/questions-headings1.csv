@@ -1,0 +1,44 @@
+questions
+I will provide a list of headings and subheadings (with page numbers) from an FRD in the format:
+ 
+Heads/Subheads|Pages  
+ 
+Your task is to:
+1. Identify only those headings/subheadings that are necessary to generate a **detailed project plan** (e.g., modules, functional requirements, features, scope, workflows).  
+2. Exclude headings/subheadings that are not relevant for planning (e.g., purpose, references, glossary, introduction, acronyms, assumptions, constraints, annexures).  
+3. Return the filtered output in the **same format as the input**.
+4. Do not add any explanation, commentary, or extra text. Only return the filtered list in the given format.  
+ 
+Here are the headings/subheadings:
+ 
+Heads/Subheads|Pages
+1. PURPOSE|[3]
+2. PROJECT OVERVIEW|[4]
+2.1 OBJECTIVE|[4]
+2.2 SCOPE|[4]
+2.3 OUT OF SCOPE|[4]
+2.4 ASSUMPTIONS|[4]
+3. FUNCTIONAL MODULES|[5]
+3.1 MENU STRUCTURE|[5]
+3.2 DESIGN PATTERNS|[5]
+3.3 GENERAL UI GUIDELINES|[5]
+4. SCREENS|[6]
+4.1 JOB SCHEDULER|[6]
+4.1.1 JOB DETAIL PAGE|[10]
+4.1.1.1 SUPPORT INSTRUCTIONS TAB|[13]
+4.1.1.2 JOB PLANS TAB|[16]
+4.1.1.3 RUN STATISTICS TAB|[20]
+4.1.1.4 INCIDENTS TAB|[24]
+4.1.1.4.1 INCIDENT DETAILS POPUP|[28]
+4.1.1.5 CHANGE REQUEST TAB|[32]
+4.1.2 JOB PLAN DETAIL PAGE|[35]
+4.1.2.1 JOBS TAB|[37]
+4.1.2.2 RUN STATISTICS TAB|[39]
+4.1.2.4 INCIDENTS TAB|[41]
+4.1.2.4.1 INCIDENT DETAILS POPUP|[43]
+4.1.2.5 CHANGE REQUEST TAB|[46]
+5. NON-FUNCTIONAL REQUIREMENTS|[49]
+6. USER ROLES AND PERMISSIONS|[49]
+7. DEPENDENCIES|[49]
+8. REPORTING REQUIREMENTS|[49]
+9. ERD & DATA MODEL|[50]

@@ -1,0 +1,38 @@
+# ---- prompts input output settings ---------
+input_file1 : "./prompts/questions1.csv" #prompt: to generate detailed plan
+output_file1 : "./outputs/answers1.csv"  #output: detailed plan
+input_file1_1 : "./prompts/questions1.1.csv" #prompt: to filter required head/subheads for detailed plan
+output_file1_1 : "./outputs/answers1.1.csv" #output: required head/subheads for detailed plan
+output_file1_xlsx : "./outputs/UserStories.xlsx" #output: detailed plan excel sheet
+input_file2 : "./prompts/questions2.csv" #prompt: to generate sprint planning
+output_file2: "./outputs/answers2.csv" #output: sprint planning
+output_file2_xlsx : "./outputs/SprintPlanning.xlsx" #output: sprint planning excel sheet
+input_file3 : "./prompts/questions3.csv" #prompt: to generate gantt chart
+output_file3: "./outputs/answers3.csv" #output: gantt chart
+output_file3_xlsx : "./outputs/GanttChart.xlsx" #output: gantt chart excel sheet
+
+# ---- prompt reset settings ---------
+questions1_reset: "./prompts/Resetquestions1.csv" #prompt reset: input_file1
+questions2_reset: "./prompts/Resetquestions2.csv" #prompt reset: input_file2
+questions3_reset: "./prompts/Resetquestions3.csv" #prompt reset: input_file3
+questions4_reset: "./prompts/Resetquestions4.csv" #prompt reset: questions_generate_UI_mockups
+Resetquestions1_1: "./prompts/Resetquestions1.1.csv" #prompt reset: input_file1_1
+Resetquestions_screen_summary: "./prompts/Resetquestions_screen_summary1.csv" #prompt reset: questions_screen_summary
+
+# ## ---- pdfreader input output settings ---------
+pdfreader_output_path: "./uploades/pdf-text.txt"
+
+## ----extract headings input output settings ---------
+output_heads_subheads: "./data/raw/heads-subheads.csv" #output: selected table of content
+questions_extract_headings: "./prompts/questions-headings1.csv" #prompt: to list required headings out of table of content
+answers_extracted_headings: "./outputs/answers-headings1.csv" #output: required headings
+output_extracted_heading_content: "./data/raw/extracted_contents.csv" #output: required headings content
+extract_output_file1_1: "./data/raw/extract_output_file1_1.csv" #output: content of required head/subheads for detailed plan
+
+## ----UI mockups input output settings ---------
+questions_screen_summary: "./prompts/questions_screens_summary1.csv" #prompt: to generate all screen summary from frd mockups contents
+answers_screen_summary: "./outputs/answers_screens_summary1.csv" #output: generated screen summart
+questions_generate_UI_mockups: "./prompts/questions-ui-mockups1.csv" #prompt: to generate UI mockups in HTML CSS from screen summary
+answers_generated_UI_mockups: "./outputs/answers-ui-mockups1.html" #output: UI mockups in HTML CSS
+screenshot_output_path: "./screenshots" #output: screenshots taken of pages of UI mockups in HTML CSS
+

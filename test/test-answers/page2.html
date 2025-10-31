@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Management System</title>
+    <style>
+        /* CSS (Basic Styling - Enhance as needed) */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #222d32;
+            color: #fff;
+            padding: 20px;
+            transition: width 0.3s; /* Smooth transition for collapsing */
+        }
+
+        .sidebar.collapsed {
+            width: 60px; /* Collapsed width */
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
+        }
+
+        .sidebar li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 5px 10px;
+        }
+
+        .sidebar a:hover {
+            background-color: #367fa9;
+        }
+
+        .sidebar .active {
+            background-color: #3c8dbc;
+            font-weight: bold;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #3c8dbc;
+            margin-bottom: 15px;
+        }
+
+        /* Forms */
+        input[type="text"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Important for width */
+        }
+
+        button {
+            background-color: #3c8dbc;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #367fa9;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        /* Dashboard */
+        .dashboard-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .admin-only {
+            /* Initially hidden, shown via JS for admin role */
+            display: none;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static; /* Remove fixed positioning on mobile */
+            }
+
+            .sidebar.collapsed {
+                width: 100%; /* Expand when "collapsed" on mobile */
+            }
+        }
+
+        /* Collapsible Button */
+        #collapse-btn {
+            background-color: #3c8dbc;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 10px; /* Added margin */
+            display: block; /* Ensure it's a block-level element */
+            text-align: center; /* Center the text */
+            width: 100%; /* Full width */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        #collapse-btn:hover {
+            background-color: #367fa9;
+        }
+
+        /* Submenu Styling */
+        .submenu {
+            padding-left: 20px; /* Indent the submenu items */
+            display: none; /* Hide by default */
+        }
+
+        .submenu li {
+            border-bottom: none; /* Remove border from submenu items */
+        }
+
+        .submenu a {
+            font-size: 0.9em; /* Slightly smaller font for submenu */
+        }
+
+        .has-submenu > a:after {
+            content: '\f107'; /* FontAwesome caret-down icon (example) */
+            font-family: FontAwesome; /* Replace with your icon font */
+            float: right;
+        }
+
+        .submenu.active {
+            display: block;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Job System</h2>
+            <button id="collapse-btn">Collapse Menu</button>
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+
+                <li class="has-submenu">
+                    <a href="#">Search</a>
+                    <ul class="submenu">
+                        <li><a href="#search-job">Job Search</a></li>
+                        <li><a href="#subject-area-list">Subject Areas</a></li>
+                        <li><a href="#recent-incidents">Recent Incidents</a></li>
+                        <li><a href="#change-requests">Change Requests</a></li>
+                        <li><a href="#rally-tickets">Rally Tickets</a></li>
+                    </ul>
+                </li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#jobs">Jobs</a></li>
+                <li><a href="#change-requests-page">Change Requests</a></li>
+                <li><a href="#servicenow">ServiceNow</a></li>
+                <li><a href="#reports">Reports</a></li>
+                <li class="admin-only"><a href="#settings">Settings</a></li>
+            </ul>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+
+            <!-- Home Section -->
+            <section id="home">
+                <h1>Home</h1>
+                <p>Welcome to the Job Management System!</p>
+
+                <!-- Search Job -->
+                <section id="search-job">
+                    <h3>Search Job</h3>
+                    <input type="text" placeholder="Job Name, ID, or Subject Area">
+                    <button>Search</button>
+                </section>
+
+                <!-- Subject Area List -->
+                <section id="subject-area-list">
+                    <h3>Subject Area List</h3>
+                    <ul>
+                        <li><a href="#">Finance Jobs</a></li>
+                        <li><a href="#">IT Jobs</a></li>
+                        <li><a href="#">HR Jobs</a></li>
+                    </ul>
+                </section>
+
+                <!-- Recent Incidents -->
+                <section id="recent-incidents">
+                    <h3>Recent Incidents</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Incident ID</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INC001</td>
+                                <td>Database connection error</td>
+                                <td>Open</td>
+                            </tr>
+                            <tr>
+                                <td>INC002</td>
+                                <td>Job failing to start</td>
+                                <td>In Progress</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Change Requests -->
+                <section id="change-requests">
+                    <h3>Change Requests</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CR ID</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CR001</td>
+                                <td>Update database schema</td>
+                                <td>Pending Approval</td>
+                            </tr>
+                            <tr>
+                                <td>CR002</td>
+                                <td>Deploy new application version</td>
+                                <td>Scheduled</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Rally Tickets -->
+                <section id="rally-tickets">
+                    <h3>Rally Tickets</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>RT001</td>
+                                <td>Fix bug in reporting module</td>
+                                <td>In Development</td>
+                            </tr>
+                            <tr>
+                                <td>RT002</td>
+                                <td>Implement new feature</td>
+                                <td>In Progress</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard">
+                <h1>Dashboard</h1>
+                <div class="dashboard-item">
+                    <h3>System Health</h3>
+                    <p>Status: <span style="color: green;">Healthy</span></p>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Alerts</h3>
+                    <p>No new alerts.</p>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Key Metrics</h3>
+                    <p>Job Success Rate: 99%</p>
+                </div>
+            </section>
+
+            <!-- Subject Area List Section -->
+            <section id="subject-area-list-page">
+                <h1>Subject Area List</h1>
+                <!-- Subject Area Management Form -->
+                <input type="text" placeholder="Add New Subject Area">
+                <button>Add</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject Area</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Finance</td>
+                            <td>Financial jobs</td>
+                            <td><button>Edit</button> <button>Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>IT</td>
+                            <td>Information Technology jobs</td>
+                            <td><button>Edit</button> <button>Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Jobs Section -->
+            <section id="jobs">
+                <h1>Jobs</h1>
+                <!-- Job Filters -->
+                <input type="text" placeholder="Search Jobs">
+                <select>
+                    <option>Status: All</option>
+                    <option>Status: Active</option>
+                    <option>Status: Inactive</option>
+                </select>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Job Name</th>
+                            <th>Subject Area</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>JOB001</td>
+                            <td>Daily Sales Report</td>
+                            <td>Finance</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <td>JOB002</td>
+                            <td>Weekly Inventory Update</td>
+                            <td>IT</td>
+                            <td>Active</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Change Requests Section -->
+            <section id="change-requests-page">
+                <h1>Change Requests</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CR ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CR001</td>
+                            <td>Update database schema</td>
+                            <td>Pending Approval</td>
+                        </tr>
+                        <tr>
+                            <td>CR002</td>
+                            <td>Deploy new application version</td>
+                            <td>Scheduled</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ServiceNow Section -->
+            <section id="servicenow">
+                <h1>ServiceNow</h1>
+                <p>Embedded ServiceNow view here.</p>
+                <!-- Replace with actual ServiceNow iframe or integration -->
+                <iframe src="https://www.servicenow.com" width="100%" height="500px"></iframe>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports">
+                <h1>Reports</h1>
+                <p>Embedded Power BI reports here.</p>
+                <!-- Replace with actual Power BI embed -->
+                <iframe width="100%" height="600" src="https://app.powerbi.com/reportEmbed?reportId=YOUR_REPORT_ID&autoAuth=true&ctid=YOUR_TENANT_ID" frameborder="0" allowFullScreen="true"></iframe>
+            </section>
+
+            <!-- Settings Section (Admin Only) -->
+            <section id="settings" class="admin-only">
+                <h1>Settings</h1>
+                <ul>
+                    <li><a href="#">User Management</a></li>
+                    <li><a href="#">Role Management</a></li>
+                    <li><a href="#">Report Management</a></li>
+                    <li><a href="#">Support Templates</a></li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript (Basic Interactions)
+        const sidebar = document.querySelector('.sidebar');
+        const collapseBtn = document.getElementById('collapse-btn');
+        const adminOnlyElements = document.querySelectorAll('.admin-only');
+        const submenuLinks = document.querySelectorAll('.has-submenu > a');
+
+        collapseBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+
+        // Simulate User Role (Replace with real authentication)
+        const userRole = 'admin'; // or 'user'
+        if (userRole === 'admin') {
+            adminOnlyElements.forEach(element => element.style.display = 'block');
+        }
+
+        // Submenu Toggle
+        submenuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const submenu = link.nextElementSibling;
+                submenu.classList.toggle('active');
+            });
+        });
+    </script>
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+</body>
+</html>

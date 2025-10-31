@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Management System</title>
+    <style>
+        /* Basic CSS for layout and structure */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: width 0.3s ease;
+            overflow-x: hidden; /* Hide horizontal overflow when collapsed */
+        }
+
+        .sidebar.collapsed {
+            width: 60px; /* Collapsed width */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            padding: 8px 0;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+
+        .sidebar .active {
+            background-color: #bbb;
+            color: white;
+        }
+
+        .sidebar-toggle {
+            cursor: pointer;
+            padding: 8px;
+            text-align: center;
+        }
+        .sidebar-toggle:hover {
+            background-color: #ddd;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #eee;
+            padding: 10px;
+            text-align: right;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Forms */
+        input[type="text"],
+        select {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .dashboard-item {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" onclick="toggleSidebar()">☰</div>
+        <ul>
+            <li><a href="home.html" class="active">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="subject-areas.html">Subject Areas</a></li>
+            <li><a href="jobs.html">Jobs</a></li>
+            <li><a href="change-requests.html">Change Requests</a></li>
+            <li><a href="service-now.html">ServiceNow</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li class="has-submenu">
+                <a href="#">Settings</a>
+                <ul>
+                    <li><a href="user-management.html">User Management</a></li>
+                    <li><a href="role-management.html">Role Management</a></li>
+                    <li><a href="report-management.html">Report Management</a></li>
+                    <li><a href="support-templates.html">Support Templates</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <!-- User info, Notifications etc. -->
+            Logged in as: John Doe | <a href="#">Logout</a>
+        </header>
+
+        <!-- Home Page Content -->
+        <section id="home">
+            <h2>Home</h2>
+
+            <!-- Search Job -->
+            <section>
+                <h3>Search Job</h3>
+                <input type="text" placeholder="Job Name, ID, Subject Area">
+                <select>
+                    <option value="">All Subject Areas</option>
+                    <option value="finance">Finance</option>
+                    <option value="hr">HR</option>
+                    <option value="it">IT</option>
+                </select>
+                <button>Search</button>
+            </section>
+
+            <!-- Subject Area List -->
+            <section>
+                <h3>Subject Areas</h3>
+                <ul>
+                    <li><a href="#">Finance</a></li>
+                    <li><a href="#">HR</a></li>
+                    <li><a href="#">IT</a></li>
+                </ul>
+            </section>
+
+            <!-- Recent Incidents -->
+            <section>
+                <h3>Recent Incidents</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>INC001</td>
+                            <td>Server Down</td>
+                            <td>Open</td>
+                        </tr>
+                        <tr>
+                            <td>INC002</td>
+                            <td>Application Error</td>
+                            <td>Pending</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Change Requests -->
+            <section>
+                <h3>Change Requests</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CR001</td>
+                            <td>Database Upgrade</td>
+                            <td>In Progress</td>
+                        </tr>
+                        <tr>
+                            <td>CR002</td>
+                            <td>Network Configuration</td>
+                            <td>Approved</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Rally Tickets -->
+            <section>
+                <h3>Rally Tickets</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RA001</td>
+                            <td>Bug Fix</td>
+                            <td>Open</td>
+                        </tr>
+                        <tr>
+                            <td>RA002</td>
+                            <td>New Feature</td>
+                            <td>In Development</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <!-- Job Detail Page (Example) -->
+        <section id="job-detail" style="display: none;">
+            <h2>Job Detail - Job Name</h2>
+
+            <section>
+                <h3>Job Information</h3>
+                <p><strong>Name:</strong> Job Name</p>
+                <p><strong>Description:</strong> Job Description</p>
+                <p><strong>Status:</strong> Active</p>
+                <p><strong>Owner:</strong> John Doe</p>
+                <p><strong>Schedule:</strong> Daily at 08:00</p>
+            </section>
+
+            <section>
+                <h3>Job Support Instructions</h3>
+                <p>Documentation and troubleshooting steps...</p>
+            </section>
+
+            <section>
+                <h3>Error Logs</h3>
+                <p>Error messages and logs from UC4 and Informatica...</p>
+            </section>
+
+            <section>
+                <h3>Associated Incidents</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>INC003</td>
+                            <td>Job Failure</td>
+                            <td>Open</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>Change Requests</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CR003</td>
+                            <td>Job Update</td>
+                            <td>Completed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>Job Schedule</h3>
+                <p><strong>Next Run:</strong> 2024-10-27 08:00</p>
+                <p><strong>Last Run:</strong> 2024-10-26 08:00</p>
+                <p><strong>Frequency:</strong> Daily</p>
+                <p><strong>Timing:</strong> 08:00</p>
+            </section>
+
+            <section>
+                <h3>Job Run Stats</h3>
+                <p><strong>Success Rate:</strong> 99%</p>
+                <p><strong>Failure Rate:</strong> 1%</p>
+                <p><strong>Average Processing Time:</strong> 5 minutes</p>
+            </section>
+        </section>
+
+         <!-- Dashboard Page Content -->
+        <section id="dashboard" style="display: none;">
+            <h2>Dashboard</h2>
+            <div class="dashboard-grid">
+                <div class="dashboard-item">
+                    <h3>System Health</h3>
+                    <p>Status: <span style="color: green;">Healthy</span></p>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Alerts</h3>
+                    <p>No new alerts</p>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Job Success Rate</h3>
+                    <p>99.5%</p>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Average Job Duration</h3>
+                    <p>5 minutes</p>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Change Requests Pending</h3>
+                    <p>3</p>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Incidents Open</h3>
+                    <p>5</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subject Area List Page Content -->
+        <section id="subject-areas" style="display: none;">
+            <h2>Subject Areas</h2>
+            <input type="text" placeholder="Search Subject Areas">
+            <button>Add Subject Area</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Finance</td>
+                        <td>Financial Jobs</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>HR</td>
+                        <td>Human Resources Jobs</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Jobs List Page Content -->
+        <section id="jobs" style="display: none;">
+            <h2>Jobs</h2>
+            <input type="text" placeholder="Search Jobs">
+            <select>
+                <option value="">All Subject Areas</option>
+                <option value="finance">Finance</option>
+                <option value="hr">HR</option>
+            </select>
+            <select>
+                <option value="">All Statuses</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Subject Area</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Finance Job 1</td>
+                        <td>Finance</td>
+                        <td>Active</td>
+                        <td><a href="#">View</a> | <a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>HR Job 1</td>
+                        <td>HR</td>
+                        <td>Active</td>
+                        <td><a href="#">View</a> | <a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Change Requests List Page Content -->
+        <section id="change-requests" style="display: none;">
+            <h2>Change Requests</h2>
+            <input type="text" placeholder="Search Change Requests">
+            <select>
+                <option value="">All Statuses</option>
+                <option value="open">Open</option>
+                <option value="in progress">In Progress</option>
+                <option value="closed">Closed</option>
+            </select>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CR004</td>
+                        <td>Finance System Upgrade</td>
+                        <td>Open</td>
+                        <td><a href="#">View</a> | <a href="#">Edit</a> | <a href="#">Close</a></td>
+                    </tr>
+                    <tr>
+                        <td>CR005</td>
+                        <td>HR System Update</td>
+                        <td>In Progress</td>
+                        <td><a href="#">View</a> | <a href="#">Edit</a> | <a href="#">Close</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ServiceNow Page Content -->
+        <section id="service-now" style="display: none;">
+            <h2>ServiceNow Incidents and Tickets</h2>
+            <p>Embedded ServiceNow view (placeholder)</p>
+        </section>
+
+        <!-- Reports Page Content -->
+        <section id="reports" style="display: none;">
+            <h2>Reports</h2>
+            <p>Embedded Power BI Reports (placeholder)</p>
+        </section>
+
+        <!-- User Management Page Content -->
+        <section id="user-management" style="display: none;">
+            <h2>User Management</h2>
+            <input type="text" placeholder="Search Users">
+            <button>Add User</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>john.doe</td>
+                        <td>Admin</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>jane.doe</td>
+                        <td>User</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Role Management Page Content -->
+        <section id="role-management" style="display: none;">
+            <h2>Role Management</h2>
+            <input type="text" placeholder="Search Roles">
+            <button>Add Role</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Permissions</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Admin</td>
+                        <td>All Permissions</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>User</td>
+                        <td>Limited Permissions</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Report Management Page Content -->
+        <section id="report-management" style="display: none;">
+            <h2>Report Management</h2>
+            <input type="text" placeholder="Search Reports">
+            <button>Add Report</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Job Success Report</td>
+                        <td>Report on job success rates</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>Job Failure Report</td>
+                        <td>Report on job failure rates</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Support Templates Page Content -->
+        <section id="support-templates" style="display: none;">
+            <h2>Support Templates</h2>
+            <input type="text" placeholder="Search Templates">
+            <button>Add Template</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Job Failure Template</td>
+                        <td>Template for job failure incidents</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>System Down Template</td>
+                        <td>Template for system down incidents</td>
+                        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </div>
+
+    <footer>
+        &copy; 2024 Job Management System
+    </footer>
+
+    <script>
+        // JavaScript for sidebar toggling
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("collapsed");
+        }
+
+        // JavaScript for navigation (simple version)
+        const sections = ['home', 'dashboard', 'subject-areas', 'jobs', 'change-requests', 'service-now', 'reports', 'user-management', 'role-management', 'report-management', 'support-templates', 'job-detail'];
+
+        function showSection(sectionId) {
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = (id === sectionId) ? 'block' : 'none';
+                }
+            });
+
+            // Update active link in the sidebar
+            const sidebarLinks = document.querySelectorAll('.sidebar a');
+            sidebarLinks.forEach(link => {
+                if (link.href.endsWith(sectionId + '.html')) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Example: Initial display (Home page)
+        showSection('home');
+
+        // Add click listeners to sidebar links to trigger showSection
+        const sidebarLinks = document.querySelectorAll('.sidebar a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                const sectionId = this.href.split('/').pop().replace('.html', ''); // Extract section ID from href
+                showSection(sectionId);
+            });
+        });
+    </script>
+</body>
+</html>

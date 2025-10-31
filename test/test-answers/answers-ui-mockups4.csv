@@ -1,0 +1,625 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Management System</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff; /* Bootstrap primary color */
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        #sidebar {
+            width: 250px;
+            background-color: #222d32;
+            color: #fff;
+            padding: 20px;
+            transition: width 0.3s ease;
+            overflow-y: auto; /* Scroll if content overflows */
+        }
+
+        #sidebar.collapsed {
+            width: 60px; /* Smaller width when collapsed */
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #sidebar li {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #sidebar li:hover {
+            background-color: #333;
+        }
+
+        #sidebar a {
+            color: #fff;
+            display: block;
+            padding: 5px 0;
+            white-space: nowrap; /* Prevent text from wrapping */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Show ellipsis for long text */
+        }
+
+        #sidebar.collapsed a {
+          text-align: center;
+          padding: 15px 0;
+
+        }
+
+        #sidebar.collapsed a span {
+           display:none;
+        }
+
+
+        #sidebar li.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        #sidebar i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        #main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        section {
+            display: none;
+        }
+
+        section:target {
+            display: block;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+            margin-bottom: 10px; /* Space below each input */
+        }
+
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        /* Cards */
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 5px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            #sidebar {
+                width: 100%; /* Full width on small screens */
+                position: static; /* No longer fixed */
+                height: auto;
+            }
+
+            #main-content {
+                padding: 10px;
+            }
+        }
+
+        /* Collapsible Sidebar Button */
+        #collapse-button {
+          background-color: transparent;
+          border: none;
+          color: #fff;
+          cursor: pointer;
+          padding: 10px;
+          display: block;
+          text-align: left; /* Ensure the button aligns to the left */
+        }
+
+        #collapse-button:hover {
+          color: #ddd;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="container">
+        <aside id="sidebar">
+            <button id="collapse-button"><i class="fas fa-bars"></i></button>
+            <ul>
+                <li class="active"><a href="#home"><i class="fas fa-home"></i><span>Home</span></a></li>
+                <li><a href="#search-job"><i class="fas fa-search"></i><span>Search Job</span></a></li>
+                <li><a href="#subject-areas"><i class="fas fa-list"></i><span>Subject Areas</span></a></li>
+                <li><a href="#recent-incidents"><i class="fas fa-exclamation-triangle"></i><span>Recent Incidents</span></a></li>
+                <li><a href="#change-requests"><i class="fas fa-tasks"></i><span>Change Requests</span></a></li>
+                <li><a href="#rally-tickets"><i class="fas fa-ticket-alt"></i><span>Rally Tickets</span></a></li>
+                <li><a href="#dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                <li><a href="#jobs-list"><i class="fas fa-briefcase"></i><span>Jobs List</span></a></li>
+                <li><a href="#service-now"><i class="fas fa-external-link-alt"></i><span>ServiceNow</span></a></li>
+                <li><a href="#reports"><i class="fas fa-chart-bar"></i><span>Reports</span></a></li>
+                <li><a href="#settings"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+                <li><a href="#support-templates"><i class="fas fa-file-alt"></i><span>Support Templates</span></a></li>
+            </ul>
+        </aside>
+
+        <main id="main-content">
+            <section id="home">
+                <h2>Home</h2>
+                <div class="card">
+                    <h3 class="card-title">Search Job</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="job-search">Job Name, ID, or Subject Area:</label>
+                            <input type="text" id="job-search" placeholder="Enter job details">
+                        </div>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Subject Area List</h3>
+                    <ul>
+                        <li><a href="#">Finance Jobs</a></li>
+                        <li><a href="#">IT Jobs</a></li>
+                        <li><a href="#">Marketing Jobs</a></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Recent Incidents</h3>
+                    <p>No recent incidents.</p>
+                </div>
+
+                 <div class="card">
+                    <h3 class="card-title">Change Requests</h3>
+                    <p>No pending change requests.</p>
+                </div>
+
+                 <div class="card">
+                    <h3 class="card-title">Rally Tickets</h3>
+                    <p>No assigned rally tickets.</p>
+                </div>
+            </section>
+
+            <section id="search-job">
+                <h2>Search Job</h2>
+                <div class="card">
+                    <form>
+                        <div class="form-group">
+                            <label for="search-term">Search Term:</label>
+                            <input type="text" id="search-term" placeholder="Enter search term">
+                        </div>
+                         <div class="form-group">
+                            <label for="search-filters">Filters:</label>
+                             <select id="search-filters">
+                                <option value="all">All</option>
+                                <option value="name">Job Name</option>
+                                <option value="id">Job ID</option>
+                                <option value="subject">Subject Area</option>
+                            </select>
+                        </div>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </section>
+
+             <section id="subject-areas">
+                <h2>Subject Areas</h2>
+                <div class="card">
+                    <h3 class="card-title">Subject Areas</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Finance</td>
+                                <td>Jobs related to finance</td>
+                                <td><a href="#">View Jobs</a></td>
+                            </tr>
+                            <tr>
+                                <td>IT</td>
+                                <td>Jobs related to information technology</td>
+                                <td><a href="#">View Jobs</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+             <section id="recent-incidents">
+                <h2>Recent Incidents</h2>
+                <div class="card">
+                    <h3 class="card-title">Recent Incidents</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Incident ID</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INC001</td>
+                                <td>Server down</td>
+                                <td>Open</td>
+                            </tr>
+                            <tr>
+                                <td>INC002</td>
+                                <td>Database error</td>
+                                <td>Resolved</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+              <section id="change-requests">
+                <h2>Change Requests</h2>
+                <div class="card">
+                    <h3 class="card-title">Change Requests</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CR001</td>
+                                <td>Update application</td>
+                                <td>Pending</td>
+                            </tr>
+                            <tr>
+                                <td>CR002</td>
+                                <td>Database upgrade</td>
+                                <td>Approved</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="rally-tickets">
+                <h2>Rally Tickets</h2>
+                <div class="card">
+                    <h3 class="card-title">Rally Tickets</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>RT001</td>
+                                <td>Fix bug</td>
+                                <td>Open</td>
+                            </tr>
+                            <tr>
+                                <td>RT002</td>
+                                <td>Implement feature</td>
+                                <td>In Progress</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="dashboard">
+                <h2>Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3 class="card-title">System Health</h3>
+                        <p>System is running smoothly.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title">Key Metrics</h3>
+                        <p>99.9% Uptime</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="jobs-list">
+                <h2>Jobs List</h2>
+                <div class="card">
+                    <h3>Filters</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="filter-subject-area">Subject Area:</label>
+                            <select id="filter-subject-area">
+                                <option value="">All</option>
+                                <option value="finance">Finance</option>
+                                <option value="it">IT</option>
+                            </select>
+                        </div>
+                        <button type="submit">Apply Filters</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Jobs</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Job ID</th>
+                                <th>Job Name</th>
+                                <th>Subject Area</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>JOB001</td>
+                                <td>Process Finance Data</td>
+                                <td>Finance</td>
+                                <td>Active</td>
+                            </tr>
+                            <tr>
+                                <td>JOB002</td>
+                                <td>Backup IT Systems</td>
+                                <td>IT</td>
+                                <td>Scheduled</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="service-now">
+                <h2>ServiceNow</h2>
+                <div class="card">
+                    <p>Embedded ServiceNow view will go here.</p>
+                    <!-- Placeholder for ServiceNow integration -->
+                    <iframe src="https://www.servicenow.com/" width="100%" height="600px"></iframe>
+                </div>
+            </section>
+
+            <section id="reports">
+                <h2>Reports</h2>
+                 <div class="card">
+                    <p>Embedded Power BI reports will go here.</p>
+                    <!-- Placeholder for Power BI reports -->
+                    <iframe width="600" height="450" src="https://app.powerbi.com/reportEmbed?reportId=YOUR_REPORT_ID&autoAuth=true&ctid=YOUR_TENANT_ID" frameborder="0" allowFullScreen="true"></iframe>
+                </div>
+            </section>
+
+            <section id="settings">
+                <h2>Settings</h2>
+                <div class="card">
+                    <h3 class="card-title">User Management</h3>
+                    <p><a href="#">Manage Users</a></p>
+                </div>
+
+                 <div class="card">
+                    <h3 class="card-title">Role Management</h3>
+                    <p><a href="#">Manage Roles</a></p>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Report Management</h3>
+                    <p><a href="#">Manage Reports</a></p>
+                </div>
+            </section>
+
+            <section id="support-templates">
+                <h2>Support Templates</h2>
+                <div class="card">
+                    <h3 class="card-title">Support Templates</h3>
+                    <ul>
+                        <li><a href="#">Template 1</a></li>
+                        <li><a href="#">Template 2</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="job-details">
+            <h2>Job Details</h2>
+            <div class="card">
+                <h3 class="card-title">Job Information</h3>
+                <p><strong>Job Name:</strong> Data Processing</p>
+                <p><strong>Description:</strong> Processes daily data feeds.</p>
+                <p><strong>Status:</strong> Active</p>
+                <p><strong>Owner:</strong> John Doe</p>
+                <p><strong>Schedule:</strong> Daily at 02:00 AM</p>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Job Support Instructions</h3>
+                <p>Refer to the troubleshooting guide for common issues.</p>
+                <a href="#">Download Guide</a>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Error Logs</h3>
+                <p>No recent errors.</p>
+                <!-- Add error log display here -->
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Associated Incidents</h3>
+                <p>No associated incidents.</p>
+                <!-- Add linked incident display here -->
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Change Requests</h3>
+                <p>No pending change requests.</p>
+                <!-- Add change request display here -->
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Job Schedule</h3>
+                <p><strong>Next Run:</strong> 2024-01-02 02:00 AM</p>
+                <p><strong>Last Run:</strong> 2024-01-01 02:00 AM</p>
+                <p><strong>Frequency:</strong> Daily</p>
+                <p><strong>Timing:</strong> 02:00 AM</p>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Job Run Stats</h3>
+                <p><strong>Success Rate:</strong> 99.9%</p>
+                <p><strong>Failure Rate:</strong> 0.1%</p>
+                <p><strong>Average Processing Time:</strong> 5 minutes</p>
+            </div>
+        </section>
+        </main>
+    </div>
+
+    <script>
+     document.getElementById('collapse-button').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+      });
+    </script>
+</body>
+</html>
+```

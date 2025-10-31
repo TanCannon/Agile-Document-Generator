@@ -1,0 +1,25 @@
+#create a virtual env named myenv
+python -m venv my_env
+
+#activate the virtual env
+my_env\Scripts\activate
+
+#to deactivate virtual env
+deactivate
+
+#to install required module from requirements.txt
+pip install -r requirements.txt
+
+#Using Python 3.9+, install the google-genai package using the following pip command:
+pip install -q -U google-genai
+
+**STREAMLIT**
+# to install
+pip install streamlit
+# to run the app
+streamlit run yourscript.py
+
+**playwright**
+#to install
+pip install playwright
+install playwright

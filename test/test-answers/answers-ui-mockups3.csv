@@ -1,0 +1,696 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Management System</title>
+    <style>
+        /* Basic Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #222;
+            color: #fff;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1em;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #444;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #eee;
+            padding: 1em;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 0.75em;
+            text-decoration: none;
+            color: #333;
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #ddd;
+            border-left-color: #007bff;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2em;
+            margin-left: 250px; /* Adjust for sidebar width */
+        }
+
+        /* Sections */
+        section {
+            display: none;
+            padding: 20px;
+        }
+
+        section:target {
+            display: block;
+        }
+
+        /* Forms */
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin-bottom: 1em;
+        }
+
+        label {
+            margin-bottom: 0.5em;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        textarea,
+        select {
+            padding: 0.75em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 0.75em 1.5em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1em;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0.75em;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        /* Cards */
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 1em;
+            margin-bottom: 1em;
+        }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 5px;
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none;
+        }
+
+        /* Role Based Visibility */
+        .admin-only {
+            /* Style for admin-only elements */
+            display: none;
+        }
+
+        body.admin .admin-only {
+            display: block; /* Show for admins */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+            }
+
+            main {
+                margin-left: 0;
+            }
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-top: 1em;
+            }
+        }
+        /* Hover Effects and Other Interactions */
+        .button-primary {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-primary:hover {
+            background-color: #218838;
+        }
+
+        .draggable {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+            cursor: move;
+        }
+    </style>
+</head>
+<body class="admin">
+    <nav>
+        <h1>Job Management System</h1>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#subject-areas">Subject Areas</a></li>
+            <li><a href="#jobs">Jobs</a></li>
+            <li><a href="#change-requests">Change Requests</a></li>
+            <li><a href="#service-now">ServiceNow</a></li>
+            <li><a href="#reports">Reports</a></li>
+            <li class="admin-only"><a href="#settings">Settings</a></li>
+            <li><a href="#login">Login</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#subject-areas">Subject Areas</a></li>
+            <li><a href="#jobs">Jobs</a></li>
+            <li>
+                <a href="#change-requests">Change Requests</a>
+                <ul>
+                    <li><a href="#change-requests-list">List</a></li>
+                    <li><a href="#change-requests-create">Create</a></li>
+                </ul>
+            </li>
+            <li><a href="#service-now">ServiceNow</a></li>
+            <li><a href="#reports">Reports</a></li>
+            <li class="admin-only"><a href="#settings">Settings</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section id="home">
+            <h2>Home</h2>
+            <div class="card">
+                <h3>Search Job</h3>
+                <form>
+                    <input type="text" placeholder="Job Name, ID, or Subject Area" aria-label="Search Job">
+                    <button type="submit">Search</button>
+                    <details>
+                        <summary>Filters</summary>
+                        <label for="status">Status:</label>
+                        <select id="status">
+                            <option value="all">All</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </details>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Subject Area List</h3>
+                <ul>
+                    <li><a href="#">Finance</a></li>
+                    <li><a href="#">Marketing</a></li>
+                    <li><a href="#">Sales</a></li>
+                    <li><a href="#">Operations</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Recent Incidents (ServiceNow)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Incident ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>INC001</td>
+                            <td>Server Down</td>
+                            <td>Open</td>
+                        </tr>
+                        <tr>
+                            <td>INC002</td>
+                            <td>Application Error</td>
+                            <td>In Progress</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>Change Requests</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CR ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CR001</td>
+                            <td>Deploy New Feature</td>
+                            <td>Pending Approval</td>
+                        </tr>
+                        <tr>
+                            <td>CR002</td>
+                            <td>Update Database</td>
+                            <td>In Progress</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>Rally Tickets</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RA001</td>
+                            <td>Bug Fix</td>
+                            <td>Open</td>
+                        </tr>
+                        <tr>
+                            <td>RA002</td>
+                            <td>New Feature Implementation</td>
+                            <td>In Progress</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="dashboard">
+            <h2>Dashboard</h2>
+            <div class="card">
+                <h3>System Health Overview</h3>
+                <p>System is operating normally. All critical services are online.</p>
+            </div>
+
+            <div class="card">
+                <h3>Alerts</h3>
+                <p>No current alerts.</p>
+            </div>
+
+            <div class="card">
+                <h3>Key Metrics</h3>
+                <ul>
+                    <li>Jobs Run: 1200</li>
+                    <li>Success Rate: 99.9%</li>
+                    <li>Average Processing Time: 5 minutes</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="subject-areas">
+            <h2>Subject Areas</h2>
+            <div class="card">
+                <h3>List of Subject Areas</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Finance</td>
+                            <td>Financial Jobs</td>
+                            <td><button>Edit</button> <button>Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>Marketing</td>
+                            <td>Marketing Jobs</td>
+                            <td><button>Edit</button> <button>Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button>Add Subject Area</button>
+        </section>
+
+        <section id="jobs">
+            <h2>Jobs</h2>
+            <div class="card">
+                <h3>Job List</h3>
+                <form>
+                    <input type="text" placeholder="Search Jobs" aria-label="Search Jobs">
+                    <button type="submit">Search</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Name</th>
+                            <th>Subject Area</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>JOB001</td>
+                            <td>Daily Sales Report</td>
+                            <td>Sales</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <td>JOB002</td>
+                            <td>Monthly Budget</td>
+                            <td>Finance</td>
+                            <td>Active</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button>Add Job</button>
+        </section>
+
+         <section id="job-detail">
+            <h2>Job Detail</h2>
+            <div class="card">
+                <h3>Job Information</h3>
+                <p><strong>Job Name:</strong> Monthly Budget</p>
+                <p><strong>Description:</strong> Calculates the monthly budget.</p>
+                <p><strong>Status:</strong> Active</p>
+                <p><strong>Owner:</strong> John Doe</p>
+                <p><strong>Schedule:</strong> Monthly, on the 1st of each month.</p>
+            </div>
+
+            <div class="card">
+                <h3>Job Support Instructions</h3>
+                <p>Refer to the internal documentation for troubleshooting steps.</p>
+            </div>
+
+            <div class="card">
+                <h3>Error Logs (UC4 and Informatica)</h3>
+                <pre><code>
+ERROR: Something went wrong at 2024-01-01
+                </code></pre>
+            </div>
+
+            <div class="card">
+                <h3>Associated Incidents</h3>
+                <ul>
+                    <li><a href="#">INC001 - Job Failed to Run</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Change Requests</h3>
+                <ul>
+                    <li><a href="#">CR002 - Update Database</a></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Job Schedule</h3>
+                <p><strong>Next Run:</strong> 2024-11-01</p>
+                <p><strong>Last Run:</strong> 2024-10-01</p>
+                <p><strong>Frequency:</strong> Monthly</p>
+                <p><strong>Timing:</strong> 00:00</p>
+            </div>
+
+            <div class="card">
+                <h3>Job Run Stats</h3>
+                <p><strong>Success Rate:</strong> 99.9%</p>
+                <p><strong>Failure Rate:</strong> 0.1%</p>
+                <p><strong>Average Processing Time:</strong> 5 minutes</p>
+            </div>
+        </section>
+
+        <section id="change-requests">
+            <h2>Change Requests</h2>
+            <div class="card">
+                <h3>Change Request List</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CR001</td>
+                            <td>Update Server</td>
+                            <td>Approved</td>
+                            <td><button>View</button></td>
+                        </tr>
+                        <tr>
+                            <td>CR002</td>
+                            <td>Deploy New Code</td>
+                            <td>Pending</td>
+                            <td><button>View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="service-now">
+            <h2>ServiceNow</h2>
+            <div class="card">
+                <h3>ServiceNow Incidents and Tickets</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>INC001</td>
+                            <td>Network Issue</td>
+                            <td>Open</td>
+                        </tr>
+                        <tr>
+                            <td>TASK001</td>
+                            <td>Server Maintenance</td>
+                            <td>Closed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="reports">
+            <h2>Reports</h2>
+            <div class="card">
+                <h3>Embedded Power BI Reports</h3>
+                <p>Embedded Power BI Report Placeholder</p>
+            </div>
+        </section>
+
+        <section id="settings">
+            <h2>Settings</h2>
+            <div class="card">
+                <h3>User Management</h3>
+                <p>Manage users and their permissions.</p>
+                <button>Manage Users</button>
+            </div>
+
+            <div class="card">
+                <h3>Role Management</h3>
+                <p>Manage roles and their associated permissions.</p>
+                <button>Manage Roles</button>
+            </div>
+
+            <div class="card">
+                <h3>Report Management</h3>
+                <p>Manage reports and their access.</p>
+                <button>Manage Reports</button>
+            </div>
+
+            <div class="card">
+                <h3>Support Templates</h3>
+                <p>Manage support templates and their content.</p>
+                <button>Manage Templates</button>
+            </div>
+        </section>
+
+        <section id="login">
+            <h2>Login</h2>
+            <div class="card">
+                <form>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal!</p>
+        </div>
+    </div>
+
+<script>
+    // Simple script to add 'active' class to sidebar links (optional)
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebarLinks = document.querySelectorAll('.sidebar a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
+    });
+
+    //Draggable
+    document.addEventListener('DOMContentLoaded', () => {
+            const draggables = document.querySelectorAll('.draggable');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', () => {
+                    draggable.classList.add('dragging');
+                });
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                });
+            });
+
+            // Example only - Not a functional drop target.
+            const container = document.querySelector('#home'); // Or another appropriate container
+            container.addEventListener('dragover', e => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(container, e.clientY);
+                const draggable = document.querySelector('.dragging');
+                if (afterElement == null) {
+                    container.appendChild(draggable);
+                } else {
+                    container.insertBefore(draggable, afterElement);
+                }
+            });
+
+            function getDragAfterElement(container, y) {
+                const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+
+                return draggableElements.reduce((closest, child) => {
+                    const box = child.getBoundingClientRect();
+                    const offset = y - box.top - box.height / 2;
+                    if (offset < 0 && offset > closest.offset) {
+                        return { offset: offset, element: child };
+                    } else {
+                        return closest;
+                    }
+                }, { offset: Number.NEGATIVE_INFINITY }).element;
+            }
+    });
+</script>
+</body>
+</html>
+```
